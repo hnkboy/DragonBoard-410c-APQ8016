@@ -12,7 +12,7 @@ Description : Simple Hardware access example that blinks user-LED4
 #include <fcntl.h>
 #include <unistd.h>
 //定义控制LED的路劲
-#define LED4 "/sys/class/leds/apq8016-sbc\:green\:user3/brightness"
+#define LED4 "/sys/class/leds/apq8016-sbc:green:user3/brightness"
 int main( void ){
     //获得对LED的亮度控制文件权限
     int led4_fd = open( LED4, O_WRONLY);
