@@ -43,7 +43,7 @@ int main(void)
         ret = Write_GPIO(GPIO_A, out_value);
         if (ret != 0)
             printf("Error writing GPIO_%d", GPIO_A);
-//        ret = Read_GPIO(GPIO_B, (int*) &in_value);
+		ret = Read_GPIO(GPIO_B, (int*) &in_value);
         if (ret != 0)
 			 printf("Error reading GPIO_%d", GPIO_B);
         printf("Reading GPIO_%d: value=%d \n", GPIO_B, in_value);
