@@ -1,8 +1,8 @@
 /*
 ============================================================================
-Name : TogglyGPIO.c
-Author : ZhouJunyu
-Version : 0.0.1
+Name : gpionum.c
+Author : jiali
+Version : 0.0.2
 Copyright : Your copyright notice
 Description : Basic Hardware access, Ansi-style
 ============================================================================
@@ -12,7 +12,7 @@ Description : Basic Hardware access, Ansi-style
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
-#define MAX_BUF 10
+#define MAX_BUF 30
 #define GPIO_A 36
 #define GPIO_B 12
 int Export_GPIO(int gpio);
@@ -33,7 +33,7 @@ int main(void)
     printf("Error exporting GPIO_%d", GPIO_A);
     ret = Export_GPIO(GPIO_B);
     if(ret != 0)
-        printf("Error exporting GPIO_%d", GPIO_B);
+     printf("Error exporting GPIO_%d", GPIO_B);
         //
         //向指定的GPIO口写值
         //
@@ -43,13 +43,14 @@ int main(void)
         ret = Write_GPIO(GPIO_A, out_value);
         if (ret != 0)
             printf("Error writing GPIO_%d", GPIO_A);
-        ret = Read_GPIO(GPIO_B, (int*) &in_value);
+//        ret = Read_GPIO(GPIO_B, (int*) &in_value);
         if (ret != 0)
-            printf("Error reading GPIO_%d", GPIO_B);
-            printf("Reading GPIO_%d: value=%d \n", GPIO_B, in_value);
-            out_value = !out_value;
+			 printf("Error reading GPIO_%d", GPIO_B);
+        printf("Reading GPIO_%d: value=%d \n", GPIO_B, in_value);
+        out_value = !out_value;
+	
         c= getchar();
-}
+	}
     //
     //将指定的GPIO口进行unexport
     //
