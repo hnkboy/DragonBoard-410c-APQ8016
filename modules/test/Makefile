@@ -1,6 +1,6 @@
 ifneq ($(KERNELRELEASE),)  
 #kbuild syntax. dependency relationshsip of files and target modules are listed here.  
-mymodule-objs := hello.o
+#mymodule-objs := hello.o
 obj-m := hello.o     
   
 else  
