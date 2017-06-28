@@ -1,8 +1,8 @@
 ifneq ($(KERNELRELEASE),)  
 #kbuild syntax. dependency relationshsip of files and target modules are listed here.  
-mymodule-objs := hello.o  
 obj-m := hello.o     
- 
+mymodule-objs := hello.o  
+
 else  
 PWD  := $(shell pwd)   
 KVER ?= $(shell uname -r)  
