@@ -49,7 +49,7 @@ struct tbs2701_data{
     struct mutex data_lock;
     wait_queue_head_t data_queue;
 	
-	//struct work_struct pwm_work;
+	struct work_struct pwm_work;
 	struct work_struct pwm_work_enable;
     bool turn_flag;
 	//atomic_t counter;/* 一共经历了多少秒？(定义为原子量)*/
@@ -239,7 +239,7 @@ static DEVICE_ATTR(value,0644,tbs2701_show_value,tbs2701_store_value);
 
 
 static int tbs2701_probe(struct platform_device *pdev){
-	//struct tbs2701_data* data;
+	struct tbs2701_data* data;
 	int result;
 	tbs2701 = kmalloc(sizeof(struct tbs2701_data),GFP_KERNEL);
 	if(!tbs2701){
