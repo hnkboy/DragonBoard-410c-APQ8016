@@ -1,4 +1,4 @@
 all:
-  cc ./comsume.c -o comsume -pthread
+	 cc ./consume.c -o consume -pthread
 clean:
-  rm ./*.o
+	rm ./*.o
