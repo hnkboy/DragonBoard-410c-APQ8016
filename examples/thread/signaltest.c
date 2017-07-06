@@ -3,7 +3,7 @@
 #include<signal.h>
 #include<pthread.h>
 #include<time.h>
-pthread_t tid;　
+pthread_t tid;
 sigset_t set;
 void myfunc()
 {
@@ -52,5 +52,5 @@ int main()
         else
             continue;
     }
-    return0;
+    return 0;
 }
