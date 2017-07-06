@@ -1,0 +1,135 @@
+前言：
+本文是纯手工制作，如有错误经请谅解。联系邮箱：<zhangzk@hugefound.com> 提出您宝贵的意见
+
+linux2.6内核之后的声音结构基本上都是使用的ALSA，下面是基于ALSA架构的音频编程及相关说明。
+
+音频相关参数及含义：    
+    样本长度(sample)：样本是记录音频数据最基本的单位，常见的有8位和16位。
+    通道数(channel)：该参数为1表示单声道，2则是立体声。
+    桢(frame)：桢记录了一个声音单元，其长度为样本长度与通道数的乘积。
+    采样率(rate)：每秒钟采样次数，该次数是针对桢而言。
+    周期(period)：音频设备一次处理所需要的桢数，对于音频设备的数据访问以及音频数据的存储，都是以此为单位。
+
+    交错模式(interleaved)：是一种音频数据的记录方式，在交错模式下，数据以连续桢的形式存放，即首先记录完桢1的左声道样本和右声道样本（假设为立体声格式），再开始桢2的记录。而在非交错模式下，首先记录的是一个周期内所有桢的左声道样本，再记录右声道样本，数据是以连续通道的方式存储。不过多数情况下，我们只需要使用交错模式就可以了。
+    period(周期):硬件中中断间的间隔时间。它表示输入延时。
+
+一个典型的音频程序应该具有以下结构：
+    打开音频设备
+    为设备设置读写参数
+    向音频设备读/写音频数据
+    关闭设备
+ 
+    但是要想直接生成wav格式的音频文件，就需要更多的知识来实现这一目的。
+简单来说就是 封装wav文件，设置需要的参数，读写音频数据。
+    以lPlay为例：从WAV文件读取PCM数据，通过I2S或AC97依次送到Audio Codec。难点在于对snd_pcm_hw_params_t的设置，尤其要确定每次要送到Audio Codec的数据帧大小(peroid_size).
+其中I2S是飞利浦公司针对数字音频设备之间的音频数据传输而制定的一种总线标准。
+I2C是两线式串行总线，I2S是3线市并行总线，
+想了解I2S请参考：http://blog.csdn.net/greston/article/details/8076584 
+************************************************************************
+************************************************************************
+
+下面分析一下程序
+    程序分为四块：wav_parser  sndwav_common  lplay  lrecord   代码中都有详细的中文注释。
+    首先介绍各个模块的都干了什么事：
+wav_parser主要是对wav音频文件的分析和封装，sndwav_common(硬件参数的相关设置),lplay(播放录音),lrecord(获取音频).
+    其次是各个模块代码的分析,为了代码的可读性更高，变量类型用unit_t,
+
+说明详见http://www.cnblogs.com/wwping/articles/2295954.html 
+(中间穿插涉及到很多知识，请耐心学习)
+
+1.wav_parser.h/wav_parser.c
+ 
+(1)先看.h里定义了一堆宏
+#if __BYTE_ORDER == __LITTLE_ENDIAN //判断大小端模式
+因为有的处理器用的大端方式进行数据的存放，有的却是用的小端。不仅对于处理器，一些外设的设计中也存在着使用大端或者小端进行数据存放的选择。这一现象为系统的软硬件设计带来了不小的麻烦，这要求系统设计工程师，必须深入理解大端和小端模式的差别。大端与小端模式的差别体现在一个处理器的寄存器，指令集，系统总线等各个层次中。
+大小端模式参考：http://blog.csdn.net/fei324/article/details/6887608
+其他的宏是wav文件各个块的名字还有fmt块的数据，代码中都有注释。
+    (2)往下就是定义了描述wav文件的相关信息的结构体，因为牛逼的wav文件是分很多块的，要根据每个块的信息填入完整的wav文件，有的是固定格式，有的自己设定。传说+老师名言：要想把wav文件初步整明白正常人需要2到3天的时间。而本人只用了一天，原因嘛！你懂得。PS：No No No,原因是我还没太搞懂。看了很多关于wav格式的解释，觉得这个还不错：
+http://blog.sina.com.cn/s/blog_4a0444b80100cto1.html
+    (3)在.c文件中依赖与.h文件给出的信息，来对wav文件进行封装，其中在WAV_WriteHeader()函数中调用了assert(),它的作用就是做一个判断，()内是条件，如果其值为假（即为0），那么它先向stderr打印一条出错信息，然后通过调用 abort 来终止程序运行，详见代码。
+
+2.sndwav_common.h/sndwav_common.c
+
+    (1).h中定义了一个结构体包含一些参数变量，还有三个函数分别是：读，写，设置PCM参数的函数，其中用到了wav_parser中的WAVContainer_t结构体
+    (2).c的结构很明显，就包含了四个函数。他们的作用分别是：
+SNDWAV_P_GetFormat()是获取wav的格式，
+SNDWAV_ReadPcm()读硬件的配置参数（录音），snd_pcm_writei().
+SNDWAV_WritePcm()写硬件的配置参数(放音)，snd_pcm_readi().
+SNDWAV_SetParams()设置硬件的参数：
+从WAV文件的头信息可以分析出：sample_format、channels number、sample_rate、sample_length，这些参数要通过snd_pcm_hw_params_set_XXX()接口设置到 snd_pcm_hw_params_t中。
+    接着我们要设置buffer_time 和peroid_time。通过snd_pcm_hw_params_get_buffer_time_max()接口可以获取该Audio Codec可以支持的最大buffer_time，这里我们设置buffer_time = (MAX_BUFFER_TIME > 500000) ? 500000 : MAX_BUFFER_TIME; peroid_time = buffer_time/4。
+关 于peroid的概念有这样的描述：The “period” is a term that corresponds to a fragment in the OSS world. The period defines the size at which a PCM interrupt is generated. 从底层驱动看来，应该是PCM DMA单次传送数据帧的大小。其实真正关注底层驱动的话，它并不是关心peroid_time，它关心的是peroid_size，这两者有转换关系。具 体见struct snd_pcm_hardware结构体。
+通过snd_pcm_hw_params_get_period_size()取得peroid_size，注意在ALSA中peroid_size是以 frame为单位的，所以我们要对peroid_size进行转换：chunk_bytes = peroid_size * sample_length / 8。chunk_bytes就是我们单次从WAV读PCM数据的大小。
+    其实只有当我们调用函数 snd_pcm_hw_params后，设置的硬件参数才会起作用。
+ 
+3.lrecord.c(录音)/lplay.c(播放)
+
+    首先是对硬件参数进行了疯狂的设置，以致于本人初次观赏的时候很蛋疼。然后就是操作wav文件。其中remove(filename)函数会删除参数filename 指定的文件. 如果参数为一文件, 则调用unlink()处理,若参数为一目录, 则调用rmdir()来处理.
+memset()函数的作用是清空record。
+    因为Alsa库为我们实现这些操作提供了丰富的接口，这就使音频编程变的稍简单一些，snd_pcm_open是Alsa库提供的打开设备调用函数，这里我们指定打开缺省的音频设备，并根据参数mode将设备置为录音或是播放状态，如果设备打开成功，record.handle便指向该设备句柄 (此处应该设置全局变量)
+open设备之后便是调用其他函数来设置相关参数，然后是snd_pcm_dump()函数
+再调用本文件的SNDWAV_Record()函数来设置和读参数数据，其中在此函数中又调用了SNDWAV_ReadPcm()函数，此函数的作用就是对硬件参数和data数据块的读入。
+操作完毕之后用了snd_pcm_drain()函数，继续传输挂起的声音样本直至完毕，然后就可以该关闭的关闭，最后做一下判断。
+lplay.c中的框架和lrecord.c基本是一样的，也是调用snd_pcm_open函数打开设备，再调用之前的函数来实现一下，最后关闭。
+
+4.最后是由本人改写的Makefile。
+    这里就不详细的介绍了。
+
+代码下载地址：公司企业邮箱的网盘中 http://mail.hugefound.com
+
+linux下alsa架构采集声音成wav格式播放.tar
+************************************************************************
+************************************************************************
+
+下面介绍一下之前进入误区遇到的几个小问题给大家做一个参考：
+1.检查linux内核版本
+方法一：
+命令： uname -a
+作用： 查看系统内核版本号及系统名称
+方法二：
+命令： cat /proc/version
+作用： 查看目录"/proc"下version的信息，也可以得到当前系统的内核版本号及系统名称
+补充说明：
+／proc文件系统，它不是普通的文件系统，而是系统内核的映像，也就是说，该目录中的文件是存放在系统内存之中的，它以文件系统的方式为访问系统内核数据的操作提供接口。而我们使用命令“uname -a"的信息就是从该文件获取的，当然用方法二的命令直接查看它的内容也可以达到同等效果.另外，加上参数"a"是获得详细信息，如果不加参数为查看系统名称。
+
+2.系统出现大量的/dev/dsp: No such device or address
+运行程序时出现大量的这样的错误，察看/dev/dsp已经创建  并且权限是766.
+重新建立 /dev/dsp、
+rm -rf /dev/dsp
+mknod /dev/dsp c 1 3
+chmod 666 /dev/dsp
+再次执行：问题解决
+mknod 可为这些指定的设备创建节点，当然节点的位置不是一定要在/dev下，但是为了便于管理一般都是指定/dev。驱动程序是根据主、次设备号定位的，但是你的应用程序open一个设备时，一定要是你指定的节点位置。
+
+3.alsa/asoundlib.h：没有那个文件或目录 问题
+主要是因为头文件里的alsa/asoundlib.h这个库没有安装，这时，我们需要安装libasound2这个东西，安装命令：apt-get install libasound2 -dev ，但是我安装时出现只能安装50%的问题，这是因为，我没有更新，所以以后再安装东西的时候，一定要记得首先更新，命令：sudo apt-get update .这个很重要。另外在编译WAV文件时，编译命令为gcc filename.c -lasound.文件名后要记得加上 -lasound。
+
+4.查看硬件的声卡信息
+硬件信息 之 声卡（lshw指list hardware，是一个软件）
+~$ sudo lshw -C sound
+  *-multimedia UNCLAIMED 
+       description: Multimedia audio controller
+       product: 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) AC'97 Audio Controller
+       vendor: Intel Corporation
+       physical id: 1f.5
+       bus info: pci@0000:00:1f.5
+       version: 03
+       width: 32 bits
+       clock: 33MHz
+       capabilities: pm bus_master cap_list
+       configuration: latency=0
+
+************************************************************************
+************************************************************************
+总结：整整一周的时间过去了，终于把alsa  wav弄出来了。不知不觉自己也成为了一名程序员，身为顶尖菜鸟程序员，我并不感到羞愧，因为我相信只要努力总有一天我也会成为大牛一般的人物。从踏上这条路以来我从没有后悔过，相信大多数人都和我一样，我们既然选择了做程序员，就不能后悔，反之我们还应该感谢，不是感谢你父母生了你这么一个聪明伶俐乖巧可爱美丽冻人的天才，也不是感谢国家感谢共产党，更不是感谢cctv什么的，你应该感谢你自己，感谢你所在的公司给了你这样一个修练的机会，所以请珍惜。有的人认为会写程序就是程序员了，并不是能写几行程序就是程序员，程序并不是计算机的全部，好的程序，好的程序员要经历漫长的修炼，就像是武林高手修炼内功比修炼招式更重要。我要做的是程序员，不是coder。
+
+以此作为自己及看到此篇文章的朋友们共勉。
+
+祝大家事业有成，身体健康，家庭和睦。
+
+                                                                                       张尊锟              2014.06.17
+
+                                                                                       邮箱：<zhangzk@hugefound.com>
+
+
+                       能看到现在的，你们都是帅哥美女！！！
