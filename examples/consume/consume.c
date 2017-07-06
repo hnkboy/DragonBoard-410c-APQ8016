@@ -32,18 +32,15 @@ pthread_mutex_t g_mutex;  //互斥信号量
 
 pthread_t g_thread[CONSUMERS_COUNT + PRODUCERS_COUNT];
 
-void *consume(void *arg)
-{
+void *consume(void *arg){
     int i;
     int num = (int)arg;
-    while (1)
-    {
+    while (1){
         printf("%d wait buffer not empty\n", num);
         sem_wait(&g_sem_empty);
         pthread_mutex_lock(&g_mutex);
         //遍历缓冲区，看有哪些缓冲区是可以生产产品的
-        for (i = 0; i < BUFFSIZE; i++)
-        {
+        for (i = 0; i < BUFFSIZE; i++){
             printf("%02d ", i);
             if (g_buffer[i] == -1)
                 printf("%s", "null");
@@ -69,17 +66,14 @@ void *consume(void *arg)
     return NULL;
 }
 
-void *produce(void *arg)
-{
+void *produce(void *arg){
     int num = (int)arg;
     int i;
-    while (1)
-    {
+    while (1){
         printf("%d wait buffer not full\n", num);
         sem_wait(&g_sem_full);
         pthread_mutex_lock(&g_mutex);
-        for (i = 0; i < BUFFSIZE; i++)
-        {
+        for (i = 0; i < BUFFSIZE; i++){
             printf("%02d ", i);
             if (g_buffer[i] == -1)
                 printf("%s", "null");
@@ -103,8 +97,7 @@ void *produce(void *arg)
     return NULL;
 }
 
-int main(void)
-{
+int main(void){
     int i;
     for (i = 0; i < BUFFSIZE; i++)
         g_buffer[i] = -1;
