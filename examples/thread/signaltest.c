@@ -3,35 +3,35 @@
 #include<signal.h>
 #include<pthread.h>
 #include<time.h>
-pthread_ttid;　sigset_tset;
+pthread_t tid;　
+sigset_t set;
 void myfunc()
 {
-　printf("hello\n");
+	printf("hello\n");
 }
-static void *mythread(void*p)
-{
-　int signum;
-　while(1){
-　    sigwait(&set,&signum);
-　    if(SIGUSR1==signum)
-　    myfunc();
-　    if(SIGUSR2==signum)
-　    {
-　    printf("Iwillsleep2secondandexit\n");
-　    sleep(2);
-　    break;
-　    }
-    }
+static void *mythread(void*p){
+	int signum;
+	while(1){
+		sigwait(&set,&signum);
+		if(SIGUSR1==signum)
+		myfunc();
+		if(SIGUSR2==signum)
+		{
+		printf("Iwillsleep2secondandexit\n");
+		sleep(2);
+		break;
+		}
+	}
 }
-int    main()
+int main()
 {
-    char tmp;
-    void *status;
-    sigemptyset(&set);
-    sigaddset(&set,SIGUSR1);
-    sigaddset(&set,SIGUSR2);
-    sigprocmask(SIG_SETMASK,&set,NULL);
-    pthread_create(&tid,NULL,mythread,NULL);
+	char tmp;
+	void *status;
+	sigemptyset(&set);
+	sigaddset(&set,SIGUSR1);
+	sigaddset(&set,SIGUSR2);
+	sigprocmask(SIG_SETMASK,&set,NULL);
+	pthread_create(&tid,NULL,mythread,NULL);
     while(1)
     {    
         printf(":");
@@ -42,12 +42,12 @@ int    main()
         }
         else if('q'==tmp)
         {
-            //发出SIGUSR2信号，让线程退出，如果发送SIGKILL，线程将直接退出。
-            pthread_kill(tid,SIGUSR2);
-            //等待线程tid执行完毕，这里阻塞。
-            pthread_join(tid,&status);
-            printf("finish\n");
-            break;
+			//发出SIGUSR2信号，让线程退出，如果发送SIGKILL，线程将直接退出。
+			pthread_kill(tid,SIGUSR2);
+			//等待线程tid执行完毕，这里阻塞。
+			pthread_join(tid,&status);
+			printf("finish\n");
+			break;
         }
         else
             continue;
