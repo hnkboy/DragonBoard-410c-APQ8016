@@ -30,7 +30,7 @@ sem_t g_sem_full; //可以使用的空缓冲区数（缓冲区中可以生产多
 sem_t g_sem_empty;  //缓冲区内可以使用的产品数（可以消费的产品数）
 pthread_mutex_t g_mutex;  //互斥信号量
 
-pthread_t g_thread[CONSUMERS_COUNT + PRODUCERS_COUNT];
+pthread_t g_thread[CONSUMERS_COUNT + PRODUCERS_COUNT]; //线程ID typedef unsigned long int pthread_t;
 
 void *consume(void *arg){
     int i;
