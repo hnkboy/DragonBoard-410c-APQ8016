@@ -4,7 +4,7 @@
 
 
 
-#consume.c
+# consume.c
 #编译文件时
 #gcc consume.c -pthread
 
