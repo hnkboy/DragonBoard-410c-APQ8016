@@ -19,16 +19,19 @@
 #include <assert.h> 
 #include "wav_parser.h" 
 #include "sndwav_common.h" 
- 
+
+/*--
+* 通道，采样率，样本长度，采样时间
+*/  
 #define DEFAULT_CHANNELS         (2) 
 #define DEFAULT_SAMPLE_RATE      (8000) 
 #define DEFAULT_SAMPLE_LENGTH    (16) 
 #define DEFAULT_DURATION_TIME    (10) 
- 
+
 int SNDWAV_PrepareWAVParams(WAVContainer_t *wav) 
 { 
-	assert(wav); 
-	//硬件参数赋值
+	assert(wav);            /*数值为0时，返回错误，终止程序*/
+	/*硬件参数赋值*/
 	uint16_t channels = DEFAULT_CHANNELS; 
 	uint16_t sample_rate = DEFAULT_SAMPLE_RATE; 
 	uint16_t sample_length = DEFAULT_SAMPLE_LENGTH; 
@@ -41,17 +44,15 @@ int SNDWAV_PrepareWAVParams(WAVContainer_t *wav)
 	wav->format.format = LE_SHORT(WAV_FMT_PCM); 
 	wav->chunk.type = WAV_DATA; 
  
-	//自定义 
+	/*自定义*/ 
 	wav->format.channels = LE_SHORT(channels); 
 	wav->format.sample_rate = LE_INT(sample_rate); 
 	wav->format.sample_length = LE_SHORT(sample_length); 
  
-wav->format.blocks_align = LE_SHORT(channels * sample_length / 8); 
-wav->format.bytes_p_second = LE_INT((uint16_t)(wav->format.blocks_align) * sample_rate); 
-	 
-wav->chunk.length = LE_INT(duration_time * (uint32_t)(wav->format.bytes_p_second)); 
-wav->header.length = LE_INT((uint32_t)(wav->chunk.length) + sizeof(wav->chunk) + sizeof(wav->format) + sizeof(wav->header) - 8); 
- 
+	wav->format.blocks_align = LE_SHORT(channels * sample_length / 8); 
+	wav->format.bytes_p_second = LE_INT((uint16_t)(wav->format.blocks_align) * sample_rate); 
+	wav->chunk.length = LE_INT(duration_time * (uint32_t)(wav->format.bytes_p_second)); 
+	wav->header.length = LE_INT((uint32_t)(wav->chunk.length) + sizeof(wav->chunk) + sizeof(wav->format) + sizeof(wav->header) - 8); 
 	return 0; 
 } 
  
@@ -93,7 +94,7 @@ int main(int argc, char *argv[])
 		return -1; 
 	} 
 	 
-	memset(&record, 0x0, sizeof(record)); 
+	memset(&record, 0x0, sizeof(record));   /*全部初始化清0*/
  
 	filename = argv[1]; 
 	remove(filename); 
