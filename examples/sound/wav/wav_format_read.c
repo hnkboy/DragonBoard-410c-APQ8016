@@ -3,12 +3,12 @@
 #include <stdlib.h>  
   
 struct WAV_Format {  
-    uint32_t ChunkID;   /* "RIFF" */  
+    uint8_t ChunkID[4];   /* "RIFF" */  
     uint32_t ChunkSize; /* 36 + Subchunk2Size */  
-    uint32_t Format;    /* "WAVE" */  
+    uint8_t Format[4];    /* "WAVE" */  
   
     /* sub-chunk "fmt" */  
-    uint32_t Subchunk1ID;   /* "fmt " */  
+    uint8_t Subchunk1ID[4];   /* "fmt " */  
     uint32_t Subchunk1Size; /* 16 for PCM */  
     uint16_t AudioFormat;   /* PCM = 1*/  
     uint16_t NumChannels;   /* Mono = 1, Stereo = 2, etc. */  
@@ -18,7 +18,7 @@ struct WAV_Format {
     uint16_t BitsPerSample; /* 8bits, 16bits, etc. */  
   
     /* sub-chunk "data" */  
-    uint32_t Subchunk2ID;   /* "data" */  
+    uint8_t Subchunk2ID[4];   /* "data" */  
     uint32_t Subchunk2Size; /* data size */  
 };   
   
@@ -35,10 +35,10 @@ int main(int argc, char *argv[])
   
     fread(&wav, 1, sizeof(struct WAV_Format), fp);  
   
-    printf("ChunkID \t%x\n", wav.ChunkID);  
+    printf("ChunkID \t%s\n", wav.ChunkID);  
     printf("ChunkSize \t%d\n", wav.ChunkSize);  
-    printf("Format \t\t%x\n", wav.Format);  
-    printf("Subchunk1ID \t%x\n", wav.Subchunk1ID);  
+    printf("Format \t\t%s\n", wav.Format);  
+    printf("Subchunk1ID \t%s\n", wav.Subchunk1ID);  
     printf("Subchunk1Size \t%d\n", wav.Subchunk1Size);  
     printf("AudioFormat \t%d\n", wav.AudioFormat);  
     printf("NumChannels \t%d\n", wav.NumChannels);  
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     printf("ByteRate \t%d\n", wav.ByteRate);  
     printf("BlockAlign \t%d\n", wav.BlockAlign);  
     printf("BitsPerSample \t%d\n", wav.BitsPerSample);  
-    printf("Subchunk2ID \t%x\n", wav.Subchunk2ID);  
+    printf("Subchunk2ID \t%s\n", wav.Subchunk2ID);  
     printf("Subchunk2Size \t%d\n", wav.Subchunk2Size);  
   
     fclose(fp);  
