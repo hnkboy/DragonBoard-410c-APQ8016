@@ -82,7 +82,7 @@ int WAV_P_CheckValid(WAVContainer_t *container)
 		container->format.magic != WAV_FMT || 
 		container->format.fmt_size != LE_INT(16) || 
 (container->format.channels != LE_SHORT(1) && container->format.channels != LE_SHORT(2))
- || container->chunk.type != WAV_DATA) {
+ || container->chunk.type != WAV_DATA) { /*会判断标准网路下载的wav文件格式错误*/
 		fprintf(stderr, "non standard wav file./n"); 
 		return -1; 
 	} 
