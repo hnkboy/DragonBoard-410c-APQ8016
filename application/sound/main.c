@@ -3,6 +3,8 @@
 #include<signal.h>
 #include<pthread.h>
 #include<time.h>
+#include "playback.h"
+
 pthread_t tid;
 sigset_t set;
 void myfunc()
@@ -40,6 +42,7 @@ int main()
         scanf("%c",&tmp);
         if('a'==tmp)
         {
+			testvioce();
             pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
         }
         else if('q'==tmp)

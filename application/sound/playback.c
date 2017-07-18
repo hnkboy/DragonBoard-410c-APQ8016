@@ -7,10 +7,12 @@
  */
 
 /* use the newer ALSA_API */
+
 #define ALSA_PCM_NEW_HW_PARAMS_API
 
 #include <alsa/asoundlib.h>
 #include <alsa/pcm.h>
+
 /*
  * init the alsa/device
  * times : us
@@ -125,8 +127,8 @@ int close_alse(snd_pcm_t *handle){
     return 0;
 }
 
-int main(int argc, char* argv[]){
-	
+//int main(int argc, char* argv[]){
+int testvioce(void){	
 	snd_pcm_t *handle;
     snd_pcm_hw_params_t *params;
 	snd_pcm_uframes_t frames;
