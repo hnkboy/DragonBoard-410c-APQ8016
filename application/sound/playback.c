@@ -11,19 +11,23 @@
 
 #include <alsa/asoundlib.h>
 #include <alsa/pcm.h>
+/*
+ * init the alsa/device
+ * times : us
+*/
+      
 
-int main()
+snd_pcm_t *alsa_init(snd_pcm_hw_params_t *params, 
+						snd_pcm_uframes_t frames,
+						unsigned int *period)
 {
     int rc;
     snd_pcm_t *handle;
-    snd_pcm_hw_params_t *params;
     unsigned int val;
-    int dir;
-    snd_pcm_uframes_t frames;
-    int size;
-    long loops;
-    char *buffer;
+    int dir;  
+   
 
+   
     int fd;
     rc = snd_pcm_open(&handle, "default", SND_PCM_STREAM_PLAYBACK, 0);
     if (rc < 0) {
@@ -63,17 +67,32 @@ int main()
                 snd_strerror(rc));
         exit(1);
     }
-
-    /* use buffer large enough to hold one period */
+	/* use buffer large enough to hold one period */
     snd_pcm_hw_params_get_period_size(params, &frames, &dir);
-    size = frames * 4; //2 bytes/sample, 2 channels
-    buffer = (char *)malloc(size);
 
     /* we want to loop for 5 seconds */
     snd_pcm_hw_params_get_period_time(params, &val, &dir);
+	*period = val;
+	return handle;                                       
+}
+int exce_alsa(snd_pcm_t *handle,
+				snd_pcm_uframes_t frames,
+			    unsigned int period,	
+				int timeus){
+	
+
+	int size;
+	long loops;
+	int rc;
+	char *buffer;
+    frames = 32;
+
+	size = frames * 4; //2 bytes/sample, 2 channels
+    buffer = (char *)malloc(size);
+
     /* 5 second in micro seconds divided by period time */
-	/* val is period time*/
-    loops = 5000000 / val;                                    
+	/*  is period time*/
+    loops = timeus / period;
     while (loops > 0) {
         loops--;
         rc = read(0, buffer, size);
@@ -94,11 +113,31 @@ int main()
         } else if (rc != (int)frames) {
             fprintf(stderr, "short write, write %d frames\n", rc);
         }
-    }
-
+    }    
+	free(buffer);
+	return 0;
+}
+int close_alse(snd_pcm_t *handle){
     /* allow any pending sound samples to be transferred */
     snd_pcm_drain(handle);
     snd_pcm_close(handle);
-    free(buffer);
-    return 0;   
+
+    return 0;
+}
+
+int main(int argc, char* argv[]){
+	
+	snd_pcm_t *handle;
+    snd_pcm_hw_params_t *params;
+	snd_pcm_uframes_t frames;
+	unsigned int period;
+	
+	handle = alsa_init(params, frames,&period);
+
+	exce_alsa(handle, 32, period, 5000000);
+
+	close_alse(handle);
+	
+	return 0;
+	
 }
