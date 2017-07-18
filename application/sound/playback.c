@@ -88,7 +88,12 @@ int exce_alsa(snd_pcm_t *handle,
 	int rc;
 	char *buffer;
     frames = 32;
-
+    int fd;
+	fd = open("./01.pcm",O_RDONLY);
+	if(fd < 0){
+		fprintf(stderr, "open error\n");
+        return -1;
+	}
 	size = frames * 4; //2 bytes/sample, 2 channels
     buffer = (char *)malloc(size);
 
@@ -97,7 +102,7 @@ int exce_alsa(snd_pcm_t *handle,
     loops = timeus / period;
     while (loops > 0) {
         loops--;
-        rc = read(0, buffer, size);
+        rc = read(fd, buffer, size);
         if (rc == 0) {
             fprintf(stderr, "end of file on input\n");
             break;
@@ -115,7 +120,11 @@ int exce_alsa(snd_pcm_t *handle,
         } else if (rc != (int)frames) {
             fprintf(stderr, "short write, write %d frames\n", rc);
         }
-    }    
+    }  
+	if (close(fd) != 0){
+		fprintf(stderr, "close error\n");
+        return -1;
+	}
 	free(buffer);
 	return 0;
 }
