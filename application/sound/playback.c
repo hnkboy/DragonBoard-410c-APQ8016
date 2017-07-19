@@ -87,8 +87,8 @@ int exce_alsa(snd_pcm_t *handle,
 	long loops;
 	int rc;
 	char *buffer;
-    frames = 32;
-    int fd;
+    //frames = 32;
+	int fd;
 	fd = open("./01.pcm",O_RDONLY);
 	if(fd < 0){
 		fprintf(stderr, "open error\n");
