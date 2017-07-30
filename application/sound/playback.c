@@ -89,7 +89,7 @@ int exce_alsa(snd_pcm_t *handle,
 	char *buffer;
     //frames = 32;
 	int fd;
-	fd = open("./01.pcm",O_RDONLY);
+	fd = open("/root/01.pcm",O_RDONLY);
 	if(fd < 0){
 		fprintf(stderr, "open error\n");
         return -1;
@@ -145,7 +145,7 @@ int testvioce(void){
 	
 	handle = alsa_init(params, frames,&period);
 
-	exce_alsa(handle, 32, period, 5000000);
+	exce_alsa(handle, 1881, period, 5000000);
 
 	close_alse(handle);
 	
