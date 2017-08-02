@@ -1,4 +1,4 @@
-/*
+﻿/*
  * list3.c
  * read from input(STDIN) and writes to the default PCM device
  * for 5 seconds of data
