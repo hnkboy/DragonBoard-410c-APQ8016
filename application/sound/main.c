@@ -4,6 +4,7 @@
 #include<pthread.h>
 #include<time.h>
 #include "playback.h"
+#include "playback_wav.h"
 
 pthread_t tid;
 sigset_t set;
