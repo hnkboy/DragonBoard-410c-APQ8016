@@ -56,6 +56,7 @@ snd_pcm_t *alsa_init(snd_pcm_hw_params_t *params,
 
     /* 44100 bits/second sampling rate (CD quality) */
     val = 44100;
+	//val = 16000;
     snd_pcm_hw_params_set_rate_near(handle, params, &val, &dir);
 
     /* set period size t 32 frames */
@@ -89,7 +90,7 @@ int exce_alsa(snd_pcm_t *handle,
 	char *buffer;
     //frames = 32;
 	int fd;
-	fd = open("/root/01.pcm",O_RDONLY);
+	fd = open("/root/02.wav",O_RDONLY);
 	if(fd < 0){
 		fprintf(stderr, "open error\n");
         return -1;
