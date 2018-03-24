@@ -20,7 +20,7 @@
       
 
 snd_pcm_t *alsa_init(snd_pcm_hw_params_t *params, 
-						snd_pcm_uframes_t frames,
+						snd_pcm_uframes_t *frames,
 						unsigned int *period)
 {
     int rc;
@@ -60,8 +60,8 @@ snd_pcm_t *alsa_init(snd_pcm_hw_params_t *params,
     snd_pcm_hw_params_set_rate_near(handle, params, &val, &dir);
 
     /* set period size t 32 frames */
-    frames = 32;    
-    snd_pcm_hw_params_set_period_size_near(handle, params, &frames, &dir);
+    *frames = 32;    
+    snd_pcm_hw_params_set_period_size_near(handle, params, frames, &dir);
 
     /* write params to the driver */
     rc = snd_pcm_hw_params(handle, params);
@@ -71,7 +71,8 @@ snd_pcm_t *alsa_init(snd_pcm_hw_params_t *params,
         exit(1);
     }
 	/* use buffer large enough to hold one period */
-    snd_pcm_hw_params_get_period_size(params, &frames, &dir);
+    snd_pcm_hw_params_get_period_size(params, frames, &dir);
+	//fprintf(stderr, "frames is %d\n", *frames);
 
     /* we want to loop for 5 seconds */
     snd_pcm_hw_params_get_period_time(params, &val, &dir);
@@ -144,9 +145,10 @@ int testvioce(void){
 	snd_pcm_uframes_t frames;
 	unsigned int period;
 	
-	handle = alsa_init(params, frames,&period);
+	handle = alsa_init(params, &frames,&period);
 
-	exce_alsa(handle, 1881, period, 5000000);
+	exce_alsa(handle, frames, period, 5000000);
+	
 
 	close_alse(handle);
 	
