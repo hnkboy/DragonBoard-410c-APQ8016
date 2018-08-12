@@ -18,41 +18,8 @@ typedef struct
 }people;
 
 weather today = {0};
-//void dofile(char *filename);/* Read a file, parse, render back, etc. */
-/*
-int main(int argc, char **argv)
-{
-
-//	dofile("json_str1.txt");
-//	dofile("json_str2.txt");
-	dofile("tmp.txt");
-
-	return 0;
-}*/
 
 //parse a key-value pair
-int cJSON_to_str(char *json_string, char *str_val)
-{
-	cJSON *root=cJSON_Parse(json_string);
-	if (!root)
-	{
-		printf("Error before: [%s]\n",cJSON_GetErrorPtr());
-		return -1;
-	}
-	else
-	{
-		cJSON *item=cJSON_GetObjectItem(root,"firstName");
-		if(item!=NULL)
-		{
-			printf("cJSON_GetObjectItem: type=%d, key is %s, value is %s\n",item->type,item->string,item->valuestring);
-			memcpy(str_val,item->valuestring,strlen(item->valuestring));
-		}
-		cJSON_Delete(root);
-	}
-	return 0;
-}
-
-//parse a object to struct
 int cJSON_to_struct(char *json_string, people *person)
 {
 	cJSON *item;
@@ -65,7 +32,49 @@ int cJSON_to_struct(char *json_string, people *person)
 	}
 	else
 	{
-		object=cJSON_GetObjectItem(root,"data");
+		object=cJSON_GetObjectItem(root,"HeWeather6");
+		if(object==NULL)
+		{
+			printf("Error before: [%s]\n",cJSON_GetErrorPtr());
+			cJSON_Delete(root);
+			return -1;
+		}
+		printf("cJSON_GetObjectItem: type=%d, key is %s, value is %s\n",object->type,object->string,object->valuestring);
+		object=cJSON_GetArrayItem(object,0);
+		if(object==NULL)
+		{
+			printf("Error before: [%s]\n",cJSON_GetErrorPtr());
+			cJSON_Delete(root);
+			return -1;
+		}
+		printf("cJSON_GetObjectItem: type=%d, key is %s, value is %s\n",object->type,object->string,object->valuestring);
+
+			item=cJSON_GetObjectItem(object,"status");
+			if(item!=NULL)
+			{
+				printf("cJSON_GetObjectItem: type=%d, string is %s, valuestring=%s\n",item->type,item->string,item->valuestring);
+				memcpy(person->firstName,item->valuestring,strlen(item->valuestring));
+				if (item->valuestring[0]=='o')
+				{
+					today.status = 200;	
+				}
+				else
+				{
+					today.status = 300;	
+				}
+			printf("today.status = %d\n",today.status);
+			}
+
+		object=cJSON_GetObjectItem(object,"daily_forecast");
+		if(object==NULL)
+		{
+			printf("Error before: [%s]\n",cJSON_GetErrorPtr());
+			cJSON_Delete(root);
+			return -1;
+		}
+		printf("cJSON_GetObjectItem: type=%d, key is %s, value is %s\n",object->type,object->string,object->valuestring);
+
+		object=cJSON_GetArrayItem(object,0);
 		if(object==NULL)
 		{
 			printf("Error before: [%s]\n",cJSON_GetErrorPtr());
@@ -81,22 +90,52 @@ int cJSON_to_struct(char *json_string, people *person)
 			{
 				printf("cJSON_GetObjectItem: type=%d, string is %s, valuestring=%s\n",item->type,item->string,item->valuestring);
 				memcpy(person->firstName,item->valuestring,strlen(item->valuestring));
-			}
 			today.tmp = (int)strtol(item->valuestring,(char **)NULL,10);
 			printf("today.tmp = %d\n",today.tmp);
+			}
 			item=cJSON_GetObjectItem(object,"shidu");
 			if(item!=NULL)
 			{
 				printf("cJSON_GetObjectItem: type=%d, string is %s, valuestring=%s\n",item->type,item->string,item->valuestring);
 				memcpy(person->lastName,item->valuestring,strlen(item->valuestring));
 			}
-
 			item=cJSON_GetObjectItem(object,"pm25");
 			if(item!=NULL)
 			{
 				printf("cJSON_GetObjectItem: type=%d, string is %s, valueint=%d\n",item->type,item->string,item->valueint);
 			}
-
+					item=cJSON_GetObjectItem(object,"tmp_max");
+					if(item!=NULL)
+					{
+						printf("cJSON_GetObjectItem: type=%d, string is %s, valuestring=%s\n",item->type,item->string,item->valuestring);
+						memcpy(person->firstName,item->valuestring,strlen(item->valuestring));
+						memcpy(today.shightemp,item->valuestring,strlen(item->valuestring));
+						today.shightemp[strlen(item->valuestring)] = '\0'; 
+					}
+					item=cJSON_GetObjectItem(object,"tmp_min");
+					if(item!=NULL)
+					{
+						printf("cJSON_GetObjectItem: type=%d, string is %s, valuestring=%s\n",item->type,item->string,item->valuestring);
+						memcpy(person->firstName,item->valuestring,strlen(item->valuestring));
+						memcpy(today.slowtemp,item->valuestring,strlen(item->valuestring));
+						today.slowtemp[strlen(item->valuestring)] = '\0'; 
+					}
+					item=cJSON_GetObjectItem(object,"cond_txt_d");
+					if(item!=NULL)
+					{
+						printf("cJSON_GetObjectItem: type=%d, string is %s, valuestring=%s\n",item->type,item->string,item->valuestring);
+						memcpy(person->firstName,item->valuestring,strlen(item->valuestring));
+						memcpy(today.stype,item->valuestring,strlen(item->valuestring));
+						today.stype[strlen(item->valuestring)] = '\0'; 
+					}
+					item=cJSON_GetObjectItem(object,"notice");
+					if(item!=NULL)
+					{
+						printf("cJSON_GetObjectItem: type=%d, string is %s, valuestring=%s\n",item->type,item->string,item->valuestring);
+						memcpy(person->firstName,item->valuestring,strlen(item->valuestring));
+						memcpy(today.snotice,item->valuestring,strlen(item->valuestring));
+						today.snotice[strlen(item->valuestring)] = '\0'; 
+					}
 			item=cJSON_GetObjectItem(object,"pm10");
 			if(item!=NULL)
 			{
@@ -108,7 +147,7 @@ int cJSON_to_struct(char *json_string, people *person)
 			}
 
 		}
-
+		return 0;
 		object=cJSON_GetObjectItem(object,"forecast");
 		if(object==NULL)
 		{
@@ -150,6 +189,22 @@ int cJSON_to_struct(char *json_string, people *person)
 						memcpy(person->firstName,item->valuestring,strlen(item->valuestring));
 						memcpy(today.slowtemp,item->valuestring,strlen(item->valuestring));
 						today.slowtemp[strlen(item->valuestring)] = '\0'; 
+					}
+					item=cJSON_GetObjectItem(object,"cond_txt_d");
+					if(item!=NULL)
+					{
+						printf("cJSON_GetObjectItem: type=%d, string is %s, valuestring=%s\n",item->type,item->string,item->valuestring);
+						memcpy(person->firstName,item->valuestring,strlen(item->valuestring));
+						memcpy(today.stype,item->valuestring,strlen(item->valuestring));
+						today.stype[strlen(item->valuestring)] = '\0'; 
+					}
+					item=cJSON_GetObjectItem(object,"notice");
+					if(item!=NULL)
+					{
+						printf("cJSON_GetObjectItem: type=%d, string is %s, valuestring=%s\n",item->type,item->string,item->valuestring);
+						memcpy(person->firstName,item->valuestring,strlen(item->valuestring));
+						memcpy(today.snotice,item->valuestring,strlen(item->valuestring));
+						today.snotice[strlen(item->valuestring)] = '\0'; 
 					}
 			}
        }
@@ -237,12 +292,14 @@ int cJSON_to_struct_array(char *text, people worker[])
 }
 
 // Read a file, parse, render back, etc.
-weather dofile(char *filename)
+#if 1
+int dofile(char *filename,weather *pweather)
+//int main()
 {
 	FILE *f;
 	int len;
 	char *data;
-	
+ //   char *filename="./tmp_he.txt";
 	f=fopen(filename,"rb");
 	fseek(f,0,SEEK_END);
 	len=ftell(f);
@@ -252,17 +309,18 @@ weather dofile(char *filename)
 	fclose(f);
 	
 	printf("read file %s complete, len=%d.\n",filename,len);
-
 //	char str_name[40];
 //	int ret = cJSON_to_str(data, str_name);
 
 	people person;
     int ret = cJSON_to_struct(data, &person);
-
+    *pweather = today;
+	printf("success json.\n");
 	//people worker[3]={{0}};
 	//cJSON_to_struct_array(data, worker);
 
 	free(data);
-	return today;
+	return 0;
 }
+#endif
 

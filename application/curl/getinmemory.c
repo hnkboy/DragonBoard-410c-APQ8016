@@ -30,7 +30,8 @@
 #include <string.h>
 
 #include <curl/curl.h>
-#include <json.h>
+#include "cJSON.h"
+#include "json.h"
 #include "getinmemory.h"
 FILE *fp;
 struct MemoryStruct {
@@ -38,6 +39,7 @@ struct MemoryStruct {
   size_t size;
 };
 
+//weather stweather;
 static size_t
 WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 {
@@ -57,10 +59,12 @@ WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)
 
   return realsize;
 }
-
+#define CURL_UPDATA 1
 int curl_get_weather(char *pvstr,weather *pstweather)
-{
+//int main(void)
+{ 
   CURL *curl_handle;
+  struct curl_slist *chunk_h = NULL;
   CURLcode res;
 #if CURL_UPDATA
   struct MemoryStruct chunk;
@@ -74,21 +78,24 @@ int curl_get_weather(char *pvstr,weather *pstweather)
   curl_handle = curl_easy_init();
 
   /* specify URL to get */
-  curl_easy_setopt(curl_handle, CURLOPT_URL, "https://www.sojson.com/open/api/weather/json.shtml?city=北京");
+  curl_easy_setopt(curl_handle, CURLOPT_URL, "https://free-api.heweather.com/s6/weather/forecast?location=CN101010100&key=f84b10202847419086d87937f79adee1");
 
   /* send all data to this function  */
   curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
 
   /* we pass our 'chunk' struct to the callback function */
   curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
-
+  curl_easy_setopt(curl_handle, CURLOPT_SSL_VERIFYPEER, 0);
+  curl_easy_setopt(curl_handle, CURLOPT_SSL_VERIFYHOST, 0);
   /* some servers don't like requests that are made without a user-agent
      field, so we provide one */
   curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
-
+  curl_easy_setopt(curl_handle, CURLOPT_NOSIGNAL, 1L);
+  chunk_h = curl_slist_append(chunk_h, "User-Agent:Mozilla/5.0(Macintosh;IntelMacOSX10.10;rv:47.0)Gecko/20100101Firefox/47.0");
+  curl_easy_setopt(curl_handle, CURLOPT_HTTPHEADER, chunk_h);
   /* get it! */
   res = curl_easy_perform(curl_handle);
-
+  curl_slist_free_all(chunk_h);
   /* check for errors */
   if(res != CURLE_OK) {
     fprintf(stderr, "curl_easy_perform() failed: %s\n",
@@ -105,19 +112,23 @@ int curl_get_weather(char *pvstr,weather *pstweather)
     printf("%lu bytes retrieved\n", (long)chunk.size);
   }
   fp = fopen("./tmp.txt","wr");
+  fp = fopen("./tmp.txt","w");
   if (chunk.size == fwrite(chunk.memory,1,chunk.size,fp))
   {
     printf("Write success\n");
   }
   else 
-    printf("Write file\n");
+    printf("Write error\n");
 
     fclose(fp); 
 
-	memcpy(pvstr,chunk.memory,chunk.size);
-	pvstr[chunk.size] = '\0';
+//	memcpy(pvstr,chunk.memory,chunk.size);
+//	pvstr[chunk.size] = '\0';
 #endif
-    *pstweather = dofile("tmp.txt");
+   //*pstweather = dofile("./tmp.txt");
+   //*pstweather = (weather)0;
+		
+   (void)dofile("./tmp.txt",pstweather);
 	
 
 
@@ -128,6 +139,7 @@ int curl_get_weather(char *pvstr,weather *pstweather)
 
   free(chunk.memory);
 
+  printf("curl_global_cleanup\n");
   /* we're done with libcurl, so clean it up */
   curl_global_cleanup();
 #endif

@@ -1,0 +1,92 @@
+{
+    "HeWeather6": [
+        {
+            "basic": {
+                "cid": "CN101010100",
+                "location": "北京",
+                "parent_city": "北京",
+                "admin_area": "北京",
+                "cnty": "中国",
+                "lat": "39.90498734",
+                "lon": "116.4052887",
+                "tz": "+8.00"
+            },
+            "update": {
+                "loc": "2018-05-28 22:51",
+                "utc": "2018-05-28 14:51"
+            },
+            "status": "ok",
+            "daily_forecast": [
+                {
+                    "cond_code_d": "103",
+                    "cond_code_n": "100",
+                    "cond_txt_d": "晴间多云",
+                    "cond_txt_n": "晴",
+                    "date": "2018-05-28",
+                    "hum": "15",
+                    "mr": "18:10",
+                    "ms": "04:13",
+                    "pcpn": "0.0",
+                    "pop": "0",
+                    "pres": "1006",
+                    "sr": "04:50",
+                    "ss": "19:34",
+                    "tmp_max": "30",
+                    "tmp_min": "15",
+                    "uv_index": "8",
+                    "vis": "20",
+                    "wind_deg": "0",
+                    "wind_dir": "无持续风向",
+                    "wind_sc": "1-2",
+                    "wind_spd": "9"
+                },
+                {
+                    "cond_code_d": "101",
+                    "cond_code_n": "101",
+                    "cond_txt_d": "多云",
+                    "cond_txt_n": "多云",
+                    "date": "2018-05-29",
+                    "hum": "18",
+                    "mr": "19:09",
+                    "ms": "04:47",
+                    "pcpn": "0.0",
+                    "pop": "0",
+                    "pres": "1014",
+                    "sr": "04:50",
+                    "ss": "19:35",
+                    "tmp_max": "31",
+                    "tmp_min": "16",
+                    "uv_index": "7",
+                    "vis": "20",
+                    "wind_deg": "0",
+                    "wind_dir": "无持续风向",
+                    "wind_sc": "1-2",
+                    "wind_spd": "7"
+                },
+                {
+                    "cond_code_d": "100",
+                    "cond_code_n": "100",
+                    "cond_txt_d": "晴",
+                    "cond_txt_n": "晴",
+                    "date": "2018-05-30",
+                    "hum": "24",
+                    "mr": "20:06",
+                    "ms": "05:25",
+                    "pcpn": "0.0",
+                    "pop": "0",
+                    "pres": "1015",
+                    "sr": "04:49",
+                    "ss": "19:36",
+                    "tmp_max": "33",
+                    "tmp_min": "19",
+                    "uv_index": "8",
+                    "vis": "20",
+                    "wind_deg": "257",
+                    "wind_dir": "西南风",
+                    "wind_sc": "1-2",
+                    "wind_spd": "6"
+                }
+            ]
+        }
+    ]
+}

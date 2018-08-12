@@ -144,7 +144,6 @@ int set_pcm_play(FILE *fp)
             fprintf(stderr, "short write, write %d frames\n", rc);
         }
 }
-
 	snd_pcm_drain(handle);
 	snd_pcm_close(handle);
 	free(buffer);
@@ -165,11 +164,14 @@ int playback_wav(char *path)
 	
     //fp=fopen(argv[1],"rb");
 	//fp=fopen("/home/jiali/test3/sound/01.wav","rb");
+    
+    printf("wav file path %s\n",path);
 	fp=fopen(path,"rb");
     if(fp==NULL)
     {
         perror("open file failed:\n");
-        exit(1);
+        //exit(1);
+        return -1;
     }
     
     nread=fread(&wav_header,1,sizeof(wav_header),fp);

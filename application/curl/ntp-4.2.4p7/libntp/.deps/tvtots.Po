@@ -1,0 +1,68 @@
+tvtots.o: tvtots.c \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/types.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/features.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/cdefs.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/wordsize.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/gnu/stubs.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/types.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/typesizes.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/time.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include/stddef.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/endian.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/endian.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/byteswap.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/select.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/select.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/sigset.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/time.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/sysmacros.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/pthreadtypes.h \
+ ../include/ntp_types.h ../include/ntp_machine.h ../config.h \
+ /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/time.h \
+ ../include/ntp_proto.h
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/types.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/features.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/cdefs.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/wordsize.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/gnu/stubs.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/types.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/typesizes.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/time.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include/stddef.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/endian.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/endian.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/byteswap.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/select.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/select.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/sigset.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/time.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/sysmacros.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/pthreadtypes.h:
+
+../include/ntp_types.h:
+
+../include/ntp_machine.h:
+
+../config.h:
+
+/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/time.h:
+
+../include/ntp_proto.h:

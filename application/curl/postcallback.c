@@ -87,7 +87,10 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
   return realsize;
 }
 int curl_post_data(char *svstr, int strlenth)
+//int main(void)
 {
+  //char *svstr="nihao ";
+  //int strlenth = 7;
   CURL *curl;
   CURLcode res;
 
@@ -96,7 +99,7 @@ int curl_post_data(char *svstr, int strlenth)
   struct curl_httppost *last=NULL;
 
   char cstampsec[21]={0};
-  char data[100]={0};
+  char data[200]={0};
   unsigned char md5_value[16]={0};
   char md5_value_s[33]={0};
   char md5_value_ls[100]={0};
