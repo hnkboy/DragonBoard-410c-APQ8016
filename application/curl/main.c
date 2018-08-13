@@ -63,7 +63,7 @@ int main()
 	
 	pthread_create(&tid,NULL,mythread,NULL);
 	pthread_create(&tlistenid,NULL,listenmain,NULL);
-	pthread_create(&tuartid,NULL,puartmain,NULL);
+//	pthread_create(&tuartid,NULL,puartmain,NULL);
     pthread_create(&tworkid,NULL,workmain,NULL);
     pthread_create(&tvoiceid,NULL,voicemain,NULL);
     voicesockopen();	

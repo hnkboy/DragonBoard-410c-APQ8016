@@ -85,8 +85,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = x86_64-pc-linux-gnu
-host_triplet = arm-none-linux-gnu
+build_triplet = aarch64-unknown-linux-gnu
+host_triplet = aarch64-unknown-linux-gnu
 subdir = scripts
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/curl-compilers.m4 \
@@ -136,26 +136,26 @@ am__can_run_installinfo = \
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 am__DIST_COMMON = $(srcdir)/Makefile.in
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing aclocal-1.15
+ACLOCAL = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = /usr/bin/ar
 AS = as
-AUTOCONF = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing autoconf
-AUTOHEADER = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing autoheader
-AUTOMAKE = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing automake-1.15
-AWK = gawk
+AUTOCONF = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing autoconf
+AUTOHEADER = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing autoheader
+AUTOMAKE = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing automake-1.15
+AWK = mawk
 BLANK_AT_MAKETIME = 
-CC = arm-none-linux-gnueabi-gcc
+CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -O2 -Wno-system-headers
 CFLAG_CURL_SYMBOL_HIDING = -fvisibility=hidden
-CONFIGURE_OPTIONS = " '--prefix=/home/zhangjiali/libcurl' '--host=arm-none-linux' 'CC=arm-none-linux-gnueabi-gcc' 'CXX=arm-none-linux-gnueabi-g++' '-with-ssl=/home/zhangjiali/libopenssl' 'host_alias=arm-none-linux'"
-CPP = arm-none-linux-gnueabi-gcc -E
-CPPFLAGS = -I/home/zhangjiali/libopenssl/include
+CONFIGURE_OPTIONS = ""
+CPP = gcc -E
+CPPFLAGS = 
 CPPFLAG_CURL_STATICLIB = 
 CURLVERSION = 7.49.0
-CURL_CA_BUNDLE = 
+CURL_CA_BUNDLE = "/etc/ssl/certs/ca-certificates.crt"
 CURL_CFLAG_EXTRAS = 
 CURL_DISABLE_DICT = 
 CURL_DISABLE_FILE = 
@@ -173,14 +173,14 @@ CURL_DISABLE_SMTP =
 CURL_DISABLE_TELNET = 
 CURL_DISABLE_TFTP = 
 CURL_LT_SHLIB_VERSIONED_FLAVOUR = 
-CURL_NETWORK_AND_TIME_LIBS = -lrt
+CURL_NETWORK_AND_TIME_LIBS = 
 CURL_NETWORK_LIBS = 
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
 DLLTOOL = false
 DSYMUTIL = 
-DUMPBIN = :
+DUMPBIN = 
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
@@ -192,8 +192,8 @@ FGREP = /bin/grep -F
 GREP = /bin/grep
 HAVE_GNUTLS_SRP = 
 HAVE_LDAP_SSL = 1
-HAVE_LIBZ = 1
-HAVE_OPENSSL_SRP = 1
+HAVE_LIBZ = 
+HAVE_OPENSSL_SRP = 
 IDN_ENABLED = 
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
@@ -201,27 +201,27 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 IPV6_ENABLED = 1
-LD = /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/bin/ld
-LDFLAGS = -L/home/zhangjiali/libopenssl/lib
-LIBCURL_LIBS = -lssl -lcrypto -lssl -lcrypto -lz -lrt
+LD = /usr/bin/ld
+LDFLAGS = 
+LIBCURL_LIBS = 
 LIBMETALINK_CPPFLAGS = 
 LIBMETALINK_LDFLAGS = 
 LIBMETALINK_LIBS = 
 LIBOBJS = 
-LIBS = -lssl -lcrypto -lssl -lcrypto -lz -lrt
+LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
 LT_SYS_LIBRARY_PATH = 
 MAINT = #
-MAKEINFO = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing makeinfo
+MAKEINFO = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing makeinfo
 MANIFEST_TOOL = :
-MANOPT = -man
+MANOPT = 
 MKDIR_P = /bin/mkdir -p
-NM = nm
+NM = /usr/bin/nm -B
 NMEDIT = 
-NROFF = /usr/bin/nroff
+NROFF = 
 NSS_LIBS = 
 OBJDUMP = objdump
 OBJEXT = o
@@ -245,12 +245,12 @@ RANLIB = ranlib
 REQUIRE_LIB_DEPS = no
 SED = /bin/sed
 SET_MAKE = 
-SHELL = /bin/sh
-SSL_ENABLED = 1
-SSL_LIBS = -lssl -lcrypto
+SHELL = /bin/bash
+SSL_ENABLED = 
+SSL_LIBS = 
 STRIP = strip
-SUPPORT_FEATURES = SSL IPv6 UnixSockets libz NTLM NTLM_WB TLS-SRP
-SUPPORT_PROTOCOLS = DICT FILE FTP FTPS GOPHER HTTP HTTPS IMAP IMAPS POP3 POP3S RTSP SMB SMBS SMTP SMTPS TELNET TFTP
+SUPPORT_FEATURES = IPv6 UnixSockets
+SUPPORT_PROTOCOLS = DICT FILE FTP GOPHER HTTP IMAP POP3 RTSP SMTP TELNET TFTP
 USE_ARES = 
 USE_AXTLS = 
 USE_CYASSL = 
@@ -269,7 +269,7 @@ USE_UNIX_SOCKETS = 1
 USE_WINDOWS_SSPI = 
 VERSION = -
 VERSIONNUM = 073100
-ZLIB_LIBS = -lz
+ZLIB_LIBS = 
 
 #***************************************************************************
 #                                  _   _ ____  _
@@ -293,39 +293,39 @@ ZLIB_LIBS = -lz
 #
 ###########################################################################
 ZSH_FUNCTIONS_DIR = ${prefix}/share/zsh/site-functions
-abs_builddir = /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/scripts
-abs_srcdir = /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/scripts
-abs_top_builddir = /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0
-abs_top_srcdir = /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0
+abs_builddir = /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/scripts
+abs_srcdir = /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/scripts
+abs_top_builddir = /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0
+abs_top_srcdir = /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0
 ac_ct_AR = 
-ac_ct_CC = 
-ac_ct_DUMPBIN = link -dump
+ac_ct_CC = gcc
+ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = x86_64-pc-linux-gnu
+build = aarch64-unknown-linux-gnu
 build_alias = 
-build_cpu = x86_64
+build_cpu = aarch64
 build_os = linux-gnu
-build_vendor = pc
+build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = arm-none-linux-gnu
-host_alias = arm-none-linux
-host_cpu = arm
+host = aarch64-unknown-linux-gnu
+host_alias = 
+host_cpu = aarch64
 host_os = linux-gnu
-host_vendor = none
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/install-sh
+install_sh = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 libext = a
@@ -335,7 +335,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/zhangjiali/libcurl
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
@@ -545,14 +545,14 @@ uninstall-am:
 all-local: $(ZSH_COMPLETION_FUNCTION_FILENAME)
 
 $(ZSH_COMPLETION_FUNCTION_FILENAME): zsh.pl
-	@echo "NOTICE: we can't generate zsh completion when cross-compiling!"
-#	@if ! test -x "$(PERL)"; then echo "No perl: can't install zsh.pl"; exit 0; fi
-#	$(PERL) $(srcdir)/zsh.pl $(top_builddir)/src/curl$(EXEEXT) > $@
+#	@echo "NOTICE: we can't generate zsh completion when cross-compiling!"
+	@if ! test -x "$(PERL)"; then echo "No perl: can't install zsh.pl"; exit 0; fi
+	$(PERL) $(srcdir)/zsh.pl $(top_builddir)/src/curl$(EXEEXT) > $@
 
 install-data-local:
-	@echo "NOTICE: we can't install zsh completion when cross-compiling!"
-#	$(MKDIR_P) $(DESTDIR)$(ZSH_FUNCTIONS_DIR)
-#	$(INSTALL_DATA) $(ZSH_COMPLETION_FUNCTION_FILENAME) $(DESTDIR)$(ZSH_FUNCTIONS_DIR)/$(ZSH_COMPLETION_FUNCTION_FILENAME)
+#	@echo "NOTICE: we can't install zsh completion when cross-compiling!"
+	$(MKDIR_P) $(DESTDIR)$(ZSH_FUNCTIONS_DIR)
+	$(INSTALL_DATA) $(ZSH_COMPLETION_FUNCTION_FILENAME) $(DESTDIR)$(ZSH_FUNCTIONS_DIR)/$(ZSH_COMPLETION_FUNCTION_FILENAME)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -86,8 +86,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-build_triplet = x86_64-pc-linux-gnu
-host_triplet = arm-none-linux-gnu
+build_triplet = aarch64-unknown-linux-gnu
+host_triplet = aarch64-unknown-linux-gnu
 #am__append_1 = -DCURL_STATICLIB
 noinst_PROGRAMS = getpart$(EXEEXT) resolve$(EXEEXT) rtspd$(EXEEXT) \
 	sockfilt$(EXEEXT) sws$(EXEEXT) tftpd$(EXEEXT) \
@@ -314,26 +314,26 @@ CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.inc \
 	$(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing aclocal-1.15
+ACLOCAL = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = /usr/bin/ar
 AS = as
-AUTOCONF = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing autoconf
-AUTOHEADER = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing autoheader
-AUTOMAKE = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing automake-1.15
-AWK = gawk
+AUTOCONF = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing autoconf
+AUTOHEADER = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing autoheader
+AUTOMAKE = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing automake-1.15
+AWK = mawk
 BLANK_AT_MAKETIME = 
-CC = arm-none-linux-gnueabi-gcc
+CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -O2 -Wno-system-headers
 CFLAG_CURL_SYMBOL_HIDING = -fvisibility=hidden
-CONFIGURE_OPTIONS = " '--prefix=/home/zhangjiali/libcurl' '--host=arm-none-linux' 'CC=arm-none-linux-gnueabi-gcc' 'CXX=arm-none-linux-gnueabi-g++' '-with-ssl=/home/zhangjiali/libopenssl' 'host_alias=arm-none-linux'"
-CPP = arm-none-linux-gnueabi-gcc -E
-CPPFLAGS = -I/home/zhangjiali/libopenssl/include
+CONFIGURE_OPTIONS = ""
+CPP = gcc -E
+CPPFLAGS = 
 CPPFLAG_CURL_STATICLIB = 
 CURLVERSION = 7.49.0
-CURL_CA_BUNDLE = 
+CURL_CA_BUNDLE = "/etc/ssl/certs/ca-certificates.crt"
 CURL_CFLAG_EXTRAS = 
 CURL_DISABLE_DICT = 
 CURL_DISABLE_FILE = 
@@ -351,14 +351,14 @@ CURL_DISABLE_SMTP =
 CURL_DISABLE_TELNET = 
 CURL_DISABLE_TFTP = 
 CURL_LT_SHLIB_VERSIONED_FLAVOUR = 
-CURL_NETWORK_AND_TIME_LIBS = -lrt
+CURL_NETWORK_AND_TIME_LIBS = 
 CURL_NETWORK_LIBS = 
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
 DLLTOOL = false
 DSYMUTIL = 
-DUMPBIN = :
+DUMPBIN = 
 ECHO_C = 
 ECHO_N = -n
 ECHO_T = 
@@ -370,8 +370,8 @@ FGREP = /bin/grep -F
 GREP = /bin/grep
 HAVE_GNUTLS_SRP = 
 HAVE_LDAP_SSL = 1
-HAVE_LIBZ = 1
-HAVE_OPENSSL_SRP = 1
+HAVE_LIBZ = 
+HAVE_OPENSSL_SRP = 
 IDN_ENABLED = 
 INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
@@ -379,9 +379,9 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 IPV6_ENABLED = 1
-LD = /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/arm-none-linux-gnueabi/bin/ld
-LDFLAGS = -L/home/zhangjiali/libopenssl/lib
-LIBCURL_LIBS = -lssl -lcrypto -lssl -lcrypto -lz -lrt
+LD = /usr/bin/ld
+LDFLAGS = 
+LIBCURL_LIBS = 
 LIBMETALINK_CPPFLAGS = 
 LIBMETALINK_LDFLAGS = 
 LIBMETALINK_LIBS = 
@@ -395,13 +395,13 @@ LN_S = ln -s
 LTLIBOBJS = 
 LT_SYS_LIBRARY_PATH = 
 MAINT = #
-MAKEINFO = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/missing makeinfo
+MAKEINFO = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/missing makeinfo
 MANIFEST_TOOL = :
-MANOPT = -man
+MANOPT = 
 MKDIR_P = /bin/mkdir -p
-NM = nm
+NM = /usr/bin/nm -B
 NMEDIT = 
-NROFF = /usr/bin/nroff
+NROFF = 
 NSS_LIBS = 
 OBJDUMP = objdump
 OBJEXT = o
@@ -425,12 +425,12 @@ RANLIB = ranlib
 REQUIRE_LIB_DEPS = no
 SED = /bin/sed
 SET_MAKE = 
-SHELL = /bin/sh
-SSL_ENABLED = 1
-SSL_LIBS = -lssl -lcrypto
+SHELL = /bin/bash
+SSL_ENABLED = 
+SSL_LIBS = 
 STRIP = strip
-SUPPORT_FEATURES = SSL IPv6 UnixSockets libz NTLM NTLM_WB TLS-SRP
-SUPPORT_PROTOCOLS = DICT FILE FTP FTPS GOPHER HTTP HTTPS IMAP IMAPS POP3 POP3S RTSP SMB SMBS SMTP SMTPS TELNET TFTP
+SUPPORT_FEATURES = IPv6 UnixSockets
+SUPPORT_PROTOCOLS = DICT FILE FTP GOPHER HTTP IMAP POP3 RTSP SMTP TELNET TFTP
 USE_ARES = 
 USE_AXTLS = 
 USE_CYASSL = 
@@ -449,41 +449,41 @@ USE_UNIX_SOCKETS = 1
 USE_WINDOWS_SSPI = 
 VERSION = -
 VERSIONNUM = 073100
-ZLIB_LIBS = -lz
+ZLIB_LIBS = 
 ZSH_FUNCTIONS_DIR = ${prefix}/share/zsh/site-functions
-abs_builddir = /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/tests/server
-abs_srcdir = /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/tests/server
-abs_top_builddir = /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0
-abs_top_srcdir = /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0
+abs_builddir = /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/tests/server
+abs_srcdir = /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/tests/server
+abs_top_builddir = /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0
+abs_top_srcdir = /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0
 ac_ct_AR = 
-ac_ct_CC = 
-ac_ct_DUMPBIN = link -dump
+ac_ct_CC = gcc
+ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build = x86_64-pc-linux-gnu
+build = aarch64-unknown-linux-gnu
 build_alias = 
-build_cpu = x86_64
+build_cpu = aarch64
 build_os = linux-gnu
-build_vendor = pc
+build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host = arm-none-linux-gnu
-host_alias = arm-none-linux
-host_cpu = arm
+host = aarch64-unknown-linux-gnu
+host_alias = 
+host_cpu = aarch64
 host_os = linux-gnu
-host_vendor = none
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/jiali/nfsdir/home/jiali/Documents/curl/curl-7.49.0/install-sh
+install_sh = ${SHELL} /home/linaro/DragonBoard-410c-APQ8016/application/curl/curl-7.49.0/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 libext = a
@@ -493,7 +493,7 @@ mandir = ${datarootdir}/man
 mkdir_p = $(MKDIR_P)
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/zhangjiali/libcurl
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 runstatedir = ${localstatedir}/run
@@ -586,44 +586,44 @@ UTIL = \
 getpart_SOURCES = $(CURLX_SRCS) $(CURLX_HDRS) $(USEFUL) \
  testpart.c
 
-getpart_LDADD = -lrt
+getpart_LDADD = 
 getpart_CFLAGS = $(AM_CFLAGS)
 resolve_SOURCES = $(CURLX_SRCS) $(CURLX_HDRS) $(USEFUL) $(UTIL) \
  resolve.c
 
-resolve_LDADD = -lrt
+resolve_LDADD = 
 resolve_CFLAGS = $(AM_CFLAGS)
 rtspd_SOURCES = $(CURLX_SRCS) $(CURLX_HDRS) $(USEFUL) $(UTIL) \
  server_sockaddr.h \
  rtspd.c
 
-rtspd_LDADD = -lrt
+rtspd_LDADD = 
 rtspd_CFLAGS = $(AM_CFLAGS)
 sockfilt_SOURCES = $(CURLX_SRCS) $(CURLX_HDRS) $(USEFUL) $(UTIL) \
  server_sockaddr.h \
  sockfilt.c \
  ../../lib/inet_pton.c
 
-sockfilt_LDADD = -lrt
+sockfilt_LDADD = 
 sockfilt_CFLAGS = $(AM_CFLAGS)
 sws_SOURCES = $(CURLX_SRCS) $(CURLX_HDRS) $(USEFUL) $(UTIL) \
  server_sockaddr.h \
  sws.c \
  ../../lib/inet_pton.c
 
-sws_LDADD = -lrt
+sws_LDADD = 
 sws_CFLAGS = $(AM_CFLAGS)
 tftpd_SOURCES = $(CURLX_SRCS) $(CURLX_HDRS) $(USEFUL) $(UTIL) \
  server_sockaddr.h \
  tftpd.c \
  tftp.h
 
-tftpd_LDADD = -lrt
+tftpd_LDADD = 
 tftpd_CFLAGS = $(AM_CFLAGS)
 fake_ntlm_SOURCES = $(CURLX_SRCS) $(CURLX_HDRS) $(USEFUL) $(UTIL) \
  fake_ntlm.c
 
-fake_ntlm_LDADD = -lrt
+fake_ntlm_LDADD = 
 fake_ntlm_CFLAGS = $(AM_CFLAGS)
 
 # Makefile.inc provides neat definitions

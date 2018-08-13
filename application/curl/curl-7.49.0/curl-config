@@ -21,7 +21,7 @@
 #
 ###########################################################################
 
-prefix=/home/zhangjiali/libcurl
+prefix=/usr/local
 exec_prefix=${prefix}
 includedir=${prefix}/include
 cppflag_curl_staticlib=
@@ -71,11 +71,11 @@ while test $# -gt 0; do
         ;;
 
     --ca)
-        echo 
+        echo "/etc/ssl/certs/ca-certificates.crt"
         ;;
 
     --cc)
-        echo "arm-none-linux-gnueabi-gcc"
+        echo "gcc"
         ;;
 
     --prefix)
@@ -83,13 +83,13 @@ while test $# -gt 0; do
         ;;
 
     --feature|--features)
-        for feature in SSL IPv6 UnixSockets libz NTLM NTLM_WB TLS-SRP ""; do
+        for feature in IPv6 UnixSockets ""; do
             test -n "$feature" && echo "$feature"
         done
         ;;
 
     --protocols)
-        for protocol in DICT FILE FTP FTPS GOPHER HTTP HTTPS IMAP IMAPS POP3 POP3S RTSP SMB SMBS SMTP SMTPS TELNET TFTP; do
+        for protocol in DICT FILE FTP GOPHER HTTP IMAP POP3 RTSP SMTP TELNET TFTP; do
             echo "$protocol"
         done
         ;;
@@ -148,7 +148,7 @@ while test $# -gt 0; do
            CURLLIBDIR=""
         fi
         if test "Xno" = "Xyes"; then
-          echo ${CURLLIBDIR}-lcurl -lssl -lcrypto -lssl -lcrypto -lz -lrt
+          echo ${CURLLIBDIR}-lcurl 
         else
           echo ${CURLLIBDIR}-lcurl
         fi
@@ -156,7 +156,7 @@ while test $# -gt 0; do
 
     --static-libs)
         if test "Xyes" != "Xno" ; then
-          echo ${exec_prefix}/lib/libcurl.a -L/home/zhangjiali/libopenssl/lib -lssl -lcrypto -lssl -lcrypto -lz -lrt
+          echo ${exec_prefix}/lib/libcurl.a  
         else
           echo "curl was built with static libraries disabled" >&2
           exit 1
@@ -164,7 +164,7 @@ while test $# -gt 0; do
         ;;
 
     --configure)
-        echo " '--prefix=/home/zhangjiali/libcurl' '--host=arm-none-linux' 'CC=arm-none-linux-gnueabi-gcc' 'CXX=arm-none-linux-gnueabi-g++' '-with-ssl=/home/zhangjiali/libopenssl' 'host_alias=arm-none-linux'"
+        echo ""
         ;;
 
     *)

@@ -1,9 +1,9 @@
 # Directories...
-$prefix=/home/zhangjiali/libcurl
+$prefix=/usr/local
 $exec_prefix=${prefix}
 $bindir=${exec_prefix}/bin
 $confdir=${prefix}/etc
-$docdir=/home/zhangjiali/libcurl/doc
+$docdir=/usr/local/doc
 $mandir=${datarootdir}/man
 $libdir=${exec_prefix}/lib
 $srcdir=../..

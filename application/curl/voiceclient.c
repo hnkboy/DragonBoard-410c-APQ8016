@@ -24,7 +24,7 @@ int voicesockopen()
 
     memset(&addr,0,sizeof(addr));
     addr.sin_family=AF_INET;
-    addr.sin_addr.s_addr=inet_addr("192.168.0.200");
+    addr.sin_addr.s_addr=inet_addr("192.168.0.81");
     addr.sin_port=htons(atoi("2000"));
     
     if(connect(sock,(struct sockaddr*)&addr,sizeof(addr))==-1)

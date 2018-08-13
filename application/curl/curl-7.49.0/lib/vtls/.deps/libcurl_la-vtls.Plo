@@ -1,146 +1,114 @@
-vtls/libcurl_la-vtls.lo: vtls/vtls.c ../lib/curl_setup.h \
- ../lib/curl_config.h ../include/curl/curlbuild.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/types.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/features.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/cdefs.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/wordsize.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/gnu/stubs.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/types.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/typesizes.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/time.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include/stddef.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/endian.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/endian.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/byteswap.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/select.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/select.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/sigset.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/time.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/sysmacros.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/pthreadtypes.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/stdint.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/wchar.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/inttypes.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/socket.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/uio.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/uio.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/socket.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/sockaddr.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm/socket.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm/sockios.h \
+vtls/libcurl_la-vtls.lo: vtls/vtls.c /usr/include/stdc-predef.h \
+ ../lib/curl_setup.h ../lib/curl_config.h ../include/curl/curlbuild.h \
+ /usr/include/aarch64-linux-gnu/sys/types.h /usr/include/features.h \
+ /usr/include/aarch64-linux-gnu/sys/cdefs.h \
+ /usr/include/aarch64-linux-gnu/bits/wordsize.h \
+ /usr/include/aarch64-linux-gnu/bits/long-double.h \
+ /usr/include/aarch64-linux-gnu/gnu/stubs.h \
+ /usr/include/aarch64-linux-gnu/gnu/stubs-lp64.h \
+ /usr/include/aarch64-linux-gnu/bits/types.h \
+ /usr/include/aarch64-linux-gnu/bits/typesizes.h \
+ /usr/include/aarch64-linux-gnu/bits/types/clock_t.h \
+ /usr/include/aarch64-linux-gnu/bits/types/clockid_t.h \
+ /usr/include/aarch64-linux-gnu/bits/types/time_t.h \
+ /usr/include/aarch64-linux-gnu/bits/types/timer_t.h \
+ /usr/lib/gcc/aarch64-linux-gnu/7/include/stddef.h \
+ /usr/include/aarch64-linux-gnu/bits/stdint-intn.h /usr/include/endian.h \
+ /usr/include/aarch64-linux-gnu/bits/endian.h \
+ /usr/include/aarch64-linux-gnu/bits/byteswap.h \
+ /usr/include/aarch64-linux-gnu/bits/byteswap-16.h \
+ /usr/include/aarch64-linux-gnu/bits/uintn-identity.h \
+ /usr/include/aarch64-linux-gnu/sys/select.h \
+ /usr/include/aarch64-linux-gnu/bits/select.h \
+ /usr/include/aarch64-linux-gnu/bits/types/sigset_t.h \
+ /usr/include/aarch64-linux-gnu/bits/types/__sigset_t.h \
+ /usr/include/aarch64-linux-gnu/bits/types/struct_timeval.h \
+ /usr/include/aarch64-linux-gnu/bits/types/struct_timespec.h \
+ /usr/include/aarch64-linux-gnu/sys/sysmacros.h \
+ /usr/include/aarch64-linux-gnu/bits/sysmacros.h \
+ /usr/include/aarch64-linux-gnu/bits/pthreadtypes.h \
+ /usr/include/aarch64-linux-gnu/bits/thread-shared-types.h \
+ /usr/include/aarch64-linux-gnu/bits/pthreadtypes-arch.h \
+ /usr/include/aarch64-linux-gnu/sys/socket.h \
+ /usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h \
+ /usr/include/aarch64-linux-gnu/bits/socket.h \
+ /usr/include/aarch64-linux-gnu/bits/socket_type.h \
+ /usr/include/aarch64-linux-gnu/bits/sockaddr.h \
+ /usr/include/aarch64-linux-gnu/asm/socket.h \
+ /usr/include/asm-generic/socket.h \
+ /usr/include/aarch64-linux-gnu/asm/sockios.h \
+ /usr/include/asm-generic/sockios.h \
+ /usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h \
+ ../include/curl/curlrules.h /usr/include/stdio.h \
+ /usr/include/aarch64-linux-gnu/bits/libc-header-start.h \
+ /usr/include/aarch64-linux-gnu/bits/types/__FILE.h \
+ /usr/include/aarch64-linux-gnu/bits/types/FILE.h \
+ /usr/include/aarch64-linux-gnu/bits/libio.h \
+ /usr/include/aarch64-linux-gnu/bits/_G_config.h \
+ /usr/include/aarch64-linux-gnu/bits/types/__mbstate_t.h \
+ /usr/lib/gcc/aarch64-linux-gnu/7/include/stdarg.h \
+ /usr/include/aarch64-linux-gnu/bits/stdio_lim.h \
+ /usr/include/aarch64-linux-gnu/bits/sys_errlist.h \
+ /usr/include/aarch64-linux-gnu/bits/stdio.h /usr/include/assert.h \
+ ../lib/curl_setup_once.h /usr/include/stdlib.h \
+ /usr/include/aarch64-linux-gnu/bits/waitflags.h \
+ /usr/include/aarch64-linux-gnu/bits/waitstatus.h \
+ /usr/include/aarch64-linux-gnu/bits/floatn.h \
+ /usr/include/aarch64-linux-gnu/bits/floatn-common.h \
+ /usr/include/alloca.h \
+ /usr/include/aarch64-linux-gnu/bits/stdlib-bsearch.h \
+ /usr/include/aarch64-linux-gnu/bits/stdlib-float.h /usr/include/string.h \
+ /usr/include/aarch64-linux-gnu/bits/types/locale_t.h \
+ /usr/include/aarch64-linux-gnu/bits/types/__locale_t.h \
+ /usr/include/strings.h /usr/include/ctype.h /usr/include/errno.h \
+ /usr/include/aarch64-linux-gnu/bits/errno.h /usr/include/linux/errno.h \
+ /usr/include/aarch64-linux-gnu/asm/errno.h \
+ /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
+ /usr/include/aarch64-linux-gnu/sys/stat.h \
+ /usr/include/aarch64-linux-gnu/bits/stat.h \
+ /usr/include/aarch64-linux-gnu/sys/time.h /usr/include/time.h \
+ /usr/include/aarch64-linux-gnu/bits/time.h \
+ /usr/include/aarch64-linux-gnu/bits/types/struct_tm.h \
+ /usr/include/aarch64-linux-gnu/bits/types/struct_itimerspec.h \
+ /usr/lib/gcc/aarch64-linux-gnu/7/include/stdbool.h /usr/include/unistd.h \
+ /usr/include/aarch64-linux-gnu/bits/posix_opt.h \
+ /usr/include/aarch64-linux-gnu/bits/environments.h \
+ /usr/include/aarch64-linux-gnu/bits/confname.h \
+ /usr/include/aarch64-linux-gnu/bits/getopt_posix.h \
+ /usr/include/aarch64-linux-gnu/bits/getopt_core.h /usr/include/fcntl.h \
+ /usr/include/aarch64-linux-gnu/bits/fcntl.h \
+ /usr/include/aarch64-linux-gnu/bits/fcntl-linux.h ../lib/urldata.h \
+ ../lib/curl_setup.h ../lib/cookie.h ../include/curl/curl.h \
+ ../include/curl/curlver.h ../include/curl/curlbuild.h \
  ../include/curl/curlrules.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/stdio.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/libio.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/_G_config.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/wchar.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include/stdarg.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/stdio_lim.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/sys_errlist.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/stdio.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/assert.h \
- ../lib/curl_setup_once.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/stdlib.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/alloca.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/string.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/string.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/string2.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/ctype.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/errno.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/errno.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/linux/errno.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm/errno.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm-generic/errno.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm-generic/errno-base.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/stat.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/stat.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/time.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include/stdbool.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/unistd.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/posix_opt.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/confname.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/getopt.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/fcntl.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/fcntl.h \
- ../lib/urldata.h ../lib/curl_setup.h ../lib/cookie.h \
- ../include/curl/curl.h ../include/curl/curlver.h \
- ../include/curl/curlbuild.h ../include/curl/curlrules.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include-fixed/limits.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include-fixed/syslimits.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/limits.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/posix1_lim.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/local_lim.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/linux/limits.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/posix2_lim.h \
- ../include/curl/easy.h ../include/curl/multi.h ../include/curl/curl.h \
+ /usr/lib/gcc/aarch64-linux-gnu/7/include-fixed/limits.h \
+ /usr/lib/gcc/aarch64-linux-gnu/7/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/aarch64-linux-gnu/bits/posix1_lim.h \
+ /usr/include/aarch64-linux-gnu/bits/local_lim.h \
+ /usr/include/linux/limits.h \
+ /usr/include/aarch64-linux-gnu/bits/posix2_lim.h ../include/curl/easy.h \
+ ../include/curl/multi.h ../include/curl/curl.h \
  ../include/curl/typecheck-gcc.h ../lib/formdata.h \
- /home/zhangjiali/libopenssl/include/openssl/ssl.h \
- /home/zhangjiali/libopenssl/include/openssl/e_os2.h \
- /home/zhangjiali/libopenssl/include/openssl/opensslconf.h \
- /home/zhangjiali/libopenssl/include/openssl/comp.h \
- /home/zhangjiali/libopenssl/include/openssl/crypto.h \
- /home/zhangjiali/libopenssl/include/openssl/stack.h \
- /home/zhangjiali/libopenssl/include/openssl/safestack.h \
- /home/zhangjiali/libopenssl/include/openssl/opensslv.h \
- /home/zhangjiali/libopenssl/include/openssl/ossl_typ.h \
- /home/zhangjiali/libopenssl/include/openssl/symhacks.h \
- /home/zhangjiali/libopenssl/include/openssl/bio.h \
- /home/zhangjiali/libopenssl/include/openssl/x509.h \
- /home/zhangjiali/libopenssl/include/openssl/buffer.h \
- /home/zhangjiali/libopenssl/include/openssl/evp.h \
- /home/zhangjiali/libopenssl/include/openssl/objects.h \
- /home/zhangjiali/libopenssl/include/openssl/obj_mac.h \
- /home/zhangjiali/libopenssl/include/openssl/asn1.h \
- /home/zhangjiali/libopenssl/include/openssl/bn.h \
- /home/zhangjiali/libopenssl/include/openssl/ec.h \
- /home/zhangjiali/libopenssl/include/openssl/ecdsa.h \
- /home/zhangjiali/libopenssl/include/openssl/ecdh.h \
- /home/zhangjiali/libopenssl/include/openssl/rsa.h \
- /home/zhangjiali/libopenssl/include/openssl/dsa.h \
- /home/zhangjiali/libopenssl/include/openssl/dh.h \
- /home/zhangjiali/libopenssl/include/openssl/sha.h \
- /home/zhangjiali/libopenssl/include/openssl/x509_vfy.h \
- /home/zhangjiali/libopenssl/include/openssl/lhash.h \
- /home/zhangjiali/libopenssl/include/openssl/pkcs7.h \
- /home/zhangjiali/libopenssl/include/openssl/pem.h \
- /home/zhangjiali/libopenssl/include/openssl/pem2.h \
- /home/zhangjiali/libopenssl/include/openssl/hmac.h \
- /home/zhangjiali/libopenssl/include/openssl/kssl.h \
- /home/zhangjiali/libopenssl/include/openssl/ssl2.h \
- /home/zhangjiali/libopenssl/include/openssl/ssl3.h \
- /home/zhangjiali/libopenssl/include/openssl/tls1.h \
- /home/zhangjiali/libopenssl/include/openssl/dtls1.h \
- /home/zhangjiali/libopenssl/include/openssl/pqueue.h \
- /home/zhangjiali/libopenssl/include/openssl/ssl23.h \
- /home/zhangjiali/libopenssl/include/openssl/srtp.h \
- /home/zhangjiali/libopenssl/include/openssl/engine.h \
- /home/zhangjiali/libopenssl/include/openssl/rand.h \
- /home/zhangjiali/libopenssl/include/openssl/ui.h \
- /home/zhangjiali/libopenssl/include/openssl/err.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/netinet/in.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/in.h \
- ../lib/timeval.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/zlib.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/zconf.h \
+ /usr/include/netinet/in.h \
+ /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h \
+ /usr/include/aarch64-linux-gnu/bits/in.h ../lib/timeval.h \
  ../lib/http_chunks.h ../lib/hostip.h ../lib/hash.h ../lib/llist.h \
- ../lib/curl_addrinfo.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/netdb.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/rpc/netdb.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/netdb.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/arpa/inet.h \
- ../lib/asyn.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/setjmp.h \
- /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/setjmp.h \
- ../lib/splay.h ../lib/imap.h ../lib/pingpong.h ../lib/curl_sasl.h \
- ../lib/pop3.h ../lib/smtp.h ../lib/ftp.h ../lib/file.h ../lib/ssh.h \
- ../lib/http.h ../lib/rtsp.h ../lib/smb.h ../lib/wildcard.h \
- ../lib/multihandle.h ../lib/conncache.h vtls/vtls.h vtls/openssl.h \
- vtls/gtls.h vtls/nssg.h vtls/gskit.h vtls/polarssl.h vtls/axtls.h \
- vtls/cyassl.h vtls/schannel.h vtls/darwinssl.h vtls/mbedtls.h \
- ../lib/slist.h ../lib/sendf.h ../lib/rawstr.h ../lib/url.h \
- ../lib/progress.h ../lib/share.h ../lib/urldata.h ../lib/timeval.h \
- ../lib/curl_md5.h ../lib/curl_hmac.h ../lib/warnless.h \
- ../lib/curl_base64.h ../lib/curl_printf.h ../include/curl/mprintf.h \
- ../lib/curl_memory.h ../lib/memdebug.h
+ ../lib/curl_addrinfo.h /usr/include/netdb.h /usr/include/rpc/netdb.h \
+ /usr/include/aarch64-linux-gnu/bits/netdb.h /usr/include/arpa/inet.h \
+ ../lib/asyn.h /usr/include/setjmp.h \
+ /usr/include/aarch64-linux-gnu/bits/setjmp.h ../lib/splay.h \
+ ../lib/imap.h ../lib/pingpong.h ../lib/curl_sasl.h ../lib/pop3.h \
+ ../lib/smtp.h ../lib/ftp.h ../lib/file.h ../lib/ssh.h ../lib/http.h \
+ ../lib/rtsp.h ../lib/smb.h ../lib/wildcard.h ../lib/multihandle.h \
+ ../lib/conncache.h vtls/vtls.h vtls/openssl.h vtls/gtls.h vtls/nssg.h \
+ vtls/gskit.h vtls/polarssl.h vtls/axtls.h vtls/cyassl.h vtls/schannel.h \
+ vtls/darwinssl.h vtls/mbedtls.h ../lib/slist.h ../lib/sendf.h \
+ ../lib/rawstr.h ../lib/url.h ../lib/progress.h ../lib/share.h \
+ ../lib/urldata.h ../lib/timeval.h ../lib/curl_md5.h ../lib/curl_hmac.h \
+ ../lib/warnless.h ../lib/curl_base64.h ../lib/curl_printf.h \
+ ../include/curl/mprintf.h ../lib/curl_memory.h ../lib/memdebug.h
+
+/usr/include/stdc-predef.h:
 
 ../lib/curl_setup.h:
 
@@ -148,127 +116,187 @@ vtls/libcurl_la-vtls.lo: vtls/vtls.c ../lib/curl_setup.h \
 
 ../include/curl/curlbuild.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/types.h:
+/usr/include/aarch64-linux-gnu/sys/types.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/features.h:
+/usr/include/features.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/cdefs.h:
+/usr/include/aarch64-linux-gnu/sys/cdefs.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/wordsize.h:
+/usr/include/aarch64-linux-gnu/bits/wordsize.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/gnu/stubs.h:
+/usr/include/aarch64-linux-gnu/bits/long-double.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/types.h:
+/usr/include/aarch64-linux-gnu/gnu/stubs.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/typesizes.h:
+/usr/include/aarch64-linux-gnu/gnu/stubs-lp64.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/time.h:
+/usr/include/aarch64-linux-gnu/bits/types.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include/stddef.h:
+/usr/include/aarch64-linux-gnu/bits/typesizes.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/endian.h:
+/usr/include/aarch64-linux-gnu/bits/types/clock_t.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/endian.h:
+/usr/include/aarch64-linux-gnu/bits/types/clockid_t.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/byteswap.h:
+/usr/include/aarch64-linux-gnu/bits/types/time_t.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/select.h:
+/usr/include/aarch64-linux-gnu/bits/types/timer_t.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/select.h:
+/usr/lib/gcc/aarch64-linux-gnu/7/include/stddef.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/sigset.h:
+/usr/include/aarch64-linux-gnu/bits/stdint-intn.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/time.h:
+/usr/include/endian.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/sysmacros.h:
+/usr/include/aarch64-linux-gnu/bits/endian.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/pthreadtypes.h:
+/usr/include/aarch64-linux-gnu/bits/byteswap.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/stdint.h:
+/usr/include/aarch64-linux-gnu/bits/byteswap-16.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/wchar.h:
+/usr/include/aarch64-linux-gnu/bits/uintn-identity.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/inttypes.h:
+/usr/include/aarch64-linux-gnu/sys/select.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/socket.h:
+/usr/include/aarch64-linux-gnu/bits/select.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/uio.h:
+/usr/include/aarch64-linux-gnu/bits/types/sigset_t.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/uio.h:
+/usr/include/aarch64-linux-gnu/bits/types/__sigset_t.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/socket.h:
+/usr/include/aarch64-linux-gnu/bits/types/struct_timeval.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/sockaddr.h:
+/usr/include/aarch64-linux-gnu/bits/types/struct_timespec.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm/socket.h:
+/usr/include/aarch64-linux-gnu/sys/sysmacros.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm/sockios.h:
+/usr/include/aarch64-linux-gnu/bits/sysmacros.h:
+
+/usr/include/aarch64-linux-gnu/bits/pthreadtypes.h:
+
+/usr/include/aarch64-linux-gnu/bits/thread-shared-types.h:
+
+/usr/include/aarch64-linux-gnu/bits/pthreadtypes-arch.h:
+
+/usr/include/aarch64-linux-gnu/sys/socket.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/struct_iovec.h:
+
+/usr/include/aarch64-linux-gnu/bits/socket.h:
+
+/usr/include/aarch64-linux-gnu/bits/socket_type.h:
+
+/usr/include/aarch64-linux-gnu/bits/sockaddr.h:
+
+/usr/include/aarch64-linux-gnu/asm/socket.h:
+
+/usr/include/asm-generic/socket.h:
+
+/usr/include/aarch64-linux-gnu/asm/sockios.h:
+
+/usr/include/asm-generic/sockios.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/struct_osockaddr.h:
 
 ../include/curl/curlrules.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/stdio.h:
+/usr/include/stdio.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/libio.h:
+/usr/include/aarch64-linux-gnu/bits/libc-header-start.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/_G_config.h:
+/usr/include/aarch64-linux-gnu/bits/types/__FILE.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/wchar.h:
+/usr/include/aarch64-linux-gnu/bits/types/FILE.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include/stdarg.h:
+/usr/include/aarch64-linux-gnu/bits/libio.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/stdio_lim.h:
+/usr/include/aarch64-linux-gnu/bits/_G_config.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/sys_errlist.h:
+/usr/include/aarch64-linux-gnu/bits/types/__mbstate_t.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/stdio.h:
+/usr/lib/gcc/aarch64-linux-gnu/7/include/stdarg.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/assert.h:
+/usr/include/aarch64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/aarch64-linux-gnu/bits/sys_errlist.h:
+
+/usr/include/aarch64-linux-gnu/bits/stdio.h:
+
+/usr/include/assert.h:
 
 ../lib/curl_setup_once.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/stdlib.h:
+/usr/include/stdlib.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/alloca.h:
+/usr/include/aarch64-linux-gnu/bits/waitflags.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/string.h:
+/usr/include/aarch64-linux-gnu/bits/waitstatus.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/string.h:
+/usr/include/aarch64-linux-gnu/bits/floatn.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/string2.h:
+/usr/include/aarch64-linux-gnu/bits/floatn-common.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/ctype.h:
+/usr/include/alloca.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/errno.h:
+/usr/include/aarch64-linux-gnu/bits/stdlib-bsearch.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/errno.h:
+/usr/include/aarch64-linux-gnu/bits/stdlib-float.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/linux/errno.h:
+/usr/include/string.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm/errno.h:
+/usr/include/aarch64-linux-gnu/bits/types/locale_t.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm-generic/errno.h:
+/usr/include/aarch64-linux-gnu/bits/types/__locale_t.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/asm-generic/errno-base.h:
+/usr/include/strings.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/stat.h:
+/usr/include/ctype.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/stat.h:
+/usr/include/errno.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/sys/time.h:
+/usr/include/aarch64-linux-gnu/bits/errno.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include/stdbool.h:
+/usr/include/linux/errno.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/unistd.h:
+/usr/include/aarch64-linux-gnu/asm/errno.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/posix_opt.h:
+/usr/include/asm-generic/errno.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/confname.h:
+/usr/include/asm-generic/errno-base.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/getopt.h:
+/usr/include/aarch64-linux-gnu/sys/stat.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/fcntl.h:
+/usr/include/aarch64-linux-gnu/bits/stat.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/fcntl.h:
+/usr/include/aarch64-linux-gnu/sys/time.h:
+
+/usr/include/time.h:
+
+/usr/include/aarch64-linux-gnu/bits/time.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/struct_tm.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/struct_itimerspec.h:
+
+/usr/lib/gcc/aarch64-linux-gnu/7/include/stdbool.h:
+
+/usr/include/unistd.h:
+
+/usr/include/aarch64-linux-gnu/bits/posix_opt.h:
+
+/usr/include/aarch64-linux-gnu/bits/environments.h:
+
+/usr/include/aarch64-linux-gnu/bits/confname.h:
+
+/usr/include/aarch64-linux-gnu/bits/getopt_posix.h:
+
+/usr/include/aarch64-linux-gnu/bits/getopt_core.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/aarch64-linux-gnu/bits/fcntl.h:
+
+/usr/include/aarch64-linux-gnu/bits/fcntl-linux.h:
 
 ../lib/urldata.h:
 
@@ -284,19 +312,19 @@ vtls/libcurl_la-vtls.lo: vtls/vtls.c ../lib/curl_setup.h \
 
 ../include/curl/curlrules.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include-fixed/limits.h:
+/usr/lib/gcc/aarch64-linux-gnu/7/include-fixed/limits.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../lib/gcc/arm-none-linux-gnueabi/4.4.3/include-fixed/syslimits.h:
+/usr/lib/gcc/aarch64-linux-gnu/7/include-fixed/syslimits.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/limits.h:
+/usr/include/limits.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/posix1_lim.h:
+/usr/include/aarch64-linux-gnu/bits/posix1_lim.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/local_lim.h:
+/usr/include/aarch64-linux-gnu/bits/local_lim.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/linux/limits.h:
+/usr/include/linux/limits.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/posix2_lim.h:
+/usr/include/aarch64-linux-gnu/bits/posix2_lim.h:
 
 ../include/curl/easy.h:
 
@@ -308,101 +336,13 @@ vtls/libcurl_la-vtls.lo: vtls/vtls.c ../lib/curl_setup.h \
 
 ../lib/formdata.h:
 
-/home/zhangjiali/libopenssl/include/openssl/ssl.h:
+/usr/include/netinet/in.h:
 
-/home/zhangjiali/libopenssl/include/openssl/e_os2.h:
+/usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:
 
-/home/zhangjiali/libopenssl/include/openssl/opensslconf.h:
-
-/home/zhangjiali/libopenssl/include/openssl/comp.h:
-
-/home/zhangjiali/libopenssl/include/openssl/crypto.h:
-
-/home/zhangjiali/libopenssl/include/openssl/stack.h:
-
-/home/zhangjiali/libopenssl/include/openssl/safestack.h:
-
-/home/zhangjiali/libopenssl/include/openssl/opensslv.h:
-
-/home/zhangjiali/libopenssl/include/openssl/ossl_typ.h:
-
-/home/zhangjiali/libopenssl/include/openssl/symhacks.h:
-
-/home/zhangjiali/libopenssl/include/openssl/bio.h:
-
-/home/zhangjiali/libopenssl/include/openssl/x509.h:
-
-/home/zhangjiali/libopenssl/include/openssl/buffer.h:
-
-/home/zhangjiali/libopenssl/include/openssl/evp.h:
-
-/home/zhangjiali/libopenssl/include/openssl/objects.h:
-
-/home/zhangjiali/libopenssl/include/openssl/obj_mac.h:
-
-/home/zhangjiali/libopenssl/include/openssl/asn1.h:
-
-/home/zhangjiali/libopenssl/include/openssl/bn.h:
-
-/home/zhangjiali/libopenssl/include/openssl/ec.h:
-
-/home/zhangjiali/libopenssl/include/openssl/ecdsa.h:
-
-/home/zhangjiali/libopenssl/include/openssl/ecdh.h:
-
-/home/zhangjiali/libopenssl/include/openssl/rsa.h:
-
-/home/zhangjiali/libopenssl/include/openssl/dsa.h:
-
-/home/zhangjiali/libopenssl/include/openssl/dh.h:
-
-/home/zhangjiali/libopenssl/include/openssl/sha.h:
-
-/home/zhangjiali/libopenssl/include/openssl/x509_vfy.h:
-
-/home/zhangjiali/libopenssl/include/openssl/lhash.h:
-
-/home/zhangjiali/libopenssl/include/openssl/pkcs7.h:
-
-/home/zhangjiali/libopenssl/include/openssl/pem.h:
-
-/home/zhangjiali/libopenssl/include/openssl/pem2.h:
-
-/home/zhangjiali/libopenssl/include/openssl/hmac.h:
-
-/home/zhangjiali/libopenssl/include/openssl/kssl.h:
-
-/home/zhangjiali/libopenssl/include/openssl/ssl2.h:
-
-/home/zhangjiali/libopenssl/include/openssl/ssl3.h:
-
-/home/zhangjiali/libopenssl/include/openssl/tls1.h:
-
-/home/zhangjiali/libopenssl/include/openssl/dtls1.h:
-
-/home/zhangjiali/libopenssl/include/openssl/pqueue.h:
-
-/home/zhangjiali/libopenssl/include/openssl/ssl23.h:
-
-/home/zhangjiali/libopenssl/include/openssl/srtp.h:
-
-/home/zhangjiali/libopenssl/include/openssl/engine.h:
-
-/home/zhangjiali/libopenssl/include/openssl/rand.h:
-
-/home/zhangjiali/libopenssl/include/openssl/ui.h:
-
-/home/zhangjiali/libopenssl/include/openssl/err.h:
-
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/netinet/in.h:
-
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/in.h:
+/usr/include/aarch64-linux-gnu/bits/in.h:
 
 ../lib/timeval.h:
-
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/zlib.h:
-
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/zconf.h:
 
 ../lib/http_chunks.h:
 
@@ -414,19 +354,19 @@ vtls/libcurl_la-vtls.lo: vtls/vtls.c ../lib/curl_setup.h \
 
 ../lib/curl_addrinfo.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/netdb.h:
+/usr/include/netdb.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/rpc/netdb.h:
+/usr/include/rpc/netdb.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/netdb.h:
+/usr/include/aarch64-linux-gnu/bits/netdb.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/arpa/inet.h:
+/usr/include/arpa/inet.h:
 
 ../lib/asyn.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/setjmp.h:
+/usr/include/setjmp.h:
 
-/home/jiali/Documents/FriendlyARM/toolschain/4.4.3/bin/../arm-none-linux-gnueabi//sys-root/usr/include/bits/setjmp.h:
+/usr/include/aarch64-linux-gnu/bits/setjmp.h:
 
 ../lib/splay.h:
 

@@ -22,7 +22,7 @@ void playvoice(char *pbuf ,unsigned int lenth)
     char svstr[100] = {0};
     if (0 != pbuf) 
     {
-        sprintf(svstr,"/root/%s",pbuf);
+        sprintf(svstr,"./voice/%s",pbuf);
         printf("%s\n",pbuf);
         playback_wav(svstr);    
     }

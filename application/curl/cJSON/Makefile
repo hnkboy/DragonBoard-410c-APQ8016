@@ -16,7 +16,8 @@ CJSON_SO_LDFLAG=-Wl,-soname=$(CJSON_LIBNAME).so.$(CJSON_SOVERSION)
 UTILS_SO_LDFLAG=-Wl,-soname=$(UTILS_LIBNAME).so.$(UTILS_SOVERSION)
 
 #PREFIX ?= /usr/local
-PREFIX ?= .
+#PREFIX ?= .
+PREFIX ?= /usr/
 INCLUDE_PATH ?= include/cjson
 LIBRARY_PATH ?= lib
 
@@ -24,7 +25,8 @@ INSTALL_INCLUDE_PATH = $(DESTDIR)$(PREFIX)/$(INCLUDE_PATH)
 INSTALL_LIBRARY_PATH = $(DESTDIR)$(PREFIX)/$(LIBRARY_PATH)
 
 INSTALL ?= cp -a
-CC = arm-linux-gcc
+#CC = arm-linux-gcc
+CC = gcc
 # validate gcc version for use fstack-protector-strong
 MIN_GCC_VERSION = "4.9"
 GCC_VERSION := "`$(CC) -dumpversion`"
