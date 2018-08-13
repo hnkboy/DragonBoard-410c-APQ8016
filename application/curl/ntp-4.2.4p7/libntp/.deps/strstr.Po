@@ -1,3 +1,0 @@
-strstr.o: strstr.c ../config.h
-
-../config.h:

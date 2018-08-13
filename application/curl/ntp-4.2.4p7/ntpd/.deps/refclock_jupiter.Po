@@ -1,3 +1,0 @@
-refclock_jupiter.o: refclock_jupiter.c ../config.h
-
-../config.h:

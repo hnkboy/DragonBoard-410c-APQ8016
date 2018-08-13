@@ -1,3 +1,0 @@
-refclock_tpro.o: refclock_tpro.c ../config.h
-
-../config.h:

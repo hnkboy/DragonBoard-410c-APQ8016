@@ -1,3 +1,0 @@
-refclock_tt560.o: refclock_tt560.c ../config.h
-
-../config.h:

@@ -1,3 +1,0 @@
-refclock_mx4200.o: refclock_mx4200.c ../config.h
-
-../config.h:
