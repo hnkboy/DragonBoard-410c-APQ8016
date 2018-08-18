@@ -41,10 +41,10 @@ void uartchar_proc(char *buf, unsigned int len)
     unsigned int index = 0;
     for (;index<len;index++)
 	{
-		str2 = buf[index];
 		//printf("redatad: nread = %s\n\n\r", buf1);
-		temp = buf1[0];
+		temp = buf[index];
 		//printf("tmp=%x\n\n\r", temp);
+//		printf("%2x", temp);
 		//printf("str2=%d\n\n\r", str2);
 		switch(str2){
 			case 0x0:
@@ -147,16 +147,16 @@ int main(int argc,char* argv[])
                     }
                     else
                     {
-                        write(pevents[i].data.fd,buf,str_len);
-						if (0x0D == buf[0]){
+//                        write(pevents[i].data.fd,buf,str_len);
+//						if (0x0D != buf[0]){
 							uartchar_proc(buf,str_len);
-						}
-						else{
+//						}
+//						else{
                        		//buf[str_len-1] = 0;
-                        	buf[str_len] = 0;
-                        	printf("%s\n",buf);
-                        	playvoice(buf,sizeof(buf));
-						}
+//                        	buf[str_len] = 0;
+ //                       	printf("%s\n",buf);
+//                        	playvoice(buf,sizeof(buf));
+//						}
                     }
 
                 }
