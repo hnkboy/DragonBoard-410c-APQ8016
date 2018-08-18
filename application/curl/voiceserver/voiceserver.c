@@ -27,6 +27,53 @@ void playvoice(char *pbuf ,unsigned int lenth)
         playback_wav(svstr);    
     }
 }
+
+
+/*zibee 发送的字符串处理*/
+void uartchar_proc(char *buf, unsigned int len)
+{
+	unsigned char temp,gsm_flag;
+	unsigned char str2 = 0x0;
+	unsigned char Uart2_Buffer[50];
+	unsigned char Uart2_Rx=0;
+	unsigned char i=0;
+	char buf1[100];
+    unsigned int index = 0;
+    for (;index<len;index++)
+	{
+		str2 = buf[index];
+		//printf("redatad: nread = %s\n\n\r", buf1);
+		temp = buf1[0];
+		//printf("tmp=%x\n\n\r", temp);
+		//printf("str2=%d\n\n\r", str2);
+		switch(str2){
+			case 0x0:
+				if (temp == 0x0D)str2=0x1;break;	
+			case 0x1:
+				if (temp == 0x0A)str2=0x2;else str2=0x0;break;	
+			case 0x2:
+				if (temp == 0xef)str2=0x0;else {str2=0x3;Uart2_Buffer[Uart2_Rx]=temp; Uart2_Rx++;}break;	
+			case 0x3:
+				Uart2_Buffer[Uart2_Rx]=temp;
+				Uart2_Rx++;
+				if(Uart2_Buffer[Uart2_Rx-1]==0x0D){
+					for (i=0;i<Uart2_Rx-1;i++){
+					printf("%02x ",Uart2_Buffer[i]);
+					}
+					printf("\n\r");
+					str2=0x0;
+					Uart2_Rx=0;
+					if (0x1 ==Uart2_Buffer[(Uart2_Buffer[3]+4)]){
+						gsm_flag=1;						
+					}
+				}
+			if(Uart2_Rx==40){ Uart2_Rx=0; } break;
+			default:break;
+			}
+	}
+}
+
+
 int main(int argc,char* argv[])
 {
     int serv_sock,clnt_sock;
@@ -101,10 +148,15 @@ int main(int argc,char* argv[])
                     else
                     {
                         write(pevents[i].data.fd,buf,str_len);
-                        //buf[str_len-1] = 0;
-                        buf[str_len] = 0;
-                        printf("%s\n",buf);
-                        playvoice(buf,sizeof(buf));
+						if (0x0D == buf[0]){
+							uartchar_proc(buf,str_len);
+						}
+						else{
+                       		//buf[str_len-1] = 0;
+                        	buf[str_len] = 0;
+                        	printf("%s\n",buf);
+                        	playvoice(buf,sizeof(buf));
+						}
                     }
 
                 }
