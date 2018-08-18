@@ -8,11 +8,11 @@ LIBS = -lcurl -lcjson -lasound -pthread
 INCLUDE_PATH = $(curlin) $(alsain) $(cjsonin) $(alsain)
 LIB_PATH = $(curllib) $(alsalib) $(cjsonlib)
 ALSA_PATH =../alsa
-all: voiceserver.o  main_alsa 
+all: voiceserver.o  alsa 
 	$(CC) voiceserver.o  $(ALSA_PATH)/playback.o $(ALSA_PATH)/playback_wav.o  -o voiceserver $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
 voiceserver.o: voiceserver.c
 	$(CC) -c voiceserver.c $(INCLUDE_PATH) $(LIB_PATH)
-main_alsa:
+alsa:
 	make -C $(ALSA_PATH)
 clean: 
 	rm ./*.o
