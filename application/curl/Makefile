@@ -9,18 +9,22 @@ LIBS = -lcurl -lcjson -lasound -pthread
 INCLUDE_PATH = $(curlin) $(alsain) $(cjsonin)
 LIB_PATH = $(curllib) $(alsalib) $(cjsonlib)
 ALSA_PATH = ./alsa
-all: main.o getinmemory.o json.o puart.o plisten.o pwork.o pvoice.o voiceclient.o postcallback main_alsa 
-	$(CC) main.o plisten.o pwork.o getinmemory.o postcallback.o md5.o json.o voiceclient.o ./alsa/playback.o ./alsa/playback_wav.o puart.o pvoice.o -o main $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
+all: main.o getinmemory.o json.o puart.o plisten.o prevpkt.o pwork.o pvoice.o voiceclient.o queue.o  postcallback main_alsa 
+	$(CC) main.o plisten.o pwork.o getinmemory.o postcallback.o md5.o json.o voiceclient.o ./alsa/playback.o ./alsa/playback_wav.o puart.o pvoice.o prevpkt.o queue.o -o main $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
 main.o: main.c getinmemory.c json.c postcallback.c
 	$(CC) -c main.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
 puart.o: puart.c puart.h 
 	$(CC) -c puart.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
 plisten.o: plisten.c  plisten.h
 	$(CC) -c plisten.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
+prevpkt.o: prevpkt.c  prevpkt.h
+	$(CC) -c prevpkt.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
 pwork.o: pwork.c  pwork.h
 	$(CC) -c pwork.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
 pvoice.o: pvoice.c  pvoice.h
 	$(CC) -c pvoice.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
+queue.o: queue.c  queue.h
+	$(CC) -c queue.c  $(INCLUDE_PATH) $(LIB_PATH)
 postcallback: postcallback.c md5.c
 	$(CC) -c postcallback.c -I ./ $(INCLUDE_PATH) $(LIB_PATH)
 	$(CC) -c md5.c

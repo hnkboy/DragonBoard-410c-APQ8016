@@ -4,6 +4,7 @@
 #include<pthread.h>
 #include<time.h>
 #include "plisten.h"
+#include "prevpkt.h"
 #include "puart.h"
 #include "pwork.h"
 #include "pvoice.h"
@@ -15,12 +16,13 @@
 #include "getinmemory.h"
 #include "postcallback.h"
 #include "voiceclient.h"
-
+#include "queue.h"
 pthread_t tid;
 pthread_t tlistenid;
 pthread_t tuartid;
 pthread_t tvoiceid;
 pthread_t tworkid;
+pthread_t trevpktid;
 sigset_t set;
 
 int giExit = 0;
@@ -55,14 +57,15 @@ int main()
 	void *status;
 
     weather stweather;
-
+	queue_init();
 	sigemptyset(&set);
 	sigaddset(&set,SIGUSR1);
 	sigaddset(&set,SIGUSR2);
 	sigprocmask(SIG_SETMASK,&set,NULL);
 	
 	pthread_create(&tid,NULL,mythread,NULL);
-	pthread_create(&tlistenid,NULL,listenmain,NULL);
+	pthread_create(&tlistenid,NULL,listenmain,NULL);	
+	pthread_create(&trevpktid,NULL,prevpktmain,NULL);
 //	pthread_create(&tuartid,NULL,puartmain,NULL);
     pthread_create(&tworkid,NULL,workmain,NULL);
 //    pthread_create(&tvoiceid,NULL,voicemain,NULL);
@@ -130,6 +133,7 @@ int main()
         else if('q'==tmp)
         {
 			//发出SIGUSR2信号，让线程退出，如果发送SIGKILL，线程将直接退出。
+			quemsg_snd(200,"exit",4);
 			pthread_kill(tid,SIGUSR2);
 			pthread_kill(tlistenid,SIGUSR2);
             giExit = -1;
@@ -137,7 +141,8 @@ int main()
 			pthread_join(tid,&status);
 			pthread_join(tlistenid,&status);
 			pthread_join(tuartid,&status);
-			pthread_join(tvoiceid,&status);
+			pthread_join(tvoiceid,&status);		
+			pthread_join(trevpktid,&status);
 			printf("finish\n");
             voicesockclose();
 			break;
@@ -147,3 +152,4 @@ int main()
     }
     return 0;
 }
+
