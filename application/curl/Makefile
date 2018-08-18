@@ -1,12 +1,11 @@
 CC = gcc
-#alsain = -I /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/include/
-#alsalib = -L /home/jiali/Documents/FriendlyARM/toolschain/4.4.3/lib/
+#CC = arm-linux-gcc
 curlin = -I ./libcurl/include
 curllib = -L ./libcurl/lib
-#CC = arm-linux-gcc
+cjsonlin = -I ./cJSON/include
+cjsonlib = -L ./cJSON/lib
 LIBS = -lcurl -lcjson -lasound -pthread
 LIBS = -lcurl -lcjson -lasound -pthread
-#LIBS =   -lasound -pthread -lcjson
 INCLUDE_PATH = $(curlin) $(alsain) $(cjsonin)
 LIB_PATH = $(curllib) $(alsalib) $(cjsonlib)
 ALSA_PATH = ./alsa

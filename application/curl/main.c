@@ -65,8 +65,8 @@ int main()
 	pthread_create(&tlistenid,NULL,listenmain,NULL);
 //	pthread_create(&tuartid,NULL,puartmain,NULL);
     pthread_create(&tworkid,NULL,workmain,NULL);
-    pthread_create(&tvoiceid,NULL,voicemain,NULL);
-    voicesockopen();	
+//    pthread_create(&tvoiceid,NULL,voicemain,NULL);
+//    voicesockopen();	
     while(1)
     {    
         printf(":");
@@ -122,8 +122,8 @@ int main()
 			}
 			printf("svstrp message is %s\n",svstrp);
 			
-			curl_post_data(svstrp,strlen(svstrp));
-			playback_wav("./tmp.wav");
+		//	curl_post_data(svstrp,strlen(svstrp));
+		//	playback_wav("./tmp.wav");
 
             pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
  		}
