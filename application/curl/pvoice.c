@@ -22,7 +22,16 @@ struct tm nowTime;
 #define VOICEMQNAME "/pvoicemq"
 mqd_t mqdvoice;
 
-
+void playvoice(char *pbuf ,unsigned int lenth)
+{
+    char svstr[100] = {0};
+    if (0 != pbuf) 
+    {
+        sprintf(svstr,"./voice/%s",pbuf);
+        printf("%s\n",pbuf);
+        playback_wav(svstr);    
+    }
+}
 int mqueue_send2voice(const char *buf,long len)
 {
 	int ret;
@@ -87,11 +96,11 @@ void *voicemain(void*p){
 	ep_fd_vo=epoll_create(20);
     event.events=EPOLLIN;
     event.data.fd=mqdvoice;
+    pevents=malloc(sizeof(struct epoll_event)*20);
     epoll_ctl(ep_fd_vo,EPOLL_CTL_ADD,mqdvoice,&event);
 	while( 0 == ret)
     {
-        ep_cnt=epoll_wait(ep_fd_vo,pevents,20,-1);
-        printf("ep_cnt %d",ep_cnt);
+        ep_cnt=epoll_wait(ep_fd_vo,pevents,20,100);
         if (ep_cnt < 0)
         {
             break;
@@ -100,7 +109,6 @@ void *voicemain(void*p){
         {
             if(mqdvoice == pevents[i].data.fd)
             {
-      printf("epoll wait");
                 char rbuf[BUFSIZ];
                 int val;
 				ret = mq_receive(mqdvoice, rbuf, BUFSIZ, &val);
@@ -114,9 +122,11 @@ void *voicemain(void*p){
                     ret = -1;
 					break;
         		}	
+				playvoice(rbuf,ret);
+
             }
         }
-//		task_porc();
+		task_porc();
 		
     }
     close(ep_fd_vo);
@@ -142,9 +152,9 @@ int getNowTime(void)
         nowTime.tm_hour -= 16;    
     }
         
-    sprintf(current, "%04d%02d%02d%02d:%02d:%02d", nowTime.tm_year + 1900, nowTime.tm_mon+1, nowTime.tm_mday, 
-      nowTime.tm_hour, nowTime.tm_min, nowTime.tm_sec);
-    printf("%s\n",current);
+    //sprintf(current, "%04d%02d%02d%02d:%02d:%02d", nowTime.tm_year + 1900, nowTime.tm_mon+1, nowTime.tm_mday, 
+    //  nowTime.tm_hour, nowTime.tm_min, nowTime.tm_sec);
+    //printf("%s\n",current);
     if (nowTime.tm_hour >6 && nowTime.tm_min >30 )
     {
          gmor_s.mor_flag = 1;

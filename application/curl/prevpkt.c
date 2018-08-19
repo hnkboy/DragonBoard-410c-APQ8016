@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include "playback.h"
 #include "playback_wav.h"
-
+#include "pvoice.h"
 #include <curl/curl.h>
 #include "queue.h"
 
@@ -34,17 +34,6 @@ int mqueue_send2pkt(const char *buf,long len)
     
 }
 void error_handler(const char* message);
-void playvoice(char *pbuf ,unsigned int lenth)
-{
-    char svstr[100] = {0};
-    if (0 != pbuf) 
-    {
-        sprintf(svstr,"./voice/%s",pbuf);
-        printf("%s\n",pbuf);
-        playback_wav(svstr);    
-    }
-}
-
 
 /*zibee 发送的字符串处理*/
 void uartchar_proc(char *buf, unsigned int len)
@@ -81,7 +70,7 @@ void uartchar_proc(char *buf, unsigned int len)
 					str2=0x0;
 					Uart2_Rx=0;
 					if (0x1 ==Uart2_Buffer[(Uart2_Buffer[3]+4)]){
-						gsm_flag=1;						
+                        mqueue_send2voice("opendoor.wav",12);
 					}
 				}
 			if(Uart2_Rx==40){ Uart2_Rx=0; } break;
@@ -185,7 +174,7 @@ void *prevpktmain(void *p)
                        		//buf[str_len-1] = 0;
                         	buf[str_len] = 0;
                         	printf("%s\n",buf);
-                        	playvoice(buf,sizeof(buf));
+                        	mqueue_send2voice(buf,sizeof(buf));
 						}
                     }
 
