@@ -39,8 +39,7 @@ void *workmain(void*p){
             myfunc();
 		if(SIGUSR2==signum)
 		{
-            printf("Iwillsleep2secondandexit\n");
-            sleep(2);
+            printf("work thread exit\n");
             break;
 		}
 	}

@@ -26,8 +26,7 @@ void *listenmain(void*p){
             myfunc();
 		if(SIGUSR2==signum)
 		{
-            printf("plisten Iwillsleep2secondandexit\n");
-            sleep(2);
+            printf("plisten thread exit\n");
             break;
 		}
 	}

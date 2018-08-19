@@ -7,7 +7,9 @@
 #include<sys/epoll.h>
 #include<errno.h>
 #include<fcntl.h>
-
+#include <sys/stat.h>        /* For mode constants */
+#include <mqueue.h>
+#include <stdlib.h>
 #include "playback.h"
 #include "playback_wav.h"
 
@@ -16,7 +18,21 @@
 
 #define BUF_SIZE 30
 #define EPOLL_SIZE 20
+#define PKTMQNAME "/pktmq"
+mqd_t mqd;
 
+int mqueue_send2pkt(const char *buf,long len)
+{
+	int ret;
+    ret = mq_send(mqd, buf, len, 2);
+    if (ret == -1) {
+        perror("mq_send()");
+		return -1;
+    } 
+    printf("send mqueue msg: %s",buf);
+	return 0;
+    
+}
 void error_handler(const char* message);
 void playvoice(char *pbuf ,unsigned int lenth)
 {
@@ -87,6 +103,7 @@ void *prevpktmain(void *p)
     int ep_fd,ep_cnt,i,flag;
     struct epoll_event event;
     struct epoll_event* pevents;
+    int ret = 0;
    /* 
     if(argc!=2)
     {
@@ -95,6 +112,13 @@ void *prevpktmain(void *p)
     }*/
 
     printf("hello pkt thread \n");
+    /*mqueue*/
+  	mqd = mq_open(PKTMQNAME, O_RDWR|O_CREAT, 0600, NULL);
+    if (mqd == -1) {
+        perror("pkt mq_open()");
+        exit(1);
+    } 
+
     serv_sock=socket(AF_INET,SOCK_STREAM,0);
 
     memset(&serv_addr,0,sizeof(serv_addr));
@@ -113,9 +137,12 @@ void *prevpktmain(void *p)
     event.data.fd=serv_sock;
     pevents=malloc(sizeof(struct epoll_event)*EPOLL_SIZE);
     epoll_ctl(ep_fd,EPOLL_CTL_ADD,serv_sock,&event);
-    epoll_ctl(ep_fd,EPOLL_CTL_ADD,get_queid(),&event);
 
-    while(1)
+    event.events=EPOLLIN;
+    event.data.fd=mqd;
+    epoll_ctl(ep_fd,EPOLL_CTL_ADD,mqd,&event);
+
+    while( 0 == ret)
     {
         ep_cnt=epoll_wait(ep_fd,pevents,EPOLL_SIZE,-1);
         for(i=0;i<ep_cnt;i++)
@@ -164,13 +191,19 @@ void *prevpktmain(void *p)
 
                 }
             }
-            else if(get_queid() == pevents[i].data.fd)
+            else if(mqd == pevents[i].data.fd)
             {
-                (void)quemsg_rcv(200,buf);
-                printf("epoll msg %s \n",buf);
-				if(strcmp(buf,"exit")==0)
+                char rbuf[BUFSIZ];
+                int val;
+				ret = mq_receive(mqd, rbuf, BUFSIZ, &val);
+				if (ret == -1) {
+					perror("pkt mq_receive err()");
+				}
+                printf("rcv mqueue msg %s ,prio:%d\n",rbuf,val);
+				if(strcmp(rbuf,"exit")==0)
        			{
-					queue_fini();
+					(void)mq_close(mqd);
+                    ret = -1;
 					break;
         		}	
             }
@@ -179,7 +212,7 @@ void *prevpktmain(void *p)
 
     close(serv_sock);
     close(ep_fd);
-
+    printf("pkt thread exit\n");
     return 0;
 }
 void error_handler(const char* message)

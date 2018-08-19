@@ -3,6 +3,7 @@
 #include<signal.h>
 #include<pthread.h>
 #include<time.h>
+#include<mqueue.h>
 #include "plisten.h"
 #include "prevpkt.h"
 #include "puart.h"
@@ -134,6 +135,8 @@ int main()
         {
 			//发出SIGUSR2信号，让线程退出，如果发送SIGKILL，线程将直接退出。
 			quemsg_snd(200,"exit",4);
+            (void)mqueue_send2pkt("exit",4);
+
 			pthread_kill(tid,SIGUSR2);
 			pthread_kill(tlistenid,SIGUSR2);
             giExit = -1;
