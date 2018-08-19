@@ -29,7 +29,7 @@ int mqueue_send2pkt(const char *buf,long len)
         perror("mq_send()");
 		return -1;
     } 
-    printf("send mqueue msg: %s",buf);
+    printf("send pkt mqueue msg: %s\n",buf);
 	return 0;
     
 }

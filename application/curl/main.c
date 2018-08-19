@@ -65,11 +65,11 @@ int main()
 	sigprocmask(SIG_SETMASK,&set,NULL);
 	
 	pthread_create(&tid,NULL,mythread,NULL);
-	pthread_create(&tlistenid,NULL,listenmain,NULL);	
+//	pthread_create(&tlistenid,NULL,listenmain,NULL);	
 	pthread_create(&trevpktid,NULL,prevpktmain,NULL);
 //	pthread_create(&tuartid,NULL,puartmain,NULL);
     pthread_create(&tworkid,NULL,workmain,NULL);
-//    pthread_create(&tvoiceid,NULL,voicemain,NULL);
+    pthread_create(&tvoiceid,NULL,voicemain,NULL);
 //    voicesockopen();	
     while(1)
     {    
@@ -136,18 +136,20 @@ int main()
 			//发出SIGUSR2信号，让线程退出，如果发送SIGKILL，线程将直接退出。
 			quemsg_snd(200,"exit",4);
             (void)mqueue_send2pkt("exit",4);
+            (void)mqueue_send2voice("exit",4);
 
 			pthread_kill(tid,SIGUSR2);
-			pthread_kill(tlistenid,SIGUSR2);
+			//pthread_kill(tlistenid,SIGUSR2);
             giExit = -1;
 			//等待线程tid执行完毕，这里阻塞。
 			pthread_join(tid,&status);
-			pthread_join(tlistenid,&status);
-			pthread_join(tuartid,&status);
+			//ipthread_join(tlistenid,&status);
+			//pthread_join(tuartid,&status);
 			pthread_join(tvoiceid,&status);		
 			pthread_join(trevpktid,&status);
+			pthread_join(tworkid,&status);
 			printf("finish\n");
-            voicesockclose();
+            //voicesockclose();
 			break;
         }
         else

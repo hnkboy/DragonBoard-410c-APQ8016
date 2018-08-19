@@ -11,6 +11,7 @@
 #include "json.h"
 #include "getinmemory.h"
 #include "postcallback.h"
+#include "queue.h"
 
 static void myfunc()
 {
@@ -19,6 +20,7 @@ static void myfunc()
 extern unsigned char gsm_flag;
 void *workmain(void*p){
 	int signum;
+    char buf[40];
     sigset_t gset;
     gset = get_sigset();
     myfunc();
@@ -34,6 +36,15 @@ void *workmain(void*p){
         }
         usleep(100);
 */
+		(void)quemsg_rcv(200,buf);
+		printf("rcv queue msg: %s \n",buf);
+		if(strcmp(buf,"exit")==0)
+		{
+			queue_fini();
+            printf("work thread exit\n");
+			break;
+		}
+/*
 		sigwait(&gset,&signum);
 		if(SIGUSR1==signum)
             myfunc();
@@ -42,5 +53,6 @@ void *workmain(void*p){
             printf("work thread exit\n");
             break;
 		}
+*/
 	}
 }
