@@ -35,12 +35,12 @@ void playvoice(char *pbuf ,unsigned int lenth)
 int mqueue_send2voice(const char *buf,long len)
 {
 	int ret;
-    ret = mq_send(mqdvoice, buf, len, 2);
+    ret = mq_send(mqdvoice, buf, strlen(buf), 2);
     if (ret == -1) {
         perror("voice mq_send()");
 		return -1;
     } 
-    printf(" send to pvoice mqueue msg: %s\n",buf);
+    printf("send to pvoice mqueue msg: %s.\n",buf);
 	return 0;
     
 }
@@ -79,7 +79,8 @@ void *voicemain(void*p){
     sigset_t gset;
 	
 	int ep_fd_vo,ep_cnt,i,flag;
-    int ret;
+    int ret = 0;
+    int isbreak = 0;
 	struct epoll_event event;
     struct epoll_event* pevents;
     gset = get_sigset();
@@ -98,7 +99,7 @@ void *voicemain(void*p){
     event.data.fd=mqdvoice;
     pevents=malloc(sizeof(struct epoll_event)*20);
     epoll_ctl(ep_fd_vo,EPOLL_CTL_ADD,mqdvoice,&event);
-	while( 0 == ret)
+	while( 0 == isbreak)
     {
         ep_cnt=epoll_wait(ep_fd_vo,pevents,20,100);
         if (ep_cnt < 0)
@@ -109,7 +110,7 @@ void *voicemain(void*p){
         {
             if(mqdvoice == pevents[i].data.fd)
             {
-                char rbuf[BUFSIZ];
+                char rbuf[BUFSIZ] = {0};
                 int val;
 				ret = mq_receive(mqdvoice, rbuf, BUFSIZ, &val);
 				if (ret == -1) {
@@ -119,11 +120,10 @@ void *voicemain(void*p){
 				if(strcmp(rbuf,"exit")==0)
        			{
 					(void)mq_close(mqdvoice);
-                    ret = -1;
+                    isbreak = 1;
 					break;
         		}	
 				playvoice(rbuf,ret);
-
             }
         }
 		task_porc();

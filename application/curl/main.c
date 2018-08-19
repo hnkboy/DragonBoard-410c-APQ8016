@@ -39,8 +39,8 @@ static void *mythread(void*p){
             myfunc();
 		if(SIGUSR2==signum)
 		{
-            printf("mythread Iwillsleep2secondandexit\n");
-            sleep(2);
+ //           printf("mythread Iwillsleep2secondandexit\n");
+//            sleep(2);
             break;
 		}
 	}
@@ -70,15 +70,18 @@ int main()
 //	pthread_create(&tuartid,NULL,puartmain,NULL);
     pthread_create(&tworkid,NULL,workmain,NULL);
     pthread_create(&tvoiceid,NULL,voicemain,NULL);
-//    voicesockopen();	
+//  voicesockopen();	
+    usleep(100);
     while(1)
     {    
-        printf(":");
+
+        printf("\n:");
         scanf("%c",&tmp);
         if('a'==tmp)
         {
-			testvioce();
-            pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
+		//	testvioce();
+       //     pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
+            (void)mqueue_send2voice("opendoor.wav",12);
         }
 		else if ('p'==tmp)
         {

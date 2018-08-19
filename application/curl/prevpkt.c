@@ -24,12 +24,12 @@ mqd_t mqd;
 int mqueue_send2pkt(const char *buf,long len)
 {
 	int ret;
-    ret = mq_send(mqd, buf, len, 2);
+    ret = mq_send(mqd, buf, strlen(buf), 2);
     if (ret == -1) {
         perror("mq_send()");
 		return -1;
     } 
-    printf("send pkt mqueue msg: %s\n",buf);
+    printf("send pkt mqueue msg: %s.\n",buf);
 	return 0;
     
 }
@@ -70,7 +70,7 @@ void uartchar_proc(char *buf, unsigned int len)
 					str2=0x0;
 					Uart2_Rx=0;
 					if (0x1 ==Uart2_Buffer[(Uart2_Buffer[3]+4)]){
-                        mqueue_send2voice("opendoor.wav",12);
+//                        mqueue_send2voice("opendoor.wav",12);
 					}
 				}
 			if(Uart2_Rx==40){ Uart2_Rx=0; } break;
@@ -93,6 +93,7 @@ void *prevpktmain(void *p)
     struct epoll_event event;
     struct epoll_event* pevents;
     int ret = 0;
+    _Bool bisbreak = 0;
    /* 
     if(argc!=2)
     {
@@ -131,7 +132,7 @@ void *prevpktmain(void *p)
     event.data.fd=mqd;
     epoll_ctl(ep_fd,EPOLL_CTL_ADD,mqd,&event);
 
-    while( 0 == ret)
+    while( 0 == bisbreak)
     {
         ep_cnt=epoll_wait(ep_fd,pevents,EPOLL_SIZE,-1);
         for(i=0;i<ep_cnt;i++)
@@ -182,17 +183,17 @@ void *prevpktmain(void *p)
             }
             else if(mqd == pevents[i].data.fd)
             {
-                char rbuf[BUFSIZ];
+                char rbuf[BUFSIZ] = {0};
                 int val;
 				ret = mq_receive(mqd, rbuf, BUFSIZ, &val);
 				if (ret == -1) {
 					perror("pkt mq_receive err()");
 				}
-                printf("rcv mqueue msg %s ,prio:%d\n",rbuf,val);
+                printf("rcv mqueue msg %s,prio:%d\n",rbuf,val);
 				if(strcmp(rbuf,"exit")==0)
        			{
 					(void)mq_close(mqd);
-                    ret = -1;
+                    bisbreak = 1;
 					break;
         		}	
             }
