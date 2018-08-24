@@ -17,7 +17,7 @@ UTILS_SO_LDFLAG=-Wl,-soname=$(UTILS_LIBNAME).so.$(UTILS_SOVERSION)
 
 #PREFIX ?= /usr/local
 #PREFIX ?= .
-PREFIX ?= /usr/
+PREFIX ?= /usr
 INCLUDE_PATH ?= include/cjson
 LIBRARY_PATH ?= lib
 
