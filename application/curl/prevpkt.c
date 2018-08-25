@@ -29,7 +29,7 @@ int mqueue_send2pkt(const char *buf,long len)
         perror("mq_send()");
 		return -1;
     } 
-    printf("send pkt mqueue msg: %s.\n",buf);
+    printf("send to pkt mqueue msg: %s.\n",buf);
 	return 0;
     
 }
@@ -189,7 +189,7 @@ void *prevpktmain(void *p)
 				if (ret == -1) {
 					perror("pkt mq_receive err()");
 				}
-                printf("rcv mqueue msg %s,prio:%d\n",rbuf,val);
+                printf("pktthr rcv mqueue msg %s,prio:%d\n",rbuf,val);
 				if(strcmp(rbuf,"exit")==0)
        			{
 					(void)mq_close(mqd);

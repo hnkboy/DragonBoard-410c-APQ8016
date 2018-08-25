@@ -15,13 +15,13 @@
 
 static void myfunc()
 {
-	printf("hello work thread\n");
+	printf("hello voice thread\n");
 }
 
 
 void quemsg_snd_voice(char *pbuf ,unsigned int lenth)
 {
-    quemsg_snd(400,pbuf,lenth);
+    quemsg_snd(200,pbuf,lenth);
 }
 
 void playvoice(char *pbuf ,unsigned int lenth)
@@ -44,11 +44,11 @@ void *voicemain(void*p){
 	while(1){
 
 		(void)quemsg_rcv(200,buf);
-		printf("rcv queue msg: %s \n",buf);
+		//printf("rcv queue msg: %s \n",buf);
 		if(strcmp(buf,"exit")==0)
 		{
 			queue_fini();
-            printf("work thread exit\n");
+            printf("voice thread exit\n");
 			break;
 		}
 		else

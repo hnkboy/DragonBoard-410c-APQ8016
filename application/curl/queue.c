@@ -43,7 +43,7 @@ int quemsg_snd(long type,char *a,int len)
 		perror("send fail");
 		return 1;
 	}
-	printf("snd massage : %s\n",mswr.mtex);
+	printf("snd massage : %s.   type=%ld\n",mswr.mtex,type);
 	return 0;
 }
 int quemsg_rcv(long type,char *aumsg)
@@ -54,7 +54,7 @@ int quemsg_rcv(long type,char *aumsg)
 		printf("get message fail\n");
 		return -1;
 	}
-	printf("rev massage : %s\n",msre.mtex);
+	printf("rev massage : %s.   type=%ld \n",msre.mtex,type);
 	stpcpy(aumsg,msre.mtex);
 	return 0;
 }

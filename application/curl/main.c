@@ -92,8 +92,6 @@ int main()
 		else if ('p'==tmp)
         {
             pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
-			pthread_kill(tlistenid,SIGUSR1);
-            pthread_kill(tworkid,SIGUSR1);
  		}
 		else if ('w'==tmp)
         {
