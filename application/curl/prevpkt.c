@@ -47,8 +47,11 @@ void uartchar_proc(char *buf, unsigned int len)
     unsigned int index = 0;
     for (;index<len;index++)
 	{
+		//printf("redatad: nread = %s\n\n\r", buf1);
 		temp = buf[index];
-//		printf("%2x \n", temp);
+		//printf("tmp=%x\n\n\r", temp);
+//		printf("%2x", temp);
+		//printf("str2=%d\n\n\r", str2);
 		switch(str2){
 			case 0x0:
 				if (temp == 0x0D)str2=0x1;break;	
@@ -172,7 +175,7 @@ void *prevpktmain(void *p)
                        		//buf[str_len-1] = 0;
                         	buf[str_len] = 0;
                         	printf("%s\n",buf);
-                        	mqueue_send2voice(buf,sizeof(buf));
+                        	quemsg_snd_voice(buf,sizeof(buf));
 						}
                     }
 

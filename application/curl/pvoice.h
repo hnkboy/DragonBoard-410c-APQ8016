@@ -1,5 +1,5 @@
 #ifndef __PVOICE_
 #define __PVOICE_
-int mqueue_send2voice(const char *buf,long len);
+void quemsg_snd_voice(char *pbuf ,unsigned int lenth);
 void *voicemain(void*p);
 #endif

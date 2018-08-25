@@ -1,9 +1,9 @@
-#include<stdio.h>
-#include<unistd.h>
-#include<signal.h>
-#include<pthread.h>
-#include<time.h>
-#include<mqueue.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
+#include <pthread.h>
+#include <time.h>
+#include <mqueue.h>
 #include "plisten.h"
 #include "prevpkt.h"
 #include "puart.h"
@@ -18,9 +18,12 @@
 #include "postcallback.h"
 #include "voiceclient.h"
 #include "queue.h"
-pthread_t tid;
+
+#if 0
 pthread_t tlistenid;
 pthread_t tuartid;
+#endif 
+pthread_t tid;
 pthread_t tvoiceid;
 pthread_t tworkid;
 pthread_t trevpktid;
@@ -29,7 +32,7 @@ sigset_t set;
 int giExit = 0;
 void myfunc()
 {
-	printf("hello\n");
+	printf("mythread hello\n");
 }
 static void *mythread(void*p){
 	int signum;
@@ -39,8 +42,7 @@ static void *mythread(void*p){
             myfunc();
 		if(SIGUSR2==signum)
 		{
- //           printf("mythread Iwillsleep2secondandexit\n");
-//            sleep(2);
+            printf("mythread  exit \n");
             break;
 		}
 	}
@@ -58,19 +60,23 @@ int main()
 	void *status;
 
     weather stweather;
-	queue_init();
+    /* 队列初始化 */
+	queue_init();  
+	/* 信号初始化 */     
 	sigemptyset(&set);
 	sigaddset(&set,SIGUSR1);
 	sigaddset(&set,SIGUSR2);
 	sigprocmask(SIG_SETMASK,&set,NULL);
-	
+	/* 创建子线程 */
 	pthread_create(&tid,NULL,mythread,NULL);
-//	pthread_create(&tlistenid,NULL,listenmain,NULL);	
 	pthread_create(&trevpktid,NULL,prevpktmain,NULL);
-//	pthread_create(&tuartid,NULL,puartmain,NULL);
-    pthread_create(&tworkid,NULL,workmain,NULL);
+	pthread_create(&tworkid,NULL,workmain,NULL);
     pthread_create(&tvoiceid,NULL,voicemain,NULL);
-//  voicesockopen();	
+#if 0
+	pthread_create(&tlistenid,NULL,listenmain,NULL);	
+	pthread_create(&tuartid,NULL,puartmain,NULL);
+    voicesockopen();	
+#endif 
     usleep(100);
     while(1)
     {    
@@ -81,7 +87,7 @@ int main()
         {
 		//	testvioce();
        //     pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
-            (void)mqueue_send2voice("opendoor.wav",12);
+            (void)quemsg_snd_voice("opendoor.wav",12);
         }
 		else if ('p'==tmp)
         {
@@ -139,15 +145,17 @@ int main()
 			//发出SIGUSR2信号，让线程退出，如果发送SIGKILL，线程将直接退出。
 			quemsg_snd(200,"exit",4);
             (void)mqueue_send2pkt("exit",4);
-            (void)mqueue_send2voice("exit",4);
-
+            (void)mqueue_send2work("exit",4);
 			pthread_kill(tid,SIGUSR2);
-			//pthread_kill(tlistenid,SIGUSR2);
-            giExit = -1;
 			//等待线程tid执行完毕，这里阻塞。
+
+			#if 0
+			pthread_kill(tlistenid,SIGUSR2);
+            giExit = -1;
+			ipthread_join(tlistenid,&status);
+			pthread_join(tuartid,&status);
+			#endif 
 			pthread_join(tid,&status);
-			//ipthread_join(tlistenid,&status);
-			//pthread_join(tuartid,&status);
 			pthread_join(tvoiceid,&status);		
 			pthread_join(trevpktid,&status);
 			pthread_join(tworkid,&status);
