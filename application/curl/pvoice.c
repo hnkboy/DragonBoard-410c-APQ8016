@@ -55,19 +55,12 @@ unsigned char gsm_mor_flag;
 struct tagmor_s {
     char mor_flag;
     char mor_done;    
+    char clocksharp_flag;
+    char clocksharp_done;
 }gmor_s;
 
 int getNowTime(void);
 void task_porc(){
-
-	if (1 ==gsm_flag)
-	{
-		printf("gsm_flag == 1\n");
-		voicesend("opendoor.wav");
-		gsm_flag = 0;
-			
-		
-	}
 	if (1 == getNowTime())
 	{
 		voicesend("opendoor.wav");
@@ -143,18 +136,10 @@ int getNowTime(void)
     clock_gettime(CLOCK_REALTIME, &time);  //获取相对于1970到现在的秒数
     localtime_r(&time.tv_sec, &nowTime);
 
-    if(nowTime.tm_hour < 16 )
-    {
-        nowTime.tm_hour += 8;    
-    }
-    else 
-    {
-        nowTime.tm_hour -= 16;    
-    }
         
-    //sprintf(current, "%04d%02d%02d%02d:%02d:%02d", nowTime.tm_year + 1900, nowTime.tm_mon+1, nowTime.tm_mday, 
-    //  nowTime.tm_hour, nowTime.tm_min, nowTime.tm_sec);
-    //printf("%s\n",current);
+    sprintf(current, "%04d%02d%02d%02d:%02d:%02d", nowTime.tm_year + 1900, nowTime.tm_mon+1, nowTime.tm_mday, 
+     nowTime.tm_hour, nowTime.tm_min, nowTime.tm_sec);
+    printf("%s\n",current);
     if (nowTime.tm_hour >6 && nowTime.tm_min >30 )
     {
          gmor_s.mor_flag = 1;
@@ -163,7 +148,6 @@ int getNowTime(void)
              
             printf("morning \n");
             gmor_s.mor_done = 1;
-            return 1;
          }
     }
     else 
@@ -172,6 +156,23 @@ int getNowTime(void)
          gmor_s.mor_done = 0;
     }
 
+    if (nowTime.tm_min == 0 ){
+        gmor_s.clocksharp_flag = 1;   
+        if (0 == gmor_s.clocksharp_done )
+        { 
+            printf("One oclock sharp \n");
+            gmor_s.clocksharp_done = 1;
+        }
+    }
+    else
+    {
+        gmor_s.clocksharp_flag = 0;   
+    }
+
+    if (gmor_s.clocksharp_done | gmor_s.mor_done)
+    {
+        return 1;    
+    }
     return 0;
 }
 
