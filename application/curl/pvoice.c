@@ -1,4 +1,6 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
 #include<unistd.h>
 #include<signal.h>
 #include<pthread.h>
@@ -21,7 +23,8 @@ static void myfunc()
 
 void quemsg_snd_voice(char *pbuf ,unsigned int lenth)
 {
-    quemsg_snd(200,pbuf,lenth);
+    lenth = lenth;
+    quemsg_snd(200,pbuf,strlen(pbuf));
 }
 
 void playvoice(char *pbuf ,unsigned int lenth)
