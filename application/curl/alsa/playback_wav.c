@@ -195,5 +195,6 @@ int playback_wav(char *path)
     printf("wSampleLength=%d\n",wav_header.wSampleLength);
 	
     set_pcm_play(fp);
+    fclose(fp);
     return 0;
 }

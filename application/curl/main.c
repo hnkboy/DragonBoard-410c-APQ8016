@@ -82,7 +82,9 @@ int main()
     {    
 
         printf("\n:");
-        scanf("%c",&tmp);
+        tmp = 'j';
+        sleep(1);
+       // scanf("%c",&tmp);
         if('a'==tmp)
         {
 		//	testvioce();

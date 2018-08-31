@@ -56,3 +56,4 @@ dkms.conf
 .tags_sorted_by_file
 main
 *.wav
+*.mp3
