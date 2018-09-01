@@ -6,8 +6,7 @@
 #include<pthread.h>
 #include<time.h>
 #include "homemain.h"
-#include "playback.h"
-#include "playback_wav.h"
+#include "alsaplay.h"
 
 #include <curl/curl.h>
 #include "json.h"
@@ -21,20 +20,24 @@ static void myfunc()
 }
 
 
-void quemsg_snd_voice(char *pbuf ,unsigned int lenth)
+void quemsg_snd_voice(char *pbuf ,char *strvolume)
 {
-    lenth = lenth;
+	char buf[40];
+    memcpy(buf,pbuf,sizeof(pbuf));
+    buf += 20;  
+    memcpy(buf,strvolume,sizeof(strvolume));
+
     quemsg_snd(200,pbuf,strlen(pbuf));
 }
 
-void playvoice(char *pbuf ,unsigned int lenth)
+void playvoice(char *pbuf ,char *strvolume)
 {
     char svstr[100] = {0};
     if (0 != pbuf) 
     {
         sprintf(svstr,"./voice/%s",pbuf);
         printf("%s\n",pbuf);
-        playback_wav(svstr);    
+        playback_wav(svstr,strvolume);    
     }
 }
 
@@ -56,8 +59,7 @@ void *voicemain(void*p){
 		}
 		else
 		{
-
-			playvoice(buf,sizeof(buf));
+			playvoice(buf,(buf + 20));
 		}
 
 	}

@@ -9,8 +9,8 @@
 #include "puart.h"
 #include "pwork.h"
 #include "pvoice.h"
-#include "playback.h"
-#include "playback_wav.h"
+#include "alsaplay.h"
+
 
 #include <curl/curl.h>
 #include "json.h"
@@ -89,7 +89,7 @@ int main()
         {
 		//	testvioce();
        //     pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
-            (void)quemsg_snd_voice("opendoor.wav",12);
+            (void)quemsg_snd_voice("opendoor.wav","50");
         }
 		else if ('p'==tmp)
         {

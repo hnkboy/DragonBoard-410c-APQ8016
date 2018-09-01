@@ -10,8 +10,7 @@
 #include <sys/stat.h>        /* For mode constants */
 #include <mqueue.h>
 #include <stdlib.h>
-#include "playback.h"
-#include "playback_wav.h"
+#include "alsaplay.h"
 #include "pvoice.h"
 #include <curl/curl.h>
 #include "queue.h"
@@ -175,7 +174,7 @@ void *prevpktmain(void *p)
                        		//buf[str_len-1] = 0;
                         	buf[str_len] = 0;
                         	printf("%s\n",buf);
-                        	quemsg_snd_voice(buf,sizeof(buf));
+                        	//quemsg_snd_voice(buf,sizeof(buf));
 						}
                     }
 

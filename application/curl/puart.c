@@ -7,8 +7,7 @@
 #include<unistd.h>
 #include<termios.h>
 #include<string.h>
-#include "playback.h"
-#include "playback_wav.h"
+#include "alsaplay.h"
 
 unsigned char temp,gsm_flag;
 unsigned char str2 = 0x0;

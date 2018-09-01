@@ -12,19 +12,22 @@ int set_pcm();
 void set_volume(long volume);
 snd_pcm_t* handle=NULL; //PCI设备句柄
 snd_pcm_hw_params_t* params=NULL;//硬件信息和PCM流配置
-
-int main(int argc, char *argv[])
+   快看看
+//int main(int argc, char *argv[])
+int playback_wav(char *strpath,char *strvolume) 
 {
   struct stat stat;
   void *fdm;
-
+/*
   if (argc != 3)
     {
     printf("Usage: minimad + mp3 file name + volume\n");
     return 1;
     }
+*/
   int fd;
-  fd=open(argv[1],O_RDWR);
+  //fd=open(argv[1],O_RDWR);
+  fd=open(strpath,O_RDWR);
   if(fd<0)
   {
     perror("open file failed:");
@@ -51,7 +54,9 @@ int main(int argc, char *argv[])
         printf("set_pcm fialed:\n");
         return 1; 
     }
-    set_volume(atoi(argv[2]));
+    //set_volume(atoi(argv[2]));
+    set_volume(atoi(strvolume));
+
     decode(fdm, stat.st_size);
 
     if (munmap(fdm, stat.st_size) == -1)

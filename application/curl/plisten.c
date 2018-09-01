@@ -4,8 +4,7 @@
 #include<pthread.h>
 #include<time.h>
 #include "homemain.h"
-#include "playback.h"
-#include "playback_wav.h"
+#include "alsaplay.h"
 
 #include <curl/curl.h>
 #include "json.h"
