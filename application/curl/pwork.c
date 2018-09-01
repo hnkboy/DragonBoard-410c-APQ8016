@@ -67,12 +67,12 @@ void task_proc(){
     {
         case 1: 
            // (void)quemsg_snd_voice("morning.wav",12);
-        (void)quemsg_snd_voice("opendoor.wav","12");
+        (void)quemsg_snd_voice("oclock.mp3","20");
 		    printf("morning task \n");
             break;
         case 2: 
            // (void)quemsg_snd_voice("oclock.wav",12);
-        (void)quemsg_snd_voice("opendoor.wav","12");
+        (void)quemsg_snd_voice("oclock.mp3","20");
 		    printf("clock sharp task\n");
             break;
         default :break;

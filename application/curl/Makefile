@@ -4,24 +4,25 @@ curlin = -I ./libcurl/include
 curllib = -L ./libcurl/lib
 cjsonlin = -I ./cJSON/include
 cjsonlib = -L ./cJSON/lib
-LIBS = -lcurl -lcjson -lasound -pthread -lrt
+LIBS = -lcurl -lcjson -lasound -pthread -lrt -lmad
 INCLUDE_PATH = $(curlin) $(alsain) $(cjsonin)
 LIB_PATH = $(curllib) $(alsalib) $(cjsonlib)
 ALSA_PATH = ./alsa
-all: main.o getinmemory.o json.o puart.o plisten.o prevpkt.o pwork.o pvoice.o voiceclient.o queue.o  postcallback main_alsa 
-	$(CC) main.o plisten.o pwork.o getinmemory.o postcallback.o md5.o json.o voiceclient.o ./alsa/playback.o ./alsa/playback_wav.o puart.o pvoice.o prevpkt.o queue.o -o main $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
+all: main.o getinmemory.o json.o plisten.o prevpkt.o pwork.o pvoice.o  queue.o  postcallback 
+	$(CC) main.o plisten.o pwork.o getinmemory.o postcallback.o md5.o json.o   pvoice.o prevpkt.o queue.o alsaplay.o -o main $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
 main.o: main.c getinmemory.c json.c postcallback.c
-	$(CC) -c main.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
+	$(CC) -c main.c  $(INCLUDE_PATH) $(LIB_PATH)
 puart.o: puart.c puart.h 
-	$(CC) -c puart.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
+	$(CC) -c puart.c  $(INCLUDE_PATH) $(LIB_PATH)
 plisten.o: plisten.c  plisten.h
-	$(CC) -c plisten.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
+	$(CC) -c plisten.c  $(INCLUDE_PATH) $(LIB_PATH)
 prevpkt.o: prevpkt.c  prevpkt.h
-	$(CC) -c prevpkt.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
+	$(CC) -c prevpkt.c  $(INCLUDE_PATH) $(LIB_PATH)
 pwork.o: pwork.c  pwork.h
-	$(CC) -c pwork.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
-pvoice.o: pvoice.c  pvoice.h
-	$(CC) -c pvoice.c -I ./alsa $(INCLUDE_PATH) $(LIB_PATH)
+	$(CC) -c pwork.c  $(INCLUDE_PATH) $(LIB_PATH)
+pvoice.o: pvoice.c  pvoice.h  alsaplay.c  alsaplay.h
+	$(CC) -c pvoice.c  $(INCLUDE_PATH) $(LIB_PATH)
+	$(CC) -c alsaplay.c $(INCLUDE_PATH) $(LIB_PATH)
 queue.o: queue.c  queue.h
 	$(CC) -c queue.c  $(INCLUDE_PATH) $(LIB_PATH)
 postcallback: postcallback.c md5.c
@@ -37,4 +38,3 @@ main_alsa:
 	make -C $(ALSA_PATH)
 clean: 
 	rm ./*.o
-	rm ./alsa/*.o

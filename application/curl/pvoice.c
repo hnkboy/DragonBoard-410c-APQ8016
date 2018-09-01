@@ -23,11 +23,13 @@ static void myfunc()
 void quemsg_snd_voice(char *pbuf ,char *strvolume)
 {
 	char buf[40];
-    memcpy(buf,pbuf,sizeof(pbuf));
-    buf += 20;  
-    memcpy(buf,strvolume,sizeof(strvolume));
-
-    quemsg_snd(200,pbuf,strlen(pbuf));
+    memcpy(buf,pbuf,strlen(pbuf));
+    buf[strlen(pbuf)] = '\0';
+    memcpy(&buf[20],strvolume,strlen(strvolume));
+    buf[strlen(strvolume)+20] = '\0';
+    printf("%s,%s\n",buf,&buf[20]);
+    //quemsg_snd(200,pbuf,strlen(pbuf));
+    quemsg_snd(200,buf,40);
 }
 
 void playvoice(char *pbuf ,char *strvolume)
@@ -36,8 +38,8 @@ void playvoice(char *pbuf ,char *strvolume)
     if (0 != pbuf) 
     {
         sprintf(svstr,"./voice/%s",pbuf);
-        printf("%s\n",pbuf);
-        playback_wav(svstr,strvolume);    
+        //playback_wav(svstr,strvolume);    
+        playback_mp3(svstr,strvolume);
     }
 }
 
@@ -59,7 +61,7 @@ void *voicemain(void*p){
 		}
 		else
 		{
-			playvoice(buf,(buf + 20));
+			playvoice(buf,&buf[20]);
 		}
 
 	}

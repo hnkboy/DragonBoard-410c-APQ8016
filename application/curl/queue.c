@@ -37,8 +37,9 @@ int quemsg_snd(long type,char *a,int len)
 	}
 	mswr.mtype = type;
 	bzero(mswr.mtex,40);
-	stpcpy(mswr.mtex, a);
-	if(msgsnd(msid,&mswr,strlen(mswr.mtex),0)==-1)//将mswr中的内容放到消息队列msid中放入大小为strlen,未发送则阻塞
+	//stpcpy(mswr.mtex, a);
+	memcpy(mswr.mtex, a, len);
+	if(msgsnd(msid,&mswr,40,0)==-1)//将mswr中的内容放到消息队列msid中放入大小为strlen,未发送则阻塞
 	{
 		perror("send fail");
 		return 1;
@@ -54,8 +55,9 @@ int quemsg_rcv(long type,char *aumsg)
 		printf("get message fail\n");
 		return -1;
 	}
-	printf("rev massage : %s.   type=%ld \n",msre.mtex,type);
-	stpcpy(aumsg,msre.mtex);
+	printf("rev massage : %s. %s.   type=%ld \n",msre.mtex,&msre.mtex[20],type);
+	//stpcpy(aumsg,msre.mtex);
+	memcpy(aumsg,mswr.mtex,40);
 	return 0;
 }
 void queue_fini()

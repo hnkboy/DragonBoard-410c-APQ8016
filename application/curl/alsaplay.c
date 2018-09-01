@@ -12,12 +12,12 @@ int set_pcm();
 void set_volume(long volume);
 snd_pcm_t* handle=NULL; //PCI设备句柄
 snd_pcm_hw_params_t* params=NULL;//硬件信息和PCM流配置
-   快看看
 //int main(int argc, char *argv[])
-int playback_wav(char *strpath,char *strvolume) 
+int playback_mp3(char *strpath,char *strvolume) 
 {
   struct stat stat;
   void *fdm;
+  printf("play %s,volume=%s.\n",strpath,strvolume);
 /*
   if (argc != 3)
     {
@@ -56,7 +56,7 @@ int playback_wav(char *strpath,char *strvolume)
     }
     //set_volume(atoi(argv[2]));
     set_volume(atoi(strvolume));
-
+    printf("set volume %d",atoi(strvolume));
     decode(fdm, stat.st_size);
 
     if (munmap(fdm, stat.st_size) == -1)

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include <signal.h>
 #include <pthread.h>
 #include <time.h>
@@ -84,12 +85,13 @@ int main()
         printf("\n:");
         tmp = 'j';
         sleep(1);
-       // scanf("%c",&tmp);
+        scanf("%c",&tmp);
         if('a'==tmp)
         {
 		//	testvioce();
        //     pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
-            (void)quemsg_snd_voice("opendoor.wav","50");
+        //    (void)quemsg_snd_voice("opendoor.wav","50");
+            (void)quemsg_snd_voice("oclock.mp3","90");
         }
 		else if ('p'==tmp)
         {
@@ -97,7 +99,7 @@ int main()
  		}
 		else if ('w'==tmp)
         {
-			playback_wav("/root/02.wav");
+			//playback_wav("/root/02.wav","20");
             pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
  		}
 		else if ('e'==tmp)

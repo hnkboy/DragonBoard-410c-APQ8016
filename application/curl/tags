@@ -6,7 +6,6 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 ADD	cJSON/cJSON_Utils.c	/^enum patch_operation { INVALID, ADD, REMOVE, REPLACE, MOVE, COPY, TEST };$/;"	e	enum:patch_operation	file:
 ALSA_PATH	Makefile	/^ALSA_PATH = .\/alsa$/;"	m
-ALSA_PCM_NEW_HW_PARAMS_API	alsa/playback.c	11;"	d	file:
 ASSIGN_VALUE	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	350;"	d	file:
 ASSIGN_VALUE	cJSON/tests/unity/test/tests/testunity.c	3296;"	d	file:
 AWK_SCRIPT	cJSON/tests/unity/test/Makefile	/^AWK_SCRIPT=\\$/;"	m
@@ -14,12 +13,11 @@ AbortFrame	cJSON/tests/unity/src/unity_internals.h	/^    jmp_buf AbortFrame;$/;"
 ArgvParser	cJSON/tests/unity/auto/stylize_as_junit.rb	/^class ArgvParser$/;"	c
 AssertEqualExampleStruct	cJSON/tests/unity/examples/example_3/helper/UnityHelper.c	/^void AssertEqualExampleStruct(const EXAMPLE_STRUCT_T expected, const EXAMPLE_STRUCT_T actual, const unsigned short line)$/;"	f
 BUF_SIZE	client.c	8;"	d	file:
-BUF_SIZE	prevpkt.c	19;"	d	file:
+BUF_SIZE	prevpkt.c	18;"	d	file:
 BUF_SIZE	voiceclient.c	8;"	d	file:
 BUILD_DIR	cJSON/tests/unity/extras/fixture/test/Makefile	/^BUILD_DIR = ..\/build$/;"	m
 BUILD_DIR	cJSON/tests/unity/test/Makefile	/^BUILD_DIR = build$/;"	m
 CC	Makefile	/^CC = gcc$/;"	m
-CC	alsa/Makefile	/^CC = cc$/;"	m
 CC	cJSON/Makefile	/^CC = gcc$/;"	m
 CC	cJSON/tests/unity/extras/fixture/test/Makefile	/^CC = clang$/;"	m
 CC	cJSON/tests/unity/extras/fixture/test/Makefile	/^CC = gcc$/;"	m
@@ -145,8 +143,8 @@ DEF_H	cJSON/tests/unity/test/testdata/Defs.h	2;"	d
 DOUBLES_EQUAL	cJSON/tests/unity/extras/fixture/src/unity_fixture.h	77;"	d
 D_unity_output_Spy_H	cJSON/tests/unity/extras/fixture/test/unity_output_Spy.h	9;"	d
 E	cJSON/tests/unity/test/Makefile	/^E = -Weverything$/;"	m
-EPOLL_SIZE	prevpkt.c	20;"	d	file:
-EPOLL_SIZE	pwork.c	18;"	d	file:
+EPOLL_SIZE	prevpkt.c	19;"	d	file:
+EPOLL_SIZE	pwork.c	21;"	d	file:
 EXPAND_AND_USE_2ND	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	352;"	d	file:
 EXPAND_AND_USE_2ND	cJSON/tests/unity/test/tests/testunity.c	3298;"	d	file:
 EXPECT_ABORT_BEGIN	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	333;"	d	file:
@@ -183,6 +181,7 @@ Guard	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^} Guard;$/;"	t	type
 GuardBytes	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^typedef struct GuardBytes$/;"	s	file:
 H	md5.h	14;"	d
 HH	md5.h	30;"	d
+H_ALSAPLAY__	alsaplay.h	2;"	d
 H_JSON__	json.h	2;"	d
 I	md5.h	15;"	d
 IGNORE_TEST	cJSON/tests/unity/extras/fixture/src/unity_fixture.h	43;"	d
@@ -203,7 +202,7 @@ InternalMalloc	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^TEST
 IsStringInBiggerString	cJSON/tests/unity/src/unity.c	/^int IsStringInBiggerString(const char* longstring, const char* shortstring)$/;"	f
 LDLIBS	cJSON/Makefile	/^LDLIBS = -lm$/;"	m
 LIBRARY_PATH	cJSON/Makefile	/^LIBRARY_PATH ?= lib$/;"	m
-LIBS	Makefile	/^LIBS = -lcurl -lcjson -lasound -pthread -lrt$/;"	m
+LIBS	Makefile	/^LIBS = -lcurl -lcjson -lasound -pthread -lrt -lmad$/;"	m
 LIBVERSION	cJSON/Makefile	/^LIBVERSION = 1.7.7$/;"	m
 LIB_PATH	Makefile	/^LIB_PATH = $(curllib) $(alsalib) $(cjsonlib)$/;"	m
 LONGS_EQUAL	cJSON/tests/unity/extras/fixture/src/unity_fixture.h	75;"	d
@@ -224,8 +223,6 @@ MKDIR	cJSON/tests/unity/examples/example_2/makefile	/^	MKDIR = mkdir -p$/;"	m
 MKDIR	cJSON/tests/unity/examples/example_2/makefile	/^	MKDIR = mkdir$/;"	m
 MOCK_MOCK_H	cJSON/tests/unity/test/testdata/mockMock.h	2;"	d
 MOVE	cJSON/cJSON_Utils.c	/^enum patch_operation { INVALID, ADD, REMOVE, REPLACE, MOVE, COPY, TEST };$/;"	e	enum:patch_operation	file:
-MemoryStruct	curl_get.c	/^struct MemoryStruct {$/;"	s	file:
-MemoryStruct	curl_get_writefile.c	/^struct MemoryStruct {$/;"	s	file:
 MemoryStruct	getinmemory.c	/^struct MemoryStruct {$/;"	s	file:
 MemoryStruct	postcallback.c	/^struct MemoryStruct {$/;"	s	file:
 NameFilter	cJSON/tests/unity/extras/fixture/src/unity_fixture_internals.h	/^    const char* NameFilter;$/;"	m	struct:UNITY_FIXTURE_T
@@ -234,7 +231,7 @@ NumbersToFind	cJSON/tests/unity/examples/example_1/src/ProductionCode.c	/^int Nu
 NumbersToFind	cJSON/tests/unity/examples/example_2/src/ProductionCode.c	/^int NumbersToFind[9] = { 0, 34, 55, 66, 32, 11, 1, 77, 888 }; \/\/some obnoxious array to search that is 1-based indexing instead of 0.$/;"	v
 NumbersToFind	cJSON/tests/unity/examples/example_3/src/ProductionCode.c	/^int NumbersToFind[9] = { 0, 34, 55, 66, 32, 11, 1, 77, 888 }; \/\/some obnoxious array to search that is 1-based indexing instead of 0.$/;"	v
 PADDING	md5.c	/^unsigned char PADDING[] =$/;"	v
-PKTMQNAME	prevpkt.c	21;"	d	file:
+PKTMQNAME	prevpkt.c	20;"	d	file:
 PREFIX	cJSON/Makefile	/^PREFIX ?= \/usr$/;"	m
 ParseOutput	cJSON/tests/unity/auto/parse_output.rb	/^class ParseOutput$/;"	c
 PointerPair	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^struct PointerPair$/;"	s	file:
@@ -1226,18 +1223,11 @@ VERIFY_FAILS_END	cJSON/tests/unity/test/tests/testparameterized.c	19;"	d	file:
 VERIFY_FAILS_END	cJSON/tests/unity/test/tests/testunity.c	26;"	d	file:
 VERIFY_IGNORES_END	cJSON/tests/unity/test/tests/testparameterized.c	31;"	d	file:
 VERIFY_IGNORES_END	cJSON/tests/unity/test/tests/testunity.c	39;"	d	file:
-VOICEMQNAME	pwork.c	19;"	d	file:
+VOICEMQNAME	pwork.c	22;"	d	file:
 Verbose	cJSON/tests/unity/extras/fixture/src/unity_fixture_internals.h	/^    int Verbose;$/;"	m	struct:UNITY_FIXTURE_T
-WAV_HEADER	alsa/playback_wav.c	/^struct WAV_HEADER$/;"	s	file:
-WriteMemoryCallback	curl_get.c	/^WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)$/;"	f	file:
-WriteMemoryCallback	curl_get_writefile.c	/^WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)$/;"	f	file:
 WriteMemoryCallback	getinmemory.c	/^WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)$/;"	f	file:
 WriteMemoryCallback	postcallback.c	/^static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)$/;"	f	file:
-WriteThis	curl_post.c	/^                                   struct WriteThis {$/;"	s	file:
 WriteThis	postcallback.c	/^struct WriteThis {$/;"	s	file:
-WriteThis	testpost.c	/^struct WriteThis {$/;"	s	file:
-_ALSA_JIALI_H	alsa/playback.h	11;"	d
-_ALSA_WAV_H	alsa/playback_wav.h	2;"	d
 _CRT_SECURE_NO_DEPRECATE	cJSON/cJSON.c	28;"	d	file:
 _CRT_SECURE_NO_DEPRECATE	cJSON/cJSON_Utils.c	25;"	d	file:
 _TESTHELPER_H	cJSON/tests/unity/examples/example_3/helper/UnityHelper.h	2;"	d
@@ -1261,10 +1251,7 @@ add_item_to_array	cJSON/cJSON.c	/^static cJSON_bool add_item_to_array(cJSON *arr
 add_item_to_object	cJSON/cJSON.c	/^static cJSON_bool add_item_to_object(cJSON * const object, const char * const string, cJSON * const item, const internal_hooks * const hooks, const cJSON_bool constant_key)$/;"	f	file:
 address	cJSON/test.c	/^    const char *address;$/;"	m	struct:record	file:
 age	json.c	/^	int age;$/;"	m	struct:__anon1	file:
-age	json_he.c	/^	int age;$/;"	m	struct:__anon12	file:
-age	json_sojson.c	/^	int age;$/;"	m	struct:__anon11	file:
 allocate	cJSON/cJSON.c	/^    void *(*allocate)(size_t size);$/;"	m	struct:internal_hooks	file:
-alsa_init	alsa/playback.c	/^snd_pcm_t *alsa_init(snd_pcm_hw_params_t *params, $/;"	f
 announceTestRun	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static void announceTestRun(unsigned int runNumber)$/;"	f	file:
 apply_patch	cJSON/cJSON_Utils.c	/^static int apply_patch(cJSON *object, const cJSON *patch, const cJSON_bool case_sensitive)$/;"	f	file:
 array	cJSON/cJSON.h	/^CJSON_PUBLIC(int) cJSON_GetArraySize(const cJSON *array);$/;"	v
@@ -1301,6 +1288,7 @@ assert_print_string	cJSON/tests/print_string.c	/^static void assert_print_string
 assert_print_value	cJSON/tests/print_value.c	/^static void assert_print_value(const char *input)$/;"	f	file:
 boolean	cJSON/cJSON.h	/^CJSON_PUBLIC(cJSON *) cJSON_CreateBool(cJSON_bool boolean);$/;"	v
 boolean	cJSON/include/cjson/cJSON.h	/^CJSON_PUBLIC(cJSON *) cJSON_CreateBool(cJSON_bool boolean);$/;"	v
+buffer	alsaplay.c	/^struct buffer {$/;"	s	file:
 buffer	cJSON/cJSON.c	/^    unsigned char *buffer;$/;"	m	struct:__anon5	file:
 buffer	cJSON/tests/unity/extras/fixture/test/unity_output_Spy.c	/^static char* buffer;$/;"	v	file:
 buffer	md5.h	/^	unsigned char buffer[64];   $/;"	m	struct:__anon2
@@ -1439,13 +1427,8 @@ cJSON_bool	cJSON/include/cjson/cJSON.h	/^typedef int cJSON_bool;$/;"	t
 cJSON_free	cJSON/cJSON.c	/^CJSON_PUBLIC(void) cJSON_free(void *object)$/;"	f
 cJSON_malloc	cJSON/cJSON.c	/^CJSON_PUBLIC(void *) cJSON_malloc(size_t size)$/;"	f
 cJSON_strdup	cJSON/cJSON.c	/^static unsigned char* cJSON_strdup(const unsigned char* string, const internal_hooks * const hooks)$/;"	f	file:
-cJSON_to_str	json_sojson.c	/^int cJSON_to_str(char *json_string, char *str_val)$/;"	f
 cJSON_to_struct	json.c	/^int cJSON_to_struct(char *json_string, people *person)$/;"	f
-cJSON_to_struct	json_he.c	/^int cJSON_to_struct(char *json_string, people *person)$/;"	f
-cJSON_to_struct	json_sojson.c	/^int cJSON_to_struct(char *json_string, people *person)$/;"	f
 cJSON_to_struct_array	json.c	/^int cJSON_to_struct_array(char *text, people worker[])$/;"	f
-cJSON_to_struct_array	json_he.c	/^int cJSON_to_struct_array(char *text, people worker[])$/;"	f
-cJSON_to_struct_array	json_sojson.c	/^int cJSON_to_struct_array(char *text, people worker[])$/;"	f
 calloc	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	162;"	d	file:
 calloc	cJSON/tests/unity/extras/fixture/src/unity_fixture_malloc_overrides.h	38;"	d
 can_access_at_index	cJSON/cJSON.c	260;"	d	file:
@@ -1520,7 +1503,6 @@ cjsonlib	Makefile	/^cjsonlib = -L .\/cJSON\/lib$/;"	m
 cjsonlin	Makefile	/^cjsonlin = -I .\/cJSON\/include$/;"	m
 clocksharp_done	pwork.c	/^    char clocksharp_done;  $/;"	m	struct:tagmor_s	file:
 clocksharp_flag	pwork.c	/^    char clocksharp_flag;$/;"	m	struct:tagmor_s	file:
-close_alse	alsa/playback.c	/^int close_alse(snd_pcm_t *handle){$/;"	f
 colour_print	cJSON/tests/unity/auto/colour_prompt.rb	/^def colour_print(role, str)$/;"	f
 colour_puts	cJSON/tests/unity/auto/colour_prompt.rb	/^def colour_puts(role, str)$/;"	f
 compare_from_string	cJSON/tests/compare_tests.c	/^static cJSON_bool compare_from_string(const char * const a, const char * const b, const cJSON_bool case_sensitive)$/;"	f	file:
@@ -1578,10 +1560,9 @@ d	cJSON/tests/unity/src/unity.c	/^    double d;$/;"	m	union:__anon9	file:
 d_zero	cJSON/tests/unity/test/tests/testunity.c	/^static const UNITY_DOUBLE d_zero = 0.0;$/;"	v	file:
 dashRNotLast	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static const char* dashRNotLast[] = {$/;"	v	file:
 data	cJSON/tests/unity/extras/fixture/test/template_fixture_tests.c	/^static int data = -1;$/;"	v	file:
-data	curl_post.c	/^                       static const char data[]="Lorem ipsum dolor sit amet, consectetur adipiscing "$/;"	v	file:
 data	postcallback.c	/^static const char data[]="Lorem ipsum dolor sit amet, consectetur adipiscing "$/;"	v	file:
-data	testpost.c	/^static const char data[]="Lorem ipsum dolor sit amet, consectetur adipiscing "$/;"	v	file:
 deallocate	cJSON/cJSON.c	/^    void (*deallocate)(void *pointer);$/;"	m	struct:internal_hooks	file:
+decode	alsaplay.c	/^int decode(unsigned char const *start, unsigned long length)$/;"	f	file:
 decode_array_index_from_pointer	cJSON/cJSON_Utils.c	/^static cJSON_bool decode_array_index_from_pointer(const unsigned char * const pointer, size_t * const index)$/;"	f	file:
 decode_patch_operation	cJSON/cJSON_Utils.c	/^static enum patch_operation decode_patch_operation(const cJSON * const patch, const cJSON_bool case_sensitive)$/;"	f	file:
 decode_pointer_inplace	cJSON/cJSON_Utils.c	/^static void decode_pointer_inplace(unsigned char *string)$/;"	f	file:
@@ -1593,24 +1574,19 @@ destroy	cJSON/tests/unity/auto/generate_module.rb	/^  def destroy(module_name, p
 detach_item_from_array	cJSON/cJSON_Utils.c	/^static cJSON *detach_item_from_array(cJSON *array, size_t which)$/;"	f	file:
 detach_path	cJSON/cJSON_Utils.c	/^static cJSON *detach_path(cJSON *object, const unsigned char *path, const cJSON_bool case_sensitive)$/;"	f	file:
 detect_os	cJSON/tests/unity/auto/parse_output.rb	/^  def detect_os$/;"	f	class:ParseOutput
-dld	alsa/playback_wav.c	/^    char dld[4]; \/\/”data“$/;"	m	struct:WAV_HEADER	file:
 do_test	cJSON/tests/parse_examples.c	/^static void do_test(const char *test_name)$/;"	f	file:
 dofile	json.c	/^int dofile(char *filename,weather *pweather)$/;"	f
-dofile	json_he.c	/^int dofile(char *filename,weather *pweather)$/;"	f
-dofile	json_sojson.c	/^int dofile(char *filename,weather *pweather)$/;"	f
 email	json.c	/^	char email[64];$/;"	m	struct:__anon1	file:
-email	json_he.c	/^	char email[64];$/;"	m	struct:__anon12	file:
-email	json_sojson.c	/^	char email[64];$/;"	m	struct:__anon11	file:
 encode_string_as_pointer	cJSON/cJSON_Utils.c	/^static void encode_string_as_pointer(unsigned char *destination, const unsigned char *source)$/;"	f	file:
 end	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static const char end[] = "END";$/;"	v	file:
 endPutcharSpy	cJSON/tests/unity/test/tests/testunity.c	/^void endPutcharSpy(void) {putcharSpyEnabled = 0;}$/;"	f
 ensure	cJSON/cJSON.c	/^static unsigned char* ensure(printbuffer * const p, size_t needed)$/;"	f	file:
 ensure_should_fail_on_failed_realloc	cJSON/tests/misc_tests.c	/^static void ensure_should_fail_on_failed_realloc(void)$/;"	f	file:
+error	alsaplay.c	/^enum mad_flow error(void *data,$/;"	f	file:
 error	cJSON/cJSON.c	/^} error;$/;"	t	typeref:struct:__anon3	file:
 error_handler	prevpkt.c	/^void error_handler(const char* message)$/;"	f
 error_handling	client.c	/^void error_handling(char* message)$/;"	f
 error_handling	voiceclient.c	/^void error_handling(char* message)$/;"	f
-exce_alsa	alsa/playback.c	/^int exce_alsa(snd_pcm_t *handle,$/;"	f
 execute	cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def execute(command_string, verbose = true, raise_on_fail = true)$/;"	f
 execute	cJSON/tests/unity/extras/fixture/rakefile_helper.rb	/^  def execute(command_string, verbose = true)$/;"	f
 execute	cJSON/tests/unity/test/rakefile_helper.rb	/^  def execute(command_string, ok_to_fail = false)$/;"	f
@@ -1623,7 +1599,6 @@ extest_ShouldHandleCExceptionInTest	cJSON/tests/unity/test/testdata/testRunnerGe
 extract_headers	cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def extract_headers(filename)$/;"	f	class:RakefileHelpers
 extract_headers	cJSON/tests/unity/test/rakefile_helper.rb	/^  def extract_headers(filename)$/;"	f	class:RakefileHelpers
 f	cJSON/tests/unity/src/unity.c	/^    float f;$/;"	m	union:__anon9	file:
-fLen	alsa/playback_wav.c	/^    int fLen; \/\/sizeof(wave format matex)$/;"	m	struct:WAV_HEADER	file:
 f_zero	cJSON/tests/unity/test/tests/testunity.c	/^static const UNITY_FLOAT f_zero = 0.0f;$/;"	v	file:
 fail_out	cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def fail_out(msg)$/;"	f
 failing_hooks	cJSON/tests/cjson_add.c	/^static cJSON_Hooks failing_hooks = {$/;"	v	file:
@@ -1649,11 +1624,7 @@ find_source_file	cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def
 find_source_file	cJSON/tests/unity/test/rakefile_helper.rb	/^  def find_source_file(header, paths)$/;"	f	class:RakefileHelpers
 find_tests	cJSON/tests/unity/auto/generate_test_runner.rb	/^  def find_tests(source)$/;"	f	class:UnityTestRunnerGenerator
 firstName	json.c	/^	char firstName[32];$/;"	m	struct:__anon1	file:
-firstName	json_he.c	/^	char firstName[32];$/;"	m	struct:__anon12	file:
-firstName	json_sojson.c	/^	char firstName[32];$/;"	m	struct:__anon11	file:
-fld	alsa/playback_wav.c	/^    char fld[4]; \/\/"fmt"$/;"	m	struct:WAV_HEADER	file:
 format	cJSON/cJSON.c	/^    cJSON_bool format; \/* is this print a formatted print *\/$/;"	m	struct:__anon5	file:
-fp	curl_get_writefile.c	/^FILE *fp;$/;"	v
 fp	getinmemory.c	/^FILE *fp;$/;"	v
 free	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	161;"	d	file:
 free	cJSON/tests/unity/extras/fixture/src/unity_fixture_malloc_overrides.h	40;"	d
@@ -1689,10 +1660,9 @@ groupSelected	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static int 
 gsm_flag	puart.c	/^unsigned char temp,gsm_flag;$/;"	v
 gsm_mor_flag	pwork.c	/^unsigned char gsm_mor_flag;$/;"	v
 guard_space	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^    size_t guard_space;$/;"	m	struct:GuardBytes	file:
+handle	alsaplay.c	/^snd_pcm_t* handle=NULL; \/\/PCI设备句柄$/;"	v
 heap_index	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static size_t heap_index;$/;"	v	file:
 height	json.c	/^	float height;$/;"	m	struct:__anon1	file:
-height	json_he.c	/^	float height;$/;"	m	struct:__anon12	file:
-height	json_sojson.c	/^	float height;$/;"	m	struct:__anon11	file:
 here	cJSON/tests/unity/auto/stylize_as_junit.rb	/^  def here$/;"	f
 here	cJSON/tests/unity/auto/unity_test_summary.rb	/^  def here$/;"	f
 hooks	cJSON/cJSON.c	/^    internal_hooks hooks;$/;"	m	struct:__anon4	file:
@@ -1704,9 +1674,6 @@ i32	cJSON/tests/unity/src/unity.c	/^    UNITY_INT32 i32;$/;"	m	union:__anon9	fil
 i64	cJSON/tests/unity/src/unity.c	/^    UNITY_INT64 i64;$/;"	m	union:__anon9	file:
 i8	cJSON/tests/unity/src/unity.c	/^    UNITY_INT8 i8;$/;"	m	union:__anon9	file:
 id	json.c	/^	int id;$/;"	m	struct:__anon1	file:
-id	json_he.c	/^	int id;$/;"	m	struct:__anon12	file:
-id	json_sojson.c	/^	int id;$/;"	m	struct:__anon11	file:
-in	alsa/Makefile	/^in = -I \/home\/jiali\/Documents\/FriendlyARM\/toolschain\/4.4.3\/include\/$/;"	m
 indexSpyBuffer	cJSON/tests/unity/test/tests/testunity.c	/^static int indexSpyBuffer;$/;"	v	file:
 initialize	cJSON/tests/unity/auto/colour_prompt.rb	/^  def initialize$/;"	f	class:ColourCommandLine
 initialize	cJSON/tests/unity/auto/generate_module.rb	/^  def initialize(options = nil)$/;"	f	class:UnityModuleGenerator
@@ -1715,6 +1682,7 @@ initialize	cJSON/tests/unity/auto/parse_output.rb	/^  def initialize$/;"	f	class
 initialize	cJSON/tests/unity/auto/stylize_as_junit.rb	/^  def initialize$/;"	f	class:UnityToJUnit
 initialize	cJSON/tests/unity/auto/test_file_filter.rb	/^    def initialize(all_files = false)$/;"	f	class:RakefileHelpers.TestFileFilter
 initialize	cJSON/tests/unity/auto/unity_test_summary.rb	/^  def initialize(_opts = {})$/;"	f	class:UnityTestSummary
+input	alsaplay.c	/^enum mad_flow input(void *data,$/;"	f	file:
 insert_item_in_array	cJSON/cJSON_Utils.c	/^static cJSON_bool insert_item_in_array(cJSON *array, size_t which, cJSON *newitem)$/;"	f	file:
 int1	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static int int1;$/;"	v	file:
 int2	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static int int2;$/;"	v	file:
@@ -1766,12 +1734,10 @@ json	cJSON/cJSON.c	/^    const unsigned char *json;$/;"	m	struct:__anon3	file:
 json	cJSON/tests/readme_examples.c	/^static const char *json = "{\\n\\$/;"	v	file:
 json_pointer_tests	cJSON/tests/old_utils_tests.c	/^static void json_pointer_tests(void)$/;"	f	file:
 lastName	json.c	/^	char lastName[32];$/;"	m	struct:__anon1	file:
-lastName	json_he.c	/^	char lastName[32];$/;"	m	struct:__anon12	file:
-lastName	json_sojson.c	/^	char lastName[32];$/;"	m	struct:__anon11	file:
 lat	cJSON/test.c	/^    double lat;$/;"	m	struct:record	file:
+length	alsaplay.c	/^  unsigned long length;$/;"	m	struct:buffer	file:
 length	cJSON/cJSON.c	/^    size_t length;$/;"	m	struct:__anon4	file:
 length	cJSON/cJSON.c	/^    size_t length;$/;"	m	struct:__anon5	file:
-lib	alsa/Makefile	/^lib = -L \/home\/jiali\/Documents\/FriendlyARM\/toolschain\/4.4.3\/lib\/$/;"	m
 link_it	cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def link_it(exe_name, obj_list)$/;"	f
 link_it	cJSON/tests/unity/extras/fixture/rakefile_helper.rb	/^  def link_it(exe_name, obj_list)$/;"	f
 link_it	cJSON/tests/unity/test/rakefile_helper.rb	/^  def link_it(exe_name, obj_list)$/;"	f
@@ -1782,7 +1748,6 @@ load_configuration	cJSON/tests/unity/test/rakefile_helper.rb	/^  def load_config
 local_include_dirs	cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def local_include_dirs$/;"	f	class:RakefileHelpers
 local_include_dirs	cJSON/tests/unity/test/rakefile_helper.rb	/^  def local_include_dirs$/;"	f	class:RakefileHelpers
 lon	cJSON/test.c	/^    double lon;$/;"	m	struct:record	file:
-main	alsa/main.c	/^int main()$/;"	f
 main	cJSON/fuzzing/afl.c	/^int main(int argc, char** argv)$/;"	f
 main	cJSON/test.c	/^int main(void)$/;"	f
 main	cJSON/tests/cjson_add.c	/^int main(void)$/;"	f
@@ -1830,19 +1795,13 @@ main	cJSON/tests/unity/test/expectdata/testsample_yaml.c	/^int main(void)$/;"	f
 main	cJSON/tests/unity/test/testdata/testRunnerGenerator.c	/^int main(void)$/;"	f
 main	cJSON/tests/unity/test/testdata/testRunnerGeneratorWithMocks.c	/^int main(void)$/;"	f
 main	client.c	/^int main(int argc,char* argv[])$/;"	f
-main	curl_get.c	/^int main(void)$/;"	f
-main	curl_get_writefile.c	/^int main(void)$/;"	f
-main	curl_post.c	/^                                   int main(void)$/;"	f
 main	main.c	/^int main()$/;"	f
-main	testpost.c	/^int main(void)$/;"	f
 malloc	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	160;"	d	file:
 malloc	cJSON/tests/unity/extras/fixture/src/unity_fixture_malloc_overrides.h	37;"	d
 malloc_count	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static int malloc_count;$/;"	v	file:
 malloc_fail_countdown	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static int malloc_fail_countdown = MALLOC_DONT_FAIL;$/;"	v	file:
 malloc_fn	cJSON/cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
 malloc_fn	cJSON/include/cjson/cJSON.h	/^      void *(*malloc_fn)(size_t sz);$/;"	m	struct:cJSON_Hooks
-memory	curl_get.c	/^  char *memory;$/;"	m	struct:MemoryStruct	file:
-memory	curl_get_writefile.c	/^  char *memory;$/;"	m	struct:MemoryStruct	file:
 memory	getinmemory.c	/^  char *memory;$/;"	m	struct:MemoryStruct	file:
 memory	postcallback.c	/^  char *memory;$/;"	m	struct:MemoryStruct	file:
 merge_patch	cJSON/cJSON_Utils.c	/^static cJSON *merge_patch(cJSON *target, const cJSON * const patch, const cJSON_bool case_sensitive)$/;"	f	file:
@@ -1868,17 +1827,13 @@ mswr	queue.c	/^struct msgbuf msre,mswr;$/;"	v	typeref:struct:
 mtex	queue.c	/^    char mtex[40];$/;"	m	struct:msgbuf	file:
 mtype	queue.c	/^    long mtype;$/;"	m	struct:msgbuf	file:
 multiple	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static const char* multiple[] = {$/;"	v	file:
-myfunc	alsa/main.c	/^void myfunc()$/;"	f
 myfunc	main.c	/^void myfunc()$/;"	f
 myfunc	plisten.c	/^static void myfunc()$/;"	f	file:
 myfunc	puart.c	/^static void myfunc()$/;"	f	file:
 myfunc	pvoice.c	/^static void myfunc()$/;"	f	file:
 myfunc	pwork.c	/^static void myfunc()$/;"	f	file:
 mygroup	cJSON/tests/unity/extras/fixture/test/template_fixture_tests.c	/^TEST_GROUP(mygroup);$/;"	v
-mythread	alsa/main.c	/^static void *mythread(void*p){$/;"	f	file:
 mythread	main.c	/^static void *mythread(void*p){$/;"	f	file:
-nAvgBitsPerSample	alsa/playback_wav.c	/^    int nAvgBitsPerSample;\/\/WAVE文件采样大小$/;"	m	struct:WAV_HEADER	file:
-nSamplesPersec	alsa/playback_wav.c	/^    int nSamplesPersec ; \/\/采样频率$/;"	m	struct:WAV_HEADER	file:
 name	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static const char* name[] = {$/;"	v	file:
 next	cJSON/cJSON.h	/^    struct cJSON *next;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
 next	cJSON/include/cjson/cJSON.h	/^    struct cJSON *next;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
@@ -1893,9 +1848,11 @@ offset	cJSON/cJSON.c	/^    size_t offset;$/;"	m	struct:__anon4	file:
 offset	cJSON/cJSON.c	/^    size_t offset;$/;"	m	struct:__anon5	file:
 old_value	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^    void* old_value;$/;"	m	struct:PointerPair	file:
 out_c	cJSON/tests/unity/auto/colour_prompt.rb	/^  def out_c(mode, colour, str)$/;"	f	class:ColourCommandLine
+output	alsaplay.c	/^enum mad_flow output(void *data,$/;"	f	file:
 overwrite_item	cJSON/cJSON_Utils.c	/^static void overwrite_item(cJSON * const root, const cJSON replacement)$/;"	f	file:
 p1	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static char *p1;$/;"	v	file:
 p2	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static char *p2;$/;"	v	file:
+params	alsaplay.c	/^snd_pcm_hw_params_t* params=NULL;\/\/硬件信息和PCM流配置$/;"	v
 paratest_ShouldHandleNonParameterizedTestsWhenParameterizationValid	cJSON/tests/unity/test/testdata/testRunnerGenerator.c	/^void paratest_ShouldHandleNonParameterizedTestsWhenParameterizationValid(void)$/;"	f
 paratest_ShouldHandleNonParameterizedTestsWhenParameterizationValid	cJSON/tests/unity/test/testdata/testRunnerGeneratorWithMocks.c	/^void paratest_ShouldHandleNonParameterizedTestsWhenParameterizationValid(void)$/;"	f
 paratest_ShouldHandleParameterizedTests	cJSON/tests/unity/test/testdata/testRunnerGenerator.c	/^void paratest_ShouldHandleParameterizedTests(int Num)$/;"	f
@@ -1953,10 +1910,8 @@ parse_with_opts_should_require_null_if_requested	cJSON/tests/parse_with_opts.c	/
 parse_with_opts_should_return_parse_end	cJSON/tests/parse_with_opts.c	/^static void parse_with_opts_should_return_parse_end(void)$/;"	f	file:
 patch_operation	cJSON/cJSON_Utils.c	/^enum patch_operation { INVALID, ADD, REMOVE, REPLACE, MOVE, COPY, TEST };$/;"	g	file:
 people	json.c	/^}people;$/;"	t	typeref:struct:__anon1	file:
-people	json_he.c	/^}people;$/;"	t	typeref:struct:__anon12	file:
-people	json_sojson.c	/^}people;$/;"	t	typeref:struct:__anon11	file:
-playback_wav	alsa/playback_wav.c	/^int playback_wav(char *path)$/;"	f
-playvoice	pvoice.c	/^void playvoice(char *pbuf ,unsigned int lenth)$/;"	f
+playback_mp3	alsaplay.c	/^int playback_mp3(char *strpath,char *strvolume) $/;"	f
+playvoice	pvoice.c	/^void playvoice(char *pbuf ,char *strvolume)$/;"	f
 pointer	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^    void** pointer;$/;"	m	struct:PointerPair	file:
 pointer1	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static int* pointer1 = 0;$/;"	v	file:
 pointer2	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static int* pointer2 = (int*)2;$/;"	v	file:
@@ -2013,24 +1968,19 @@ putcharSpyBuffer	cJSON/tests/unity/test/tests/testunity.c	/^static char putcharS
 putcharSpyEnabled	cJSON/tests/unity/test/tests/testunity.c	/^static int putcharSpyEnabled;$/;"	v	file:
 quemsg_rcv	queue.c	/^int quemsg_rcv(long type,char *aumsg)$/;"	f
 quemsg_snd	queue.c	/^int quemsg_snd(long type,char *a,int len)$/;"	f
-quemsg_snd_voice	pvoice.c	/^void quemsg_snd_voice(char *pbuf ,unsigned int lenth)$/;"	f
+quemsg_snd_voice	pvoice.c	/^void quemsg_snd_voice(char *pbuf ,char *strvolume)$/;"	f
 queue_fini	queue.c	/^void queue_fini()$/;"	f
 queue_init	queue.c	/^int queue_init()$/;"	f
 qwiktest_ThisTestPassesWhenNoSetupRan	cJSON/tests/unity/test/testdata/testRunnerGenerator.c	/^void qwiktest_ThisTestPassesWhenNoSetupRan(void)$/;"	f
 qwiktest_ThisTestPassesWhenNoSetupRan	cJSON/tests/unity/test/testdata/testRunnerGeneratorWithMocks.c	/^void qwiktest_ThisTestPassesWhenNoSetupRan(void)$/;"	f
 qwiktest_ThisTestPassesWhenNoTeardownRan	cJSON/tests/unity/test/testdata/testRunnerGenerator.c	/^void qwiktest_ThisTestPassesWhenNoTeardownRan(void)$/;"	f
 qwiktest_ThisTestPassesWhenNoTeardownRan	cJSON/tests/unity/test/testdata/testRunnerGeneratorWithMocks.c	/^void qwiktest_ThisTestPassesWhenNoTeardownRan(void)$/;"	f
-rLen	alsa/playback_wav.c	/^    int rLen; $/;"	m	struct:WAV_HEADER	file:
-read_callback	curl_post.c	/^                                   static size_t read_callback(void *dest, size_t size, size_t nmemb, void *userp)$/;"	f	file:
 read_callback	postcallback.c	/^static size_t read_callback(void *dest, size_t size, size_t nmemb, void *userp)$/;"	f	file:
-read_callback	testpost.c	/^static size_t read_callback(void *dest, size_t size, size_t nmemb, void *userp)$/;"	f	file:
 read_file	cJSON/fuzzing/afl.c	/^static char *read_file(const char *filename)$/;"	f	file:
 read_file	cJSON/tests/common.h	/^char* read_file(const char *filename) {$/;"	f
 read_handling	client.c	/^void read_handling(int sock)$/;"	f
 read_handling	voiceclient.c	/^void read_handling(int sock)$/;"	f
-readptr	curl_post.c	/^                                         const char *readptr;$/;"	m	struct:WriteThis	file:
 readptr	postcallback.c	/^  const char *readptr;$/;"	m	struct:WriteThis	file:
-readptr	testpost.c	/^  const char *readptr;$/;"	m	struct:WriteThis	file:
 realloc	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	163;"	d	file:
 realloc	cJSON/tests/unity/extras/fixture/src/unity_fixture_malloc_overrides.h	39;"	d
 reallocate	cJSON/cJSON.c	/^    void *(*reallocate)(void *pointer, size_t size);$/;"	m	struct:internal_hooks	file:
@@ -2064,7 +2014,6 @@ resetTest	cJSON/tests/unity/test/expectdata/testsample_run1.c	/^void resetTest(v
 resetTest	cJSON/tests/unity/test/expectdata/testsample_run2.c	/^void resetTest(void)$/;"	f
 resetTest	cJSON/tests/unity/test/expectdata/testsample_yaml.c	/^void resetTest(void)$/;"	f
 results_structure	cJSON/tests/unity/auto/stylize_as_junit.rb	/^  def results_structure$/;"	f
-rld	alsa/playback_wav.c	/^    char rld[4]; \/\/riff 标志符号$/;"	m	struct:WAV_HEADER	file:
 run	cJSON/tests/unity/auto/generate_test_runner.rb	/^  def run(input_file, output_file, options = nil)$/;"	f	class:UnityTestRunnerGenerator
 run	cJSON/tests/unity/auto/stylize_as_junit.rb	/^  def run$/;"	f	class:UnityToJUnit
 run	cJSON/tests/unity/auto/unity_test_summary.py	/^    def run(self):$/;"	m	class:UnityTestSummary
@@ -2081,8 +2030,8 @@ savedGroup	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static c
 savedName	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static const char* savedName;$/;"	v	file:
 savedRepeat	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static unsigned int savedRepeat;$/;"	v	file:
 savedVerbose	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static int savedVerbose;$/;"	v	file:
+scale	alsaplay.c	/^signed int scale(mad_fixed_t sample)$/;"	f	file:
 selected	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static int selected(const char* filter, const char* name)$/;"	f	file:
-set	alsa/main.c	/^sigset_t set;$/;"	v
 set	main.c	/^sigset_t set;$/;"	v
 setUp	cJSON/tests/unity/examples/example_1/test/TestProductionCode.c	/^void setUp(void)$/;"	f
 setUp	cJSON/tests/unity/examples/example_1/test/TestProductionCode2.c	/^void setUp(void)$/;"	f
@@ -2098,11 +2047,12 @@ setUp	cJSON/tests/unity/test/testdata/testRunnerGeneratorWithMocks.c	/^void setU
 setUp	cJSON/tests/unity/test/tests/testparameterized.c	/^void setUp(void)$/;"	f
 setUp	cJSON/tests/unity/test/tests/testunity.c	/^void setUp(void)$/;"	f
 set_opt	puart.c	/^int set_opt(int fd,int nSpeed, int nBits, char nEvent, int nStop)$/;"	f
-set_pcm_play	alsa/playback_wav.c	/^int set_pcm_play(FILE *fp)$/;"	f
+set_pcm	alsaplay.c	/^int set_pcm()$/;"	f
 set_root_path	cJSON/tests/unity/auto/unity_test_summary.py	/^    def set_root_path(self, path):$/;"	m	class:UnityTestSummary
 set_root_path	cJSON/tests/unity/auto/unity_to_junit.py	/^    def set_root_path(self, path):$/;"	m	class:UnityTestSummary
 set_targets	cJSON/tests/unity/auto/unity_test_summary.py	/^    def set_targets(self, target_array):$/;"	m	class:UnityTestSummary
 set_targets	cJSON/tests/unity/auto/unity_to_junit.py	/^    def set_targets(self, target_array):$/;"	m	class:UnityTestSummary
+set_volume	alsaplay.c	/^void set_volume(long volume)$/;"	f
 set_xml_output	cJSON/tests/unity/auto/parse_output.rb	/^  def set_xml_output$/;"	f	class:ParseOutput
 shightemp	json.h	/^    char shightemp[20];$/;"	m	struct:__anon10
 should	cJSON/tests/unity/test/rakefile_helper.rb	/^  def should(behave, &block)$/;"	f
@@ -2112,13 +2062,9 @@ size	cJSON/cJSON.h	/^CJSON_PUBLIC(void *) cJSON_malloc(size_t size);$/;"	v
 size	cJSON/include/cjson/cJSON.h	/^CJSON_PUBLIC(void *) cJSON_malloc(size_t size);$/;"	v
 size	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^    size_t size;$/;"	m	struct:GuardBytes	file:
 size	cJSON/tests/unity/extras/fixture/test/unity_output_Spy.c	/^static int size;$/;"	v	file:
-size	curl_get.c	/^  size_t size;$/;"	m	struct:MemoryStruct	file:
-size	curl_get_writefile.c	/^  size_t size;$/;"	m	struct:MemoryStruct	file:
 size	getinmemory.c	/^  size_t size;$/;"	m	struct:MemoryStruct	file:
 size	postcallback.c	/^  size_t size;$/;"	m	struct:MemoryStruct	file:
-sizeleft	curl_post.c	/^                                           size_t sizeleft;$/;"	m	struct:WriteThis	file:
 sizeleft	postcallback.c	/^  size_t sizeleft;$/;"	m	struct:WriteThis	file:
-sizeleft	testpost.c	/^  size_t sizeleft;$/;"	m	struct:WriteThis	file:
 skip_utf8_bom	cJSON/cJSON.c	/^static parse_buffer *skip_utf8_bom(parse_buffer * const buffer)$/;"	f	file:
 skip_utf8_bom_should_not_skip_bom_if_not_at_beginning	cJSON/tests/misc_tests.c	/^static void skip_utf8_bom_should_not_skip_bom_if_not_at_beginning(void)$/;"	f	file:
 skip_utf8_bom_should_skip_bom	cJSON/tests/misc_tests.c	/^static void skip_utf8_bom_should_skip_bom(void)$/;"	f	file:
@@ -2140,6 +2086,7 @@ spy_enable	cJSON/tests/unity/extras/fixture/test/unity_output_Spy.c	/^static int
 squash	cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def squash(prefix, items)$/;"	f
 squash	cJSON/tests/unity/extras/fixture/rakefile_helper.rb	/^  def squash(prefix, items)$/;"	f
 squash	cJSON/tests/unity/test/rakefile_helper.rb	/^  def squash(prefix, items)$/;"	f
+start	alsaplay.c	/^  unsigned char const *start;$/;"	m	struct:buffer	file:
 startPutcharSpy	cJSON/tests/unity/test/tests/testunity.c	/^void startPutcharSpy(void) {indexSpyBuffer = 0; putcharSpyEnabled = 1;}$/;"	f
 state	cJSON/test.c	/^    const char *state;$/;"	m	struct:record	file:
 state	md5.h	/^	unsigned int state[4];$/;"	m	struct:__anon2
@@ -2174,7 +2121,7 @@ tackit	cJSON/tests/unity/extras/fixture/rakefile_helper.rb	/^  def tackit(string
 tackit	cJSON/tests/unity/test/rakefile_helper.rb	/^  def tackit(strings)$/;"	f	class:RakefileHelpers
 tagmor_s	pwork.c	/^struct tagmor_s {$/;"	s	file:
 targets	cJSON/tests/unity/auto/unity_test_summary.py	/^    targets = list(map(lambda x: x.replace('\\\\', '\/'), glob(targets_dir + '*.test*')))$/;"	v	class:UnityTestSummary
-task_porc	pwork.c	/^void task_porc(){$/;"	f
+task_proc	pwork.c	/^void task_proc(){$/;"	f
 tearDown	cJSON/tests/unity/examples/example_1/test/TestProductionCode.c	/^void tearDown(void)$/;"	f
 tearDown	cJSON/tests/unity/examples/example_1/test/TestProductionCode2.c	/^void tearDown(void)$/;"	f
 tearDown	cJSON/tests/unity/examples/example_3/test/TestProductionCode.c	/^void tearDown(void)$/;"	f
@@ -2692,13 +2639,9 @@ test_ignored	cJSON/tests/unity/auto/parse_output.rb	/^  def test_ignored(array)$
 test_passed	cJSON/tests/unity/auto/parse_output.rb	/^  def test_passed(array)$/;"	f	class:ParseOutput
 test_passed_unity_fixture	cJSON/tests/unity/auto/parse_output.rb	/^  def test_passed_unity_fixture(array)$/;"	f	class:ParseOutput
 test_suite_verify	cJSON/tests/unity/auto/parse_output.rb	/^  def test_suite_verify(test_suite_name)$/;"	f	class:ParseOutput
-testvioce	alsa/playback.c	/^int testvioce(void){	$/;"	f
-tid	alsa/main.c	/^pthread_t tid;$/;"	v
 tid	main.c	/^pthread_t tid;$/;"	v
 tmp	json.h	/^	int tmp;$/;"	m	struct:__anon10
 today	json.c	/^weather today = {0};$/;"	v
-today	json_he.c	/^weather today = {0};$/;"	v
-today	json_sojson.c	/^weather today = {0};$/;"	v
 touch_src	cJSON/tests/unity/test/spec/generate_module_existing_file_spec.rb	/^def touch_src(file)$/;"	f
 touch_test	cJSON/tests/unity/test/spec/generate_module_existing_file_spec.rb	/^def touch_test(file)$/;"	f
 trevpktid	main.c	/^pthread_t trevpktid;$/;"	v
@@ -2741,15 +2684,8 @@ voicemain	pvoice.c	/^void *voicemain(void*p){$/;"	f
 voicesend	voiceclient.c	/^int voicesend(char* arg)$/;"	f
 voicesockclose	voiceclient.c	/^void voicesockclose()$/;"	f
 voicesockopen	voiceclient.c	/^int voicesockopen()$/;"	f
-wBitsPerSample	alsa/playback_wav.c	/^    short wBitsPerSample; \/\/WAVE文件采样大小$/;"	m	struct:WAV_HEADER	file:
-wBlockAlign	alsa/playback_wav.c	/^    short wBlockAlign; \/\/块对齐$/;"	m	struct:WAV_HEADER	file:
-wChannels	alsa/playback_wav.c	/^    short wChannels; \/\/声道数$/;"	m	struct:WAV_HEADER	file:
-wFormatTag	alsa/playback_wav.c	/^    short wFormatTag; \/\/编码格式$/;"	m	struct:WAV_HEADER	file:
-wSampleLength	alsa/playback_wav.c	/^    int wSampleLength; \/\/音频数据的大小$/;"	m	struct:WAV_HEADER	file:
-wav_header	alsa/playback_wav.c	/^} wav_header;$/;"	v	typeref:struct:WAV_HEADER
 weather	json.h	/^}weather;$/;"	t	typeref:struct:__anon10
 win32_colour	cJSON/tests/unity/auto/colour_prompt.rb	/^  def win32_colour(colour)$/;"	f	class:ColourCommandLine
-wld	alsa/playback_wav.c	/^    char wld[4]; \/\/格式类型（wave）$/;"	m	struct:WAV_HEADER	file:
 workmain	pwork.c	/^void *workmain(void*p){$/;"	f
 write_failures	cJSON/tests/unity/auto/stylize_as_junit.rb	/^  def write_failures(results, stream)$/;"	f
 write_handling	client.c	/^void write_handling(int sock)$/;"	f
