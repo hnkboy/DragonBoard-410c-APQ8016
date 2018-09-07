@@ -9,7 +9,7 @@ INCLUDE_PATH = $(curlin) $(alsain) $(cjsonin)
 LIB_PATH = $(curllib) $(alsalib) $(cjsonlib)
 ALSA_PATH = ./alsa
 all: main.o getinmemory.o json.o plisten.o prevpkt.o pwork.o pvoice.o  queue.o  postcallback 
-	$(CC) main.o plisten.o pwork.o getinmemory.o postcallback.o md5.o json.o   pvoice.o prevpkt.o queue.o alsaplay.o -o main $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
+	$(CC) main.o plisten.o pwork.o getinmemory.o postcallback.o md5.o json.o   pvoice.o prevpkt.o queue.o alsaplay.o -o Hali $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
 main.o: main.c getinmemory.c json.c postcallback.c
 	$(CC) -c main.c  $(INCLUDE_PATH) $(LIB_PATH)
 puart.o: puart.c puart.h 

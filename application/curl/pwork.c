@@ -67,12 +67,12 @@ void task_proc(){
     {
         case 1: 
            // (void)quemsg_snd_voice("morning.wav",12);
-        (void)quemsg_snd_voice("oclock.mp3","20");
+        (void)quemsg_snd_voice("oclock.mp3","90");
 		    printf("morning task \n");
             break;
         case 2: 
            // (void)quemsg_snd_voice("oclock.wav",12);
-        (void)quemsg_snd_voice("oclock.mp3","20");
+        (void)quemsg_snd_voice("oclock.mp3","10");
 		    printf("clock sharp task\n");
             break;
         default :break;
@@ -186,23 +186,28 @@ int getNowTime(void)
     sprintf(current, "%04d%02d%02d%02d:%02d:%02d", nowTime.tm_year + 1900, nowTime.tm_mon+1, nowTime.tm_mday, 
       nowTime.tm_hour, nowTime.tm_min, nowTime.tm_sec);
     printf("%s\n",current);
-    if (nowTime.tm_hour >6 && nowTime.tm_min >30 )
+    if (nowTime.tm_hour >= 7 )
     {
-         gmor_s.mor_flag = 1;
-         if (0 == gmor_s.mor_done )
-         {
-             
+        if (nowTime.tm_min >= 00 )
+        {
+            gmor_s.mor_flag = 1;
+            if (0 == gmor_s.mor_done )
+            {
+
             printf("morning \n");
             gmor_s.mor_done = 1;
             uc_ret = 1;
             return uc_ret;
-         }
+
+            }
+        }
     }
     else 
     {
          gmor_s.mor_flag = 0;          
          gmor_s.mor_done = 0;
     }
+    #if 0
     if (nowTime.tm_sec > 0 )
     {
 
@@ -219,6 +224,7 @@ int getNowTime(void)
         gmor_s.clocksharp_flag = 0;
         gmor_s.clocksharp_done = 0;
     }
+    #endif
 
     return uc_ret;
 }

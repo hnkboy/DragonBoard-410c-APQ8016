@@ -69,7 +69,7 @@ void uartchar_proc(char *buf, unsigned int len)
 					str2=0x0;
 					Uart2_Rx=0;
 					if (0x1 ==Uart2_Buffer[(Uart2_Buffer[3]+4)]){
-//                        mqueue_send2voice("opendoor.wav",12);
+                        quemsg_snd_voice("opendoor.mp3","70");
 					}
 				}
 			if(Uart2_Rx==40){ Uart2_Rx=0; } break;
@@ -113,7 +113,7 @@ void *prevpktmain(void *p)
     memset(&serv_addr,0,sizeof(serv_addr));
     serv_addr.sin_family=AF_INET;
     serv_addr.sin_addr.s_addr=htonl(INADDR_ANY);
-    serv_addr.sin_port= htons(2003);
+    serv_addr.sin_port= htons(2000);
 
     if(bind(serv_sock,(struct sockaddr*)&serv_addr,sizeof(serv_addr))==-1)
         error_handler("bind() error");
