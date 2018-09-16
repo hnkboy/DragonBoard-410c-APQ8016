@@ -20,6 +20,11 @@
 #define PKTMQNAME "/pktmq"
 mqd_t mqd;
 
+int serv_sock,clnt_sock;
+void pkt_send(char *pbuf)
+{
+    write(clnt_sock,pbuf,strlen(pbuf));
+}
 int mqueue_send2pkt(const char *buf,long len)
 {
 	int ret;
@@ -49,7 +54,7 @@ void uartchar_proc(char *buf, unsigned int len)
 		//printf("redatad: nread = %s\n\n\r", buf1);
 		temp = buf[index];
 		//printf("tmp=%x\n\n\r", temp);
-//		printf("%2x", temp);
+		printf("%2x", temp);
 		//printf("str2=%d\n\n\r", str2);
 		switch(str2){
 			case 0x0:
@@ -68,7 +73,10 @@ void uartchar_proc(char *buf, unsigned int len)
 					printf("\n\r");
 					str2=0x0;
 					Uart2_Rx=0;
-					if (0x1 ==Uart2_Buffer[(Uart2_Buffer[3]+4)]){
+					//if (0x1 ==Uart2_Buffer[(Uart2_Buffer[3]+4)]){
+                    //    quemsg_snd_voice("opendoor.mp3","70");
+					//}
+					if (0x1 ==Uart2_Buffer[3]){
                         quemsg_snd_voice("opendoor.mp3","70");
 					}
 				}
@@ -81,7 +89,6 @@ void uartchar_proc(char *buf, unsigned int len)
 
 void *prevpktmain(void *p)
 {
-    int serv_sock,clnt_sock;
     struct sockaddr_in serv_addr,clnt_addr;
     int clnt_addr_sz;
 

@@ -18,6 +18,7 @@
 #include "getinmemory.h"
 #include "postcallback.h"
 #include "voiceclient.h"
+#include "prevpkt.h"
 #include "queue.h"
 
 #if 0
@@ -91,7 +92,16 @@ int main()
 		//	testvioce();
        //     pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
         //    (void)quemsg_snd_voice("opendoor.wav","50");
-            (void)quemsg_snd_voice("oclock.mp3","90");
+       //     (void)quemsg_snd_voice("oclock.mp3","90");
+            char pbuf[7];
+            pbuf[0]=0x0d;
+            pbuf[1]=0x0a;
+            pbuf[2]=0x01;
+            pbuf[3]=0x01;
+            pbuf[4]=0x00;
+            pbuf[5]=0x0d;
+            pbuf[6]='\0';
+            pkt_send(pbuf);
         }
 		else if ('p'==tmp)
         {
