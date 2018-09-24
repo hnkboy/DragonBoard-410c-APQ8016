@@ -1,5 +1,7 @@
 #include "md5.h"
+#include <stdio.h>
 #include <memory.h>
+#include <string.h>
 
 unsigned char PADDING[] =
 {
@@ -24,7 +26,8 @@ void MD5Update(MD5_CTX *context, unsigned char *input, unsigned int inputlen)
 	unsigned int i = 0;
 	unsigned int index = 0;
 	unsigned int partlen = 0;
-
+    //inputlen = strlen(input);
+    printf("len = %d\n",inputlen);
 	index = (context->count[0] >> 3) & 0x3F;
 	partlen = 64 - index;
 	context->count[0] += inputlen << 3;

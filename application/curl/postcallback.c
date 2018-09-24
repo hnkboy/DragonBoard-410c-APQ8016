@@ -30,7 +30,7 @@
 #include <sys/time.h>
 #include "md5.h"
 
-#define _WAV
+#define _WAV  1
 
 /* silly test data to POST */
 static const char data[]="Lorem ipsum dolor sit amet, consectetur adipiscing "
@@ -218,15 +218,20 @@ int curl_post_data(char *svstr, int strlenth)
       chunk = curl_slist_append(chunk, "Content-Type:application/x-www-form-urlencoded");
       chunk = curl_slist_append(chunk, "charset=utf-8");
       chunk = curl_slist_append(chunk, "auf:audio/L16;rate=16000");
-      chunk = curl_slist_append(chunk, "speed:30");
-#ifdef _WAV
-      chunk = curl_slist_append(chunk, "aue:raw");
-#else
+      chunk = curl_slist_append(chunk, "speed:50");
+    #ifdef _WAV
+    //  chunk = curl_slist_append(chunk, "aue:raw");
+    #else
       chunk = curl_slist_append(chunk, "aue:lame");
-#endif 
+    #endif 
       chunk = curl_slist_append(chunk, "voice_name:xiaoyan");
       chunk = curl_slist_append(chunk, "X-Appid:5ac4bdf1");
+
+    #ifdef _WAV
       chunk = curl_slist_append(chunk, "X-Param:ew0KICAgICJhdWYiOiAiYXVkaW8vTDE2O3JhdGU9MTYwMDAiLA0KICAgICJhdWUiOiAicmF3IiwNCiAgICAidm9pY2VfbmFtZSI6ICJ4aWFveWFuIg0KfQ==");
+    #else 
+      chunk = curl_slist_append(chunk, "X-Param:eyJhdWYiOiAiYXVkaW8vTDE2O3JhdGU9MTYwMDAiLCJhdWUiOiAibGFtZSIsInZvaWNlX25hbWUiOiAieGlhb3lhbiIsInNwZWVkIjogIjUwIiwidm9sdW1lIjogIjUwIiwicGl0Y2giOiAiNTAiLCJlbmdpbmVfdHlwZSI6ICJpbnRwNjUiLCJ0ZXh0X3R5cGUiOiAidGV4dCJ9");
+    #endif
       chunk = curl_slist_append(chunk, "Expect:");
 #endif
 #if 1
@@ -238,10 +243,18 @@ int curl_post_data(char *svstr, int strlenth)
 	  printf("timestamp is %s\n",cstampsec);
       chunk = curl_slist_append(chunk, cstampsec);
 
-	  sprintf(data,"%s%ld%s","b821296f39b13f897570dda39b769b3e",tv_begin.tv_sec,"ew0KICAgICJhdWYiOiAiYXVkaW8vTDE2O3JhdGU9MTYwMDAiLA0KICAgICJhdWUiOiAicmF3IiwNCiAgICAidm9pY2VfbmFtZSI6ICJ4aWFveWFuIg0KfQ==");
+    #ifdef _WAV
+	 sprintf(data,"%s%ld%s","b821296f39b13f897570dda39b769b3e",tv_begin.tv_sec,"ew0KICAgICJhdWYiOiAiYXVkaW8vTDE2O3JhdGU9MTYwMDAiLA0KICAgICJhdWUiOiAicmF3IiwNCiAgICAidm9pY2VfbmFtZSI6ICJ4aWFveWFuIg0KfQ==");
+    #else
+	 sprintf(data,"%s%ld%s","b821296f39b13f897570dda39b769b3e",tv_begin.tv_sec,"eyJhdWYiOiAiYXVkaW8vTDE2O3JhdGU9MTYwMDAiLCJhdWUiOiAibGFtZSIsInZvaWNlX25hbWUiOiAieGlhb3lhbiIsInNwZWVkIjogIjUwIiwidm9sdW1lIjogIjUwIiwicGl0Y2giOiAiNTAiLCJlbmdpbmVfdHlwZSI6ICJpbnRwNjUiLCJ0ZXh0X3R5cGUiOiAidGV4dCJ9");
+    #endif
 	  printf("pppam is %s\n",data);
       MD5Init(&md5);
+    #ifdef _WAV
       MD5Update(&md5,data,162);
+    #else
+      MD5Update(&md5,data,250);
+    #endif
       MD5Final(&md5,md5_value);
 	  for ( i =0; i < 16; i++)
 	  {

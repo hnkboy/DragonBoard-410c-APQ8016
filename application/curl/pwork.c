@@ -71,6 +71,7 @@ void task_proc(){
            // (void)quemsg_snd_voice("morning.wav",12);
         (void)quemsg_snd_voice("oclock.mp3","90");
 		    printf("morning task \n");
+            pwork_sayweather();
             break;
         case 2: 
            // (void)quemsg_snd_voice("oclock.wav",12);
