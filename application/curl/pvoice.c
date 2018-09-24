@@ -7,6 +7,7 @@
 #include<time.h>
 #include "homemain.h"
 #include "alsaplay.h"
+#include "alsaplay_wav.h"
 
 #include <curl/curl.h>
 #include "json.h"
@@ -37,9 +38,21 @@ void playvoice(char *pbuf ,char *strvolume)
     char svstr[100] = {0};
     if (0 != pbuf) 
     {
-        sprintf(svstr,"./voice/%s",pbuf);
-        //playback_wav(svstr,strvolume);    
-        playback_mp3(svstr,strvolume);
+        char *p = strstr(pbuf,"mp3");
+        if (NULL != p)
+        { 
+            printf("playback_mp3\n");
+            sprintf(svstr,"./voice/%s",pbuf);
+            //playback_wav(svstr,strvolume);    
+            playback_mp3(svstr,strvolume);
+        }
+        else
+        {
+        
+            printf("playback_wav\n");
+            alsa_set_volume(atoi(strvolume));
+            playback_wav(pbuf);    
+        }
     }
 }
 

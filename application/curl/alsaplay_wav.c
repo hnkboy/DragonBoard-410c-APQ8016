@@ -1,7 +1,7 @@
 /* playback *.wav
  * by jiali
 */
-#include "playback_wav.h"
+#include "alsaplay_wav.h"
 struct WAV_HEADER
 {
     char rld[4]; //riff 标志符号

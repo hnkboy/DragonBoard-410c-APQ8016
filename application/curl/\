@@ -106,8 +106,7 @@ int main()
         }
 		else if ('p'==tmp)
         {
-//            pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
-          (void)quemsg_snd_voice("tmp.mp3","90");
+            pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
  		}
 		else if ('w'==tmp)
         {
@@ -131,7 +130,29 @@ int main()
  		}
 		else if ('t'==tmp)
         {
-            (void)mqueue_send2work("weather",7);
+			char *pvstr;
+			char svstrp[100]={0};
+		    curl_get_weather(pvstr,&stweather);
+			if (stweather.status != 200)
+			{
+				sprintf(svstrp,"获取天气失败");
+			}
+			else
+			{
+			    printf("weather message is %s,%d,h:%s,l:%s\n",pvstr,stweather.tmp,stweather.shightemp,stweather.slowtemp);
+				/*sprintf(svstrp,"当前温度%d 摄氏度  今天    %s    %s   %s   %s", stweather.tmp,stweather.shightemp,stweather.slowtemp,
+																			stweather.stype,
+																			stweather.snotice);*/
+				sprintf(svstrp,"今天天气    %s  度   到  %s  度             %s     ", stweather.slowtemp,stweather.shightemp,
+																			stweather.stype);
+			}
+			printf("svstrp message is %s\n",svstrp);
+			
+	    	curl_post_data(svstrp,strlen(svstrp));
+		//	playback_wav("./tmp.wav");
+          (void)quemsg_snd_voice("./tmp.wav","90");
+
+        //     pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
  		}
         else if('q'==tmp)
         {

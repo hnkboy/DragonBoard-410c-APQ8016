@@ -29,6 +29,9 @@
 #include <curl/curl.h>
 #include <sys/time.h>
 #include "md5.h"
+
+#define _WAV
+
 /* silly test data to POST */
 static const char data[]="Lorem ipsum dolor sit amet, consectetur adipiscing "
   "elit. Sed vel urna neque. Ut quis leo metus. Quisque eleifend, ex at "
@@ -215,7 +218,12 @@ int curl_post_data(char *svstr, int strlenth)
       chunk = curl_slist_append(chunk, "Content-Type:application/x-www-form-urlencoded");
       chunk = curl_slist_append(chunk, "charset=utf-8");
       chunk = curl_slist_append(chunk, "auf:audio/L16;rate=16000");
+      chunk = curl_slist_append(chunk, "speed:30");
+#ifdef _WAV
       chunk = curl_slist_append(chunk, "aue:raw");
+#else
+      chunk = curl_slist_append(chunk, "aue:lame");
+#endif 
       chunk = curl_slist_append(chunk, "voice_name:xiaoyan");
       chunk = curl_slist_append(chunk, "X-Appid:5ac4bdf1");
       chunk = curl_slist_append(chunk, "X-Param:ew0KICAgICJhdWYiOiAiYXVkaW8vTDE2O3JhdGU9MTYwMDAiLA0KICAgICJhdWUiOiAicmF3IiwNCiAgICAidm9pY2VfbmFtZSI6ICJ4aWFveWFuIg0KfQ==");
@@ -260,7 +268,11 @@ int curl_post_data(char *svstr, int strlenth)
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res));
 
+#ifdef _WAV
   fp = fopen("./tmp.wav","wr");
+#else
+  fp = fopen("./tmp.mp3","wr");
+#endif
   if (chunk_m.size == fwrite(chunk_m.memory,1,chunk_m.size,fp))
   {
     printf("Write success\n");

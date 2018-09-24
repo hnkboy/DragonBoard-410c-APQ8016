@@ -10,6 +10,11 @@
 static int decode(unsigned char const *, unsigned long);
 int set_pcm();
 void set_volume(long volume);
+
+void alsa_set_volume(long volume)
+{
+    set_volume(volume);
+}
 snd_pcm_t* handle=NULL; //PCI设备句柄
 snd_pcm_hw_params_t* params=NULL;//硬件信息和PCM流配置
 //int main(int argc, char *argv[])

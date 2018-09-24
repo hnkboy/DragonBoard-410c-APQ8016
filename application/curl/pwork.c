@@ -14,6 +14,7 @@
 #include <curl/curl.h>
 #include "json.h"
 #include "getinmemory.h"
+#include "postcallback.h"
 #include "voiceclient.h"
 #include "pvoice.h"
 
@@ -48,8 +49,9 @@ struct tagmor_s {
     char clocksharp_flag;
     char clocksharp_done;  
 }gmor_s;
-
+/*函数声明*/
 int getNowTime(void);
+void pwork_sayweather();
 #if 0
 extern unsigned char gsm_flag;
 #endif
@@ -151,7 +153,11 @@ void *workmain(void*p){
 					(void)mq_close(mqdwork);
                     isbreak = 1;
 					break;
-        		}	
+        		}
+				else if(strcmp(rbuf,"weather")==0)
+                {
+                    pwork_sayweather();
+                }
 				//playvoice(rbuf,ret);
             }
 			else if ((timerfd == pevents[i].data.fd) &&
@@ -228,4 +234,29 @@ int getNowTime(void)
 
     return uc_ret;
 }
+void pwork_sayweather()
+{
 
+    char *pvstr;
+    char svstrp[100]={0};
+    weather stweather;
+    curl_get_weather(pvstr,&stweather);
+    if (stweather.status != 200)
+    {
+        sprintf(svstrp,"获取天气失败");
+    }
+    else
+    {
+        printf("weather message is %s,%d,h:%s,l:%s\n",pvstr,stweather.tmp,stweather.shightemp,stweather.slowtemp);
+        /*sprintf(svstrp,"当前温度%d 摄氏度  今天    %s    %s   %s   %s", stweather.tmp,stweather.shightemp,stweather.slowtemp,
+                                                                    stweather.stype,
+                                                                    stweather.snotice);*/
+        sprintf(svstrp,"今天天气    %s  度   到  %s  度             %s     ", stweather.slowtemp,stweather.shightemp,
+                                                                    stweather.stype);
+    }
+    printf("svstrp message is %s\n",svstrp);
+    
+    curl_post_data(svstrp,strlen(svstrp));
+//    playback_wav("./tmp.wav");
+    (void)quemsg_snd_voice("./tmp.wav","90");
+}
