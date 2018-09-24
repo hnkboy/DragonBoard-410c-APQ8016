@@ -21,9 +21,9 @@
 mqd_t mqd;
 
 int serv_sock,clnt_sock;
-void pkt_send(char *pbuf)
+void pkt_send(char *pbuf, int lent)
 {
-    write(clnt_sock,pbuf,strlen(pbuf));
+    write(clnt_sock,pbuf,lent);
 }
 int mqueue_send2pkt(const char *buf,long len)
 {
@@ -95,6 +95,7 @@ void *prevpktmain(void *p)
     char buf[BUF_SIZE];
     int str_len;
 
+    int on;
     int ep_fd,ep_cnt,i,flag;
     struct epoll_event event;
     struct epoll_event* pevents;
@@ -116,7 +117,8 @@ void *prevpktmain(void *p)
     } 
 
     serv_sock=socket(AF_INET,SOCK_STREAM,0);
-
+    on = 1;
+    ret = setsockopt(serv_sock, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on) );
     memset(&serv_addr,0,sizeof(serv_addr));
     serv_addr.sin_family=AF_INET;
     serv_addr.sin_addr.s_addr=htonl(INADDR_ANY);
@@ -173,6 +175,7 @@ void *prevpktmain(void *p)
                     }
                     else
                     {
+                        int t;
                         //write(pevents[i].data.fd,buf,str_len);
 						if (0x0D == buf[0]){
 							uartchar_proc(buf,str_len);
@@ -183,6 +186,12 @@ void *prevpktmain(void *p)
                         	printf("%s\n",buf);
                         	//quemsg_snd_voice(buf,sizeof(buf));
 						}
+                        /*暂时解决一个bug*/
+                        for(t=0;str_len>t;t++)
+                        {
+                        buf[t] = 0xff;
+                        }
+                        write(pevents[i].data.fd,buf,str_len);
                     }
 
                 }
@@ -206,7 +215,9 @@ void *prevpktmain(void *p)
         }
     }
 
-    close(serv_sock);
+    //close(clnt_sock);
+    //close(serv_sock);
+    shutdown(serv_sock,SHUT_RDWR);
     close(ep_fd);
     printf("pkt thread exit\n");
     return 0;

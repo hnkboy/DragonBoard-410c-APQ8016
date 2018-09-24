@@ -101,7 +101,7 @@ int main()
             pbuf[4]=0x00;
             pbuf[5]=0x0d;
             pbuf[6]='\0';
-            pkt_send(pbuf);
+            pkt_send(pbuf,6);
         }
 		else if ('p'==tmp)
         {
@@ -150,7 +150,7 @@ int main()
 		//	curl_post_data(svstrp,strlen(svstrp));
 		//	playback_wav("./tmp.wav");
 
-            pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
+        //     pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
  		}
         else if('q'==tmp)
         {
@@ -160,7 +160,7 @@ int main()
             (void)mqueue_send2work("exit",4);
 			pthread_kill(tid,SIGUSR2);
 			//等待线程tid执行完毕，这里阻塞。
-
+            //sleep(1);
 			#if 0
 			pthread_kill(tlistenid,SIGUSR2);
             giExit = -1;

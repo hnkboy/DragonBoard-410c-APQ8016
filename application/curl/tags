@@ -112,6 +112,8 @@ CMock_Verify	cJSON/tests/unity/test/expectdata/testsample_mock_run2.c	/^static v
 CMock_Verify	cJSON/tests/unity/test/expectdata/testsample_mock_yaml.c	/^static void CMock_Verify(void)$/;"	f	file:
 COPY	cJSON/cJSON_Utils.c	/^enum patch_operation { INVALID, ADD, REMOVE, REPLACE, MOVE, COPY, TEST };$/;"	e	enum:patch_operation	file:
 COV_FLAGS	cJSON/tests/unity/test/Makefile	/^COV_FLAGS = -fprofile-arcs -ftest-coverage -I ..\/..\/src$/;"	m
+CPU_temp	get.py	/^CPU_temp = getCPUtemperature()$/;"	v
+CPU_usage	get.py	/^CPU_usage = getCPUuse()$/;"	v
 CURL_UPDATA	getinmemory.c	62;"	d	file:
 C_COMPILER	cJSON/tests/unity/examples/example_1/makefile	/^C_COMPILER=clang$/;"	m
 C_COMPILER	cJSON/tests/unity/examples/example_1/makefile	/^C_COMPILER=gcc$/;"	m
@@ -140,6 +142,10 @@ CurrentTestName	cJSON/tests/unity/src/unity_internals.h	/^    const char* Curren
 DEFINES	cJSON/tests/unity/extras/fixture/test/Makefile	/^DEFINES = -D UNITY_OUTPUT_CHAR=UnityOutputCharSpy_OutputChar$/;"	m
 DEFINES	cJSON/tests/unity/test/Makefile	/^DEFINES =  -D UNITY_OUTPUT_CHAR=putcharSpy$/;"	m
 DEF_H	cJSON/tests/unity/test/testdata/Defs.h	2;"	d
+DISK_perc	get.py	/^DISK_perc = DISK_stats[3]$/;"	v
+DISK_stats	get.py	/^DISK_stats = getDiskSpace()$/;"	v
+DISK_total	get.py	/^DISK_total = DISK_stats[0]$/;"	v
+DISK_used	get.py	/^DISK_used = DISK_stats[1]$/;"	v
 DOUBLES_EQUAL	cJSON/tests/unity/extras/fixture/src/unity_fixture.h	77;"	d
 D_unity_output_Spy_H	cJSON/tests/unity/extras/fixture/test/unity_output_Spy.h	9;"	d
 E	cJSON/tests/unity/test/Makefile	/^E = -Weverything$/;"	m
@@ -237,6 +243,10 @@ ParseOutput	cJSON/tests/unity/auto/parse_output.rb	/^class ParseOutput$/;"	c
 PointerPair	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^struct PointerPair$/;"	s	file:
 ProductionCode	cJSON/tests/unity/examples/example_2/test/TestProductionCode.c	/^TEST_GROUP(ProductionCode);$/;"	v
 ProductionCode2	cJSON/tests/unity/examples/example_2/test/TestProductionCode2.c	/^TEST_GROUP(ProductionCode2);$/;"	v
+RAM_free	get.py	/^RAM_free = round(int(RAM_stats[2]) \/ 1000,1)$/;"	v
+RAM_stats	get.py	/^RAM_stats = getRAMinfo()$/;"	v
+RAM_total	get.py	/^RAM_total = round(int(RAM_stats[0]) \/ 1000,1)$/;"	v
+RAM_used	get.py	/^RAM_used = round(int(RAM_stats[1]) \/ 1000,1)$/;"	v
 REMOVE	cJSON/cJSON_Utils.c	/^enum patch_operation { INVALID, ADD, REMOVE, REPLACE, MOVE, COPY, TEST };$/;"	e	enum:patch_operation	file:
 REPLACE	cJSON/cJSON_Utils.c	/^enum patch_operation { INVALID, ADD, REMOVE, REPLACE, MOVE, COPY, TEST };$/;"	e	enum:patch_operation	file:
 RETURN_IF_FAIL_OR_IGNORE	cJSON/tests/unity/src/unity.c	19;"	d	file:
@@ -1501,6 +1511,7 @@ cjson_utils_should_pass_json_patch_test_spec_tests	cJSON/tests/json_patch_tests.
 cjson_utils_should_pass_json_patch_test_tests	cJSON/tests/json_patch_tests.c	/^static void cjson_utils_should_pass_json_patch_test_tests(void)$/;"	f	file:
 cjsonlib	Makefile	/^cjsonlib = -L .\/cJSON\/lib$/;"	m
 cjsonlin	Makefile	/^cjsonlin = -I .\/cJSON\/include$/;"	m
+clnt_sock	prevpkt.c	/^int serv_sock,clnt_sock;$/;"	v
 clocksharp_done	pwork.c	/^    char clocksharp_done;  $/;"	m	struct:tagmor_s	file:
 clocksharp_flag	pwork.c	/^    char clocksharp_flag;$/;"	m	struct:tagmor_s	file:
 colour_print	cJSON/tests/unity/auto/colour_prompt.rb	/^def colour_print(role, str)$/;"	f
@@ -1635,7 +1646,11 @@ generate	cJSON/tests/unity/auto/generate_test_runner.rb	/^  def generate(input_f
 generate_merge_patch	cJSON/cJSON_Utils.c	/^static cJSON *generate_merge_patch(cJSON * const from, cJSON * const to, const cJSON_bool case_sensitive)$/;"	f	file:
 generate_merge_tests	cJSON/tests/old_utils_tests.c	/^static void generate_merge_tests(void)$/;"	f	file:
 getBufferPutcharSpy	cJSON/tests/unity/test/tests/testunity.c	/^char* getBufferPutcharSpy(void)$/;"	f
+getCPUtemperature	get.py	/^def getCPUtemperature():$/;"	f
+getCPUuse	get.py	/^def getCPUuse():$/;"	f
+getDiskSpace	get.py	/^def getDiskSpace():$/;"	f
 getNowTime	pwork.c	/^int getNowTime(void)$/;"	f
+getRAMinfo	get.py	/^def getRAMinfo():$/;"	f
 get_array_item	cJSON/cJSON.c	/^static cJSON* get_array_item(const cJSON *array, size_t index)$/;"	f	file:
 get_array_item	cJSON/cJSON_Utils.c	/^static cJSON *get_array_item(const cJSON *array, size_t item)$/;"	f	file:
 get_decimal_point	cJSON/cJSON.c	/^static unsigned char get_decimal_point(void)$/;"	f	file:
@@ -1910,6 +1925,7 @@ parse_with_opts_should_require_null_if_requested	cJSON/tests/parse_with_opts.c	/
 parse_with_opts_should_return_parse_end	cJSON/tests/parse_with_opts.c	/^static void parse_with_opts_should_return_parse_end(void)$/;"	f	file:
 patch_operation	cJSON/cJSON_Utils.c	/^enum patch_operation { INVALID, ADD, REMOVE, REPLACE, MOVE, COPY, TEST };$/;"	g	file:
 people	json.c	/^}people;$/;"	t	typeref:struct:__anon1	file:
+pkt_send	prevpkt.c	/^void pkt_send(char *pbuf)$/;"	f
 playback_mp3	alsaplay.c	/^int playback_mp3(char *strpath,char *strvolume) $/;"	f
 playvoice	pvoice.c	/^void playvoice(char *pbuf ,char *strvolume)$/;"	f
 pointer	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^    void** pointer;$/;"	m	struct:PointerPair	file:
@@ -2032,6 +2048,7 @@ savedRepeat	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static 
 savedVerbose	cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static int savedVerbose;$/;"	v	file:
 scale	alsaplay.c	/^signed int scale(mad_fixed_t sample)$/;"	f	file:
 selected	cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static int selected(const char* filter, const char* name)$/;"	f	file:
+serv_sock	prevpkt.c	/^int serv_sock,clnt_sock;$/;"	v
 set	main.c	/^sigset_t set;$/;"	v
 setUp	cJSON/tests/unity/examples/example_1/test/TestProductionCode.c	/^void setUp(void)$/;"	f
 setUp	cJSON/tests/unity/examples/example_1/test/TestProductionCode2.c	/^void setUp(void)$/;"	f
