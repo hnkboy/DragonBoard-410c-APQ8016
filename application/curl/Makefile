@@ -23,6 +23,7 @@ pwork.o: pwork.c  pwork.h
 pvoice.o: pvoice.c  pvoice.h  alsaplay.c  alsaplay.h
 	$(CC) -c pvoice.c  $(INCLUDE_PATH) $(LIB_PATH)
 	$(CC) -c alsaplay.c $(INCLUDE_PATH) $(LIB_PATH)
+	$(CC) -c alsaplay_wav.c $(INCLUDE_PATH) $(LIB_PATH)
 queue.o: queue.c  queue.h
 	$(CC) -c queue.c  $(INCLUDE_PATH) $(LIB_PATH)
 postcallback: postcallback.c md5.c

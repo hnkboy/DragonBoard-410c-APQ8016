@@ -89,10 +89,10 @@ int main()
         scanf("%c",&tmp);
         if('a'==tmp)
         {
-		//	testvioce();
-       //     pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
-        //    (void)quemsg_snd_voice("opendoor.wav","50");
-       //     (void)quemsg_snd_voice("oclock.mp3","90");
+	   //	testvioce();
+       //   pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
+       //  (void)quemsg_snd_voice("opendoor.wav","50");
+       //   (void)quemsg_snd_voice("oclock.mp3","90");
             char pbuf[7];
             pbuf[0]=0x0d;
             pbuf[1]=0x0a;
