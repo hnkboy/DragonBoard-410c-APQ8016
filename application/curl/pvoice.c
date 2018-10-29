@@ -34,7 +34,7 @@ void quemsg_snd_voice(char *pbuf ,char *strvolume)
 }
 void quemsg_snd_exit()
 {
-	(void)quemsg_snd(g_msid 200,"exit",4);
+	(void)quemsg_snd(g_msid, 200,"exit",4);
 }
 void playvoice(char *pbuf ,char *strvolume)
 {
@@ -70,13 +70,13 @@ void *voicemain(void*p){
 		g_msid = queue_init(123);  
 		if (g_msid == -1)
 	    {
-			return;
+			return NULL;
 		}
 		(void)quemsg_rcv(g_msid,200,buf);
 		//printf("rcv queue msg: %s \n",buf);
 		if(strcmp(buf,"exit")==0)
 		{
-			queue_fini();
+			queue_fini(g_msid);
             printf("voice thread exit\n");
 			break;
 		}
