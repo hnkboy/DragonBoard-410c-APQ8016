@@ -12,24 +12,22 @@ struct msgbuf
     char mtex[40];
 };
 struct msgbuf msre,mswr;
-int msid;
-int queue_init()
+
+int queue_init(unsigned char     num)
 {
-    key_t key = ftok(".",123);
+	int msid = -1;
+    key_t key = ftok(".",num);
     msid = msgget(key,IPC_CREAT|0666);
 
     if(msid<0)
     {
         perror("get msgid fail");
-        return 1;
+        return -1;
     }
-    return 0;
+    return msid;
 }
-int get_queid()
-{
-	return msid;
-}
-int quemsg_snd(long type,char *a,int len)
+
+int quemsg_snd(int msid, long type,char *a,int len)
 {
 	if (len >40)
 	{
@@ -47,7 +45,7 @@ int quemsg_snd(long type,char *a,int len)
 	printf("snd massage : %s.   type=%ld\n",mswr.mtex,type);
 	return 0;
 }
-int quemsg_rcv(long type,char *aumsg)
+int quemsg_rcv(int msid,long type,char *aumsg)
 {
 	bzero(msre.mtex,40);
 	if(msgrcv(msid,&msre,sizeof(msre),type,0)==-1)//从消息队列msid中，获取类型（mtype）为100的信息，放到msre中，未获得则阻塞
@@ -60,7 +58,7 @@ int quemsg_rcv(long type,char *aumsg)
 	memcpy(aumsg,mswr.mtex,40);
 	return 0;
 }
-void queue_fini()
+void queue_fini(int msid)
 {
 	msgctl(msid,IPC_RMID,NULL);
 }

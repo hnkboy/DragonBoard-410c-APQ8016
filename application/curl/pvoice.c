@@ -14,7 +14,7 @@
 #include "getinmemory.h"
 #include "postcallback.h"
 #include "queue.h"
-
+int g_msid = -1;
 static void myfunc()
 {
 	printf("hello voice thread\n");
@@ -30,9 +30,12 @@ void quemsg_snd_voice(char *pbuf ,char *strvolume)
     buf[strlen(strvolume)+20] = '\0';
     printf("%s,%s\n",buf,&buf[20]);
     //quemsg_snd(200,pbuf,strlen(pbuf));
-    quemsg_snd(200,buf,40);
+    quemsg_snd(g_msid,200,buf,40);
 }
-
+void quemsg_snd_exit()
+{
+	(void)quemsg_snd(g_msid 200,"exit",4);
+}
 void playvoice(char *pbuf ,char *strvolume)
 {
     char svstr[100] = {0};
@@ -63,8 +66,13 @@ void *voicemain(void*p){
     gset = get_sigset();
     myfunc();
 	while(1){
-
-		(void)quemsg_rcv(200,buf);
+		/* 队列初始化 */
+		g_msid = queue_init(123);  
+		if (g_msid == -1)
+	    {
+			return;
+		}
+		(void)quemsg_rcv(g_msid,200,buf);
 		//printf("rcv queue msg: %s \n",buf);
 		if(strcmp(buf,"exit")==0)
 		{

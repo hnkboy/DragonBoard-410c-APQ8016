@@ -63,8 +63,7 @@ int main()
 	void *status;
 
     weather stweather;
-    /* 队列初始化 */
-	queue_init();  
+
 	/* 信号初始化 */     
 	sigemptyset(&set);
 	sigaddset(&set,SIGUSR1);
@@ -136,7 +135,7 @@ int main()
         else if('q'==tmp)
         {
 			//发出SIGUSR2信号，让线程退出，如果发送SIGKILL，线程将直接退出。
-			quemsg_snd(200,"exit",4);
+			quemsg_snd_exit();
             (void)mqueue_send2pkt("exit",4);
             (void)mqueue_send2work("exit",4);
 			pthread_kill(tid,SIGUSR2);
