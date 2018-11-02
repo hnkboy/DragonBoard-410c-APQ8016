@@ -8,7 +8,8 @@ LIBS = -lcurl -lcjson -lasound -pthread -lrt -lmad
 INCLUDE_PATH = $(curlin) $(alsain) $(cjsonin)
 LIB_PATH = $(curllib) $(alsalib) $(cjsonlib)
 ALSA_PATH = ./alsa
-all: main.o getinmemory.o json.o plisten.o prevpkt.o pwork.o pvoice.o  queue.o  postcallback 
+REST_TTS_PATH = ./rest-api-tts
+all: main.o getinmemory.o json.o plisten.o prevpkt.o pwork.o pvoice.o  queue.o  postcallback rest_tts 
 	$(CC) main.o plisten.o pwork.o getinmemory.o postcallback.o md5.o json.o   pvoice.o prevpkt.o queue.o alsaplay.o alsaplay_wav.o -o Hali $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
 main.o: main.c getinmemory.c json.c postcallback.c
 	$(CC) -c main.c  $(INCLUDE_PATH) $(LIB_PATH)
@@ -37,7 +38,11 @@ voiceclient.o: voiceclient.c voiceclient.h
 	$(CC) -c voiceclient.c
 main_alsa:
 	make -C $(ALSA_PATH)
+rest_tts:
+	make -C $(REST_TTS_PATH)
 clean: 
 	rm ./*.o
-	rm ./*.wav
-	rm ./*.txt
+	#rm ./*.wav
+	#rm ./*.txt
+	rm $(REST_TTS_PATH)/*.o
+	#rm $(REST_TTS_PATH)/*.wav
