@@ -19,6 +19,7 @@
 #define EPOLL_SIZE 20
 #define PKTMQNAME "/pktmq"
 mqd_t mqd;
+mqd_t mqd_w;
 
 int serv_sock,clnt_sock;
 void pkt_send(char *pbuf, int lent)
@@ -101,6 +102,8 @@ void *prevpktmain(void *p)
     struct epoll_event* pevents;
     int ret = 0;
     _Bool bisbreak = 0;
+
+    int count;/*facgi 请求数目 ** ****/
    /* 
     if(argc!=2)
     {
@@ -113,6 +116,13 @@ void *prevpktmain(void *p)
   	mqd = mq_open(PKTMQNAME, O_RDWR|O_CREAT, 0600, NULL);
     if (mqd == -1) {
         perror("pkt mq_open()");
+        exit(1);
+    } 
+    /*fcgi mqueue*/
+    mqd_w = mq_open("/fastcgi_write", O_RDWR|O_CREAT, 0600, NULL);
+    if (mqd_w == -1)
+    {
+        perror("pkt fcgi  mq_open()");
         exit(1);
     } 
 
@@ -204,13 +214,26 @@ void *prevpktmain(void *p)
 				if (ret == -1) {
 					perror("pkt mq_receive err()");
 				}
-                printf("pktthr rcv mqueue msg %s,prio:%d\n",rbuf,val);
+                printf("pktthr rcv mqueue msg, prio: %d value: %s\r",val,rbuf);
 				if(strcmp(rbuf,"exit")==0)
        			{
 					(void)mq_close(mqd);
                     bisbreak = 1;
 					break;
         		}	
+				else
+				{
+                    char wbuf[BUFSIZ] = {0};
+                    int val = 1,ret;
+					bzero(wbuf,BUFSIZ);
+					sprintf(wbuf,"\r\n hello fcgi %d\r\n",count);
+					ret = mq_send(mqd_w, wbuf, BUFSIZ, val);
+					if (ret == -1) {
+						perror("pkt mq_receive err()");
+					}
+					printf("send mqueue msg, prio: %d value: %s\r",val,wbuf);
+					count ++;
+				}	
             }
         }
     }
@@ -219,6 +242,7 @@ void *prevpktmain(void *p)
     //close(serv_sock);
     shutdown(serv_sock,SHUT_RDWR);
     close(ep_fd);
+	(void)mq_close(mqd_w);
     printf("pkt thread exit\n");
     return 0;
 }
