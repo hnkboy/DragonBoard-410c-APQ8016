@@ -59,3 +59,4 @@ main
 *.mp3
 main
 application/curl/Hali
+application/curl/voice/*
