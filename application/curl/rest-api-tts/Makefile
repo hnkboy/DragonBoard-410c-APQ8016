@@ -1,7 +1,10 @@
 CC = gcc
 all: tts
-tts: ttsmain.c common.o token.o ttscurl.o
-	$(CC) -o $@ ttsmain.c token.o common.o ttscurl.o -lcurl 
+tts: ttsmain.o common.o token.o ttscurl.o
+#tts: ttsmain.c common.o token.o ttscurl.o
+#	$(CC) -o $@ ttsmain.c token.o common.o ttscurl.o -lcurl 
+ttsmain.o: ttsmain.c ttsmain.h
+	$(CC) -c -o $@ ttsmain.c
 common.o: common.c common.h
 	$(CC) -c -o $@ common.c
 token.o: token.c token.h

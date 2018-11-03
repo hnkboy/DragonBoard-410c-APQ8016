@@ -29,6 +29,7 @@ RETURN_CODE fill_config(struct tts_config *config) {
     // #音量，取值0-9，默认为5中音量
     int vol = 5;
     // 下载的文件格式, 3：mp3(default) 4： pcm-16k 5： pcm-8k 6. wav
+	//int aue = 3;
 	int aue = 3;
 	
     // 将上述参数填入config中
@@ -50,10 +51,12 @@ RETURN_CODE fill_config(struct tts_config *config) {
     return RETURN_OK;
 }
 
-int main(int argc, char *argv[]) {
+//int main(int argc, char *argv[]) {
+int tts_post(char *arg) {
     curl_global_init(CURL_GLOBAL_ALL);
    // printf("%s\r\n",argv[1]);
-    RETURN_CODE rescode = run(argv[1]);
+    //RETURN_CODE rescode = run(argv[1]);
+    RETURN_CODE rescode = run(arg);
     curl_global_cleanup();
     if (rescode != RETURN_OK) {
         fprintf(stderr, "ERROR: %s, %d", g_demo_error_msg, rescode);

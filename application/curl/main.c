@@ -61,7 +61,6 @@ int main()
 {
 	char tmp;
 	void *status;
-
     weather stweather;
 
 	/* 信号初始化 */     
@@ -71,9 +70,9 @@ int main()
 	sigprocmask(SIG_SETMASK,&set,NULL);
 	/* 创建子线程 */
 	pthread_create(&tid,NULL,mythread,NULL);
+    pthread_create(&tvoiceid,NULL,voicemain,NULL);
 	pthread_create(&trevpktid,NULL,prevpktmain,NULL);
 	pthread_create(&tworkid,NULL,workmain,NULL);
-    pthread_create(&tvoiceid,NULL,voicemain,NULL);
 #if 0
 	pthread_create(&tlistenid,NULL,listenmain,NULL);	
 	pthread_create(&tuartid,NULL,puartmain,NULL);
@@ -147,6 +146,7 @@ int main()
 			ipthread_join(tlistenid,&status);
 			pthread_join(tuartid,&status);
 			#endif 
+            sleep(1);
 			pthread_join(tid,&status);
 			pthread_join(tvoiceid,&status);		
 			pthread_join(trevpktid,&status);

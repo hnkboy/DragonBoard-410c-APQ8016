@@ -220,7 +220,7 @@ int curl_post_data(char *svstr, int strlenth)
       chunk = curl_slist_append(chunk, "auf:audio/L16;rate=16000");
       chunk = curl_slist_append(chunk, "speed:50");
     #ifdef _WAV
-    //  chunk = curl_slist_append(chunk, "aue:raw");
+      chunk = curl_slist_append(chunk, "aue:raw");
     #else
       chunk = curl_slist_append(chunk, "aue:lame");
     #endif 

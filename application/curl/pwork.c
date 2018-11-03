@@ -17,7 +17,8 @@
 #include "postcallback.h"
 #include "voiceclient.h"
 #include "pvoice.h"
-
+#include "./rest-api-tts/common.h"
+#include "./rest-api-tts/ttsmain.h"
 struct tm nowTime;
 #define EPOLL_SIZE 20
 #define VOICEMQNAME "/pworkmq"
@@ -69,8 +70,10 @@ void task_proc(){
     {
         case 1: 
            // (void)quemsg_snd_voice("morning.wav",12);
-        (void)quemsg_snd_voice("oclock.mp3","90");
+            sleep(1);
+            (void)quemsg_snd_voice("oclock.mp3","90");
 		    printf("morning task \n");
+            sleep(10);
             pwork_sayweather();
             break;
         case 2: 
@@ -257,7 +260,10 @@ void pwork_sayweather()
     }
     printf("svstrp message is %s\n",svstrp);
     
-    curl_post_data(svstrp,strlen(svstrp));
+    //curl_post_data(svstrp,strlen(svstrp));
+    tts_post(svstrp);
 //    playback_wav("./tmp.wav");
-    (void)quemsg_snd_voice("./tmp.wav","90");
+   // (void)quemsg_snd_voice("./result.wav","90");
+    (void)quemsg_snd_voice("result.mp3","90");
+   // (void)quemsg_snd_voice("./tmp.mp3","90");
 }

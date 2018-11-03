@@ -21,6 +21,7 @@ struct tts_config {
 	char format[4];
 };
 
+int tts_post(char *arg);
 RETURN_CODE run();
 
 RETURN_CODE fill_config(struct tts_config *config);
