@@ -136,7 +136,7 @@ void *workmain(void*p){
     epoll_ctl(ep_fd_vo,EPOLL_CTL_ADD,timerfd,&event);
 	while( 0 == isbreak)
     {
-        ep_cnt=epoll_wait(ep_fd_vo,pevents,20,100);
+        ep_cnt=epoll_wait(ep_fd_vo,pevents,20,90);
         if (ep_cnt < 0)
         {
             break;
@@ -264,6 +264,8 @@ void pwork_sayweather()
     tts_post(svstrp);
 //    playback_wav("./tmp.wav");
    // (void)quemsg_snd_voice("./result.wav","90");
-    (void)quemsg_snd_voice("result.mp3","90");
+    //(void)quemsg_snd_voice("result.mp3","90");
+    //(void)quemsg_snd_voice("result.mp3","90");
+    (void)quemsg_snd_voice("result.mp3","100");
    // (void)quemsg_snd_voice("./tmp.mp3","90");
 }

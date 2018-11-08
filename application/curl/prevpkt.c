@@ -14,6 +14,8 @@
 #include "pvoice.h"
 #include <curl/curl.h>
 #include "queue.h"
+#include "prevpkt.h"
+#include "device/zigbee.h"
 
 #define BUF_SIZE 30
 #define EPOLL_SIZE 20
@@ -78,7 +80,7 @@ void uartchar_proc(char *buf, unsigned int len)
                     //    quemsg_snd_voice("opendoor.mp3","70");
 					//}
 					if (0x1 ==Uart2_Buffer[3]){
-                        quemsg_snd_voice("opendoor.mp3","70");
+                        quemsg_snd_voice("opendoor.mp3","50");
 					}
 				}
 			if(Uart2_Rx==40){ Uart2_Rx=0; } break;
@@ -135,10 +137,16 @@ void *prevpktmain(void *p)
     serv_addr.sin_port= htons(2000);
 
     if(bind(serv_sock,(struct sockaddr*)&serv_addr,sizeof(serv_addr))==-1)
+    {
         error_handler("bind() error");
+        return NULL;
+    }
 
     if(listen(serv_sock,5)==-1)
+    {
         error_handler("listen() error");
+        return NULL;
+    }
 
     ep_fd=epoll_create(EPOLL_SIZE);
     event.events=EPOLLIN;
@@ -186,22 +194,28 @@ void *prevpktmain(void *p)
                     else
                     {
                         int t;
+                        int i;
+                        for ( i = 0;i<str_len;i++){
+                        	buf[str_len] = 0;
+                        	printf("%2x ",buf[i]);}
+                        printf("\nlen = %d\n",str_len);
                         //write(pevents[i].data.fd,buf,str_len);
-						if (0x0D == buf[0]){
+						if ((0x0D == buf[0]) && (0x0a == buf[1])){
 							uartchar_proc(buf,str_len);
 						}
 						else{
-                       		//buf[str_len-1] = 0;
-                        	buf[str_len] = 0;
-                        	printf("%s\n",buf);
+                            prevpkt_tlvproc(buf,str_len);
+                        	//printf("%s\n",buf);
                         	//quemsg_snd_voice(buf,sizeof(buf));
 						}
+                        #if 1
                         /*暂时解决一个bug*/
                         for(t=0;str_len>t;t++)
                         {
                         buf[t] = 0xff;
                         }
                         write(pevents[i].data.fd,buf,str_len);
+                        #endif
                     }
 
                 }
@@ -250,5 +264,30 @@ void error_handler(const char* message)
 {
     fputs(message,stderr);
     fputc('\n',stderr);
-    exit(1);
+    //exit(1);
+    
+}
+void prevpkt_tlvproc(char *arg,char len){
+    uint16_t type,i;
+    uint16_t ucValue;;
+    if (arg[0] != len)
+        return;
+    if (arg[1] != 0xff)
+        return;
+    for(i = 0; i < len;)
+    {
+        type = arg[i+3];
+        len = arg[i+4];
+        ucValue = arg[i+5];
+        i += len +2;
+        switch(type)
+        {
+            case GET_KEY:
+                printf("get key value = %d\n\r", ucValue);
+                quemsg_snd_voice("opendoor.mp3","40");
+                break;
+            default:break;
+        }
+    
+    }
 }

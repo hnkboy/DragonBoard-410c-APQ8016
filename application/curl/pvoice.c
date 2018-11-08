@@ -55,7 +55,8 @@ void playvoice(char *pbuf ,char *strvolume)
             sprintf(svstr,"./voice/%s",pbuf);
             //playback_wav(svstr,strvolume);    
             // playback_mp3(svstr,strvolume);
-            mplayer_slave_setvolume(atoi(strvolume));
+            //mplayer_slave_setvolume(atoi(strvolume));
+            alsa_set_volume(atoi(strvolume));
             (void)mplayer_slave_snd(svstr);
         }
         else
@@ -63,7 +64,8 @@ void playvoice(char *pbuf ,char *strvolume)
         
             printf("playback_wav\n");
             //alsa_set_volume(atoi(strvolume));
-            mplayer_slave_setvolume(atoi(strvolume));
+            //mplayer_slave_setvolume(atoi(strvolume));
+            alsa_set_volume(atoi(strvolume));
             //playback_wav(pbuf);    
             (void)mplayer_slave_snd(pbuf);
         }
@@ -171,7 +173,7 @@ void mplayer_slave_setvolume(int num)
     if (cmdfifofd > -1)
     {
         strtmp[0]= '\0';
-        sprintf(strtmp,"volume %d 1 \n\r",num);
+        sprintf(strtmp,"volume %d 1\n",num);
         printf("mplayer  snd %s",strtmp);
         write(cmdfifofd, strtmp,strlen(strtmp));
     }
