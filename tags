@@ -26,7 +26,7 @@ BE_SHORT	examples/sound/record_play/wav_parser.h	21;"	d
 BUFFER_ERROR_SIZE	application/curl/rest-api-tts/common.c	/^const int BUFFER_ERROR_SIZE = 1024;$/;"	v
 BUFFSIZE	examples/thread/consume.c	20;"	d	file:
 BUF_SIZE	application/curl/client.c	8;"	d	file:
-BUF_SIZE	application/curl/prevpkt.c	18;"	d	file:
+BUF_SIZE	application/curl/prevpkt.c	20;"	d	file:
 BUF_SIZE	application/curl/voiceclient.c	8;"	d	file:
 BUILD_DIR	application/curl/cJSON/tests/unity/extras/fixture/test/Makefile	/^BUILD_DIR = ..\/build$/;"	m
 BUILD_DIR	application/curl/cJSON/tests/unity/test/Makefile	/^BUILD_DIR = build$/;"	m
@@ -172,6 +172,7 @@ DEFAULT_SAMPLE_RATE	examples/sound/record_play/lrecord.c	27;"	d	file:
 DEFINES	application/curl/cJSON/tests/unity/extras/fixture/test/Makefile	/^DEFINES = -D UNITY_OUTPUT_CHAR=UnityOutputCharSpy_OutputChar$/;"	m
 DEFINES	application/curl/cJSON/tests/unity/test/Makefile	/^DEFINES =  -D UNITY_OUTPUT_CHAR=putcharSpy$/;"	m
 DEF_H	application/curl/cJSON/tests/unity/test/testdata/Defs.h	2;"	d
+DEV_NODE_S	application/curl/device/zigbee.h	/^}DEV_NODE_S;$/;"	t	typeref:struct:stgDevNode
 DISK_perc	application/curl/get.py	/^DISK_perc = DISK_stats[3]$/;"	v
 DISK_stats	application/curl/get.py	/^DISK_stats = getDiskSpace()$/;"	v
 DISK_total	application/curl/get.py	/^DISK_total = DISK_stats[0]$/;"	v
@@ -181,7 +182,8 @@ DRIVER_NAME	modules/pwm/stree.c	30;"	d	file:
 D_unity_output_Spy_H	application/curl/cJSON/tests/unity/extras/fixture/test/unity_output_Spy.h	9;"	d
 E	application/curl/cJSON/tests/unity/test/Makefile	/^E = -Weverything$/;"	m
 ENABLE_CURL_VERBOSE	application/curl/rest-api-tts/common.c	/^const int ENABLE_CURL_VERBOSE = 0;$/;"	v
-EPOLL_SIZE	application/curl/prevpkt.c	19;"	d	file:
+EPOLL_SIZE	application/curl/fastcgi/fcgi_write.c	11;"	d	file:
+EPOLL_SIZE	application/curl/prevpkt.c	21;"	d	file:
 EPOLL_SIZE	application/curl/pwork.c	23;"	d	file:
 ERROR_ASR_CURL	application/curl/rest-api-tts/common.h	/^    ERROR_ASR_CURL = 102, \/\/ 识别 curl 错误$/;"	e	enum:__anon2
 ERROR_ASR_FILE_NOT_EXIST	application/curl/rest-api-tts/common.h	/^    ERROR_ASR_FILE_NOT_EXIST = 101, \/\/ 本地文件不存在$/;"	e	enum:__anon2
@@ -265,8 +267,12 @@ LIBS	examples/sound/record_play/Makefile	/^LIBS = -lasound$/;"	m
 LIBVERSION	application/curl/cJSON/Makefile	/^LIBVERSION = 1.7.7$/;"	m
 LIB_PATH	application/curl/Makefile	/^LIB_PATH = $(curllib) $(alsalib) $(cjsonlib)$/;"	m
 LONGS_EQUAL	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture.h	75;"	d
+LS_HEAD_S	application/curl/lib/list.h	/^}LS_HEAD_S;$/;"	t	typeref:struct:stghead_s
+LS_NODE_S	application/curl/lib/list.h	/^}LS_NODE_S;$/;"	t	typeref:struct:stgnode_s
 LeakDetection	application/curl/cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^TEST_GROUP(LeakDetection);$/;"	v
+List_head	application/curl/mplayer/test/songplay.h	/^typedef struct list_head List_head;$/;"	t	typeref:struct:list_head
 MALLOC_DONT_FAIL	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture.c	134;"	d	file:
+MAXLINE	application/curl/mplayer/test/common.h	21;"	d
 MAX_BUF	examples/gpio/gpioN/togglygpionum.c	15;"	d	file:
 MAX_HEADER_VALUE_LEN	application/curl/rest-api-tts/ttscurl.c	/^const int MAX_HEADER_VALUE_LEN = 100;$/;"	v
 MAX_TOKEN_SIZE	application/curl/rest-api-tts/token.c	/^const int MAX_TOKEN_SIZE = 100;$/;"	v
@@ -287,6 +293,7 @@ MOCK_MOCK_H	application/curl/cJSON/tests/unity/test/testdata/mockMock.h	2;"	d
 MOVE	application/curl/cJSON/cJSON_Utils.c	/^enum patch_operation { INVALID, ADD, REMOVE, REPLACE, MOVE, COPY, TEST };$/;"	e	enum:patch_operation	file:
 MemoryStruct	application/curl/getinmemory.c	/^struct MemoryStruct {$/;"	s	file:
 MemoryStruct	application/curl/postcallback.c	/^struct MemoryStruct {$/;"	s	file:
+NAMESIZE	application/curl/mplayer/test/songplay.h	21;"	d
 NameFilter	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture_internals.h	/^    const char* NameFilter;$/;"	m	struct:UNITY_FIXTURE_T
 NumChannels	examples/sound/wav/wav_format_read.c	/^    uint16_t NumChannels;   \/* Mono = 1, Stereo = 2, etc. *\/  $/;"	m	struct:WAV_Format	file:
 NumberOfTests	application/curl/cJSON/tests/unity/src/unity_internals.h	/^    UNITY_COUNTER_TYPE NumberOfTests;$/;"	m	struct:UNITY_STORAGE_T
@@ -295,7 +302,8 @@ NumbersToFind	application/curl/cJSON/tests/unity/examples/example_2/src/Producti
 NumbersToFind	application/curl/cJSON/tests/unity/examples/example_3/src/ProductionCode.c	/^int NumbersToFind[9] = { 0, 34, 55, 66, 32, 11, 1, 77, 888 }; \/\/some obnoxious array to search that is 1-based indexing instead of 0.$/;"	v
 PADDING	application/curl/md5.c	/^unsigned char PADDING[] =$/;"	v
 PERIOD	modules/pwm/stree.c	33;"	d	file:
-PKTMQNAME	application/curl/prevpkt.c	20;"	d	file:
+PKTMQNAME	application/curl/fastcgi/fcgi_read.c	10;"	d	file:
+PKTMQNAME	application/curl/prevpkt.c	22;"	d	file:
 POWER_GPIO	modules/pwm/stree.c	36;"	d	file:
 PREFIX	application/curl/cJSON/Makefile	/^PREFIX ?= \/usr$/;"	m
 PRODUCERS_COUNT	examples/thread/consume.c	19;"	d	file:
@@ -362,6 +370,8 @@ SECOND_PARAM	application/curl/cJSON/tests/unity/test/tests/testunity.c	3299;"	d	
 SHARED	application/curl/cJSON/Makefile	/^	SHARED = dylib$/;"	m
 SHARED	application/curl/cJSON/Makefile	/^SHARED = so$/;"	m
 SHARED_CMD	application/curl/cJSON/Makefile	/^SHARED_CMD = $(CC) -shared -o$/;"	m
+SL_ENTRY	application/curl/lib/list.h	78;"	d
+SL_FOREACH_SAFE	application/curl/lib/list.h	80;"	d
 SNDPCMContainer	examples/sound/record_play/sndwav_common.h	/^typedef struct SNDPCMContainer { $/;"	s
 SNDPCMContainer_t	examples/sound/record_play/sndwav_common.h	/^} SNDPCMContainer_t; $/;"	t	typeref:struct:SNDPCMContainer
 SNDWAV_P_GetFormat	examples/sound/record_play/sndwav_common.c	/^int SNDWAV_P_GetFormat(WAVContainer_t *wav, snd_pcm_format_t *snd_format) $/;"	f
@@ -391,6 +401,7 @@ SetToOneMeanWeAlreadyCheckedThisGuy	application/curl/cJSON/tests/unity/test/test
 SetToOneMeanWeAlreadyCheckedThisGuy	application/curl/cJSON/tests/unity/test/tests/testunity.c	/^static int SetToOneMeanWeAlreadyCheckedThisGuy;$/;"	v	file:
 SetToOneToFailInTearDown	application/curl/cJSON/tests/unity/test/tests/testparameterized.c	/^int SetToOneToFailInTearDown;$/;"	v
 SetToOneToFailInTearDown	application/curl/cJSON/tests/unity/test/tests/testunity.c	/^static int SetToOneToFailInTearDown;$/;"	v	file:
+Song	application/curl/mplayer/test/songplay.h	/^typedef struct song Song;$/;"	t	typeref:struct:song
 Subchunk1ID	examples/sound/wav/wav_format_read.c	/^    uint8_t Subchunk1ID[4];   \/* "fmt " *\/  $/;"	m	struct:WAV_Format	file:
 Subchunk1Size	examples/sound/wav/wav_format_read.c	/^    uint32_t Subchunk1Size; \/* 16 for PCM *\/  $/;"	m	struct:WAV_Format	file:
 Subchunk2ID	examples/sound/wav/wav_format_read.c	/^    uint8_t Subchunk2ID[4];   \/* "data" *\/  $/;"	m	struct:WAV_Format	file:
@@ -1362,10 +1373,13 @@ _ALSA_WAV_H	application/curl/alsaplay_wav.h	2;"	d
 _ALSA_WAV_H	application/sound/playback_wav.h	2;"	d
 _CRT_SECURE_NO_DEPRECATE	application/curl/cJSON/cJSON.c	28;"	d	file:
 _CRT_SECURE_NO_DEPRECATE	application/curl/cJSON/cJSON_Utils.c	25;"	d	file:
+_LIST	application/curl/lib/list.h	3;"	d
 _TESTHELPER_H	application/curl/cJSON/tests/unity/examples/example_3/helper/UnityHelper.h	2;"	d
 _TESTSAMPLE_HEAD1_H	application/curl/cJSON/tests/unity/test/expectdata/testsample_head1.h	3;"	d
 _TESTSAMPLE_MOCK_HEAD1_H	application/curl/cJSON/tests/unity/test/expectdata/testsample_mock_head1.h	3;"	d
 _WAV	application/curl/postcallback.c	33;"	d	file:
+_ZIGBEE	application/curl/device/zigbee.h	3;"	d
+__COMMON_H	application/curl/mplayer/test/common.h	2;"	d
 __GETWEATHER	application/curl/getinmemory.h	2;"	d
 __HOMEMAIN	application/curl/homemain.h	2;"	d
 __HUART	application/curl/puart.h	2;"	d
@@ -1376,6 +1390,7 @@ __PQUE	application/curl/queue.h	2;"	d
 __PVOICE_	application/curl/pvoice.h	2;"	d
 __PWORK_	application/curl/pwork.h	2;"	d
 __SNDWAV_COMMON_H	examples/sound/record_play/sndwav_common.h	4;"	d
+__SONGPLAY_H	application/curl/mplayer/test/songplay.h	9;"	d
 __VOICESEND_	application/curl/voiceclient.h	2;"	d
 __WAV_PARSER_H	examples/sound/record_play/wav_parser.h	3;"	d
 __WINDOWS__	application/curl/cJSON/cJSON.h	84;"	d
@@ -1584,11 +1599,14 @@ can_read	application/curl/cJSON/cJSON.c	258;"	d	file:
 cannot_access_at_index	application/curl/cJSON/cJSON.c	261;"	d	file:
 case_insensitive_strcmp	application/curl/cJSON/cJSON.c	/^static int case_insensitive_strcmp(const unsigned char *string1, const unsigned char *string2)$/;"	f	file:
 cast_away_const	application/curl/cJSON/cJSON.c	/^static void* cast_away_const(const void* string)$/;"	f	file:
+cc	application/curl/fastcgi/Makefile	/^cc = gcc$/;"	m
 change_to	application/curl/cJSON/tests/unity/auto/colour_prompt.rb	/^  def change_to(new_colour)$/;"	f	class:ColourCommandLine
 channel_mask	examples/sound/record_play/wav_parser.h	/^	uint32_t channel_mask; $/;"	m	struct:WAVFmtExtensible
 channels	application/curl/voice/wavplay.c	/^  int channels;$/;"	m	struct:wav_info	file:
 channels	examples/sound/record_play/sndwav_common.h	/^	uint16_t channels; $/;"	m	struct:SNDPCMContainer
 channels	examples/sound/record_play/wav_parser.h	/^	uint16_t channels; 	\/* 声道数 *\/$/;"	m	struct:WAVFmt
+chgform	application/curl/mplayer/test/songplay.c	/^void chgform(char *name)	\/\/歌名有空格的在空格前加\/  （其实加上双引号“”就行）$/;"	f
+chgsong	application/curl/mplayer/test/songplay.c	/^void chgsong(char *name)	\/\/歌名有空格的在空格前加\/，其实加上双引号“”就行$/;"	f
 child	application/curl/cJSON/cJSON.h	/^    struct cJSON *child;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
 child	application/curl/cJSON/cJSON.h	/^CJSON_PUBLIC(cJSON *) cJSON_CreateArrayReference(const cJSON *child);$/;"	v
 child	application/curl/cJSON/cJSON.h	/^CJSON_PUBLIC(cJSON *) cJSON_CreateObjectReference(const cJSON *child);$/;"	v
@@ -1660,6 +1678,8 @@ clnt_sock	application/curl/prevpkt.c	/^int serv_sock,clnt_sock;$/;"	v
 clocksharp_done	application/curl/pwork.c	/^    char clocksharp_done;  $/;"	m	struct:tagmor_s	file:
 clocksharp_flag	application/curl/pwork.c	/^    char clocksharp_flag;$/;"	m	struct:tagmor_s	file:
 close_alse	application/sound/playback.c	/^int close_alse(snd_pcm_t *handle){$/;"	f
+clsthread	application/curl/mplayer/test/songplay.c	/^int clsthread = 0;	\/\/关闭线程$/;"	v
+cmdfifofd	application/curl/pvoice.c	/^int cmdfifofd = -1;$/;"	v
 colour_print	application/curl/cJSON/tests/unity/auto/colour_prompt.rb	/^def colour_print(role, str)$/;"	f
 colour_puts	application/curl/cJSON/tests/unity/auto/colour_prompt.rb	/^def colour_puts(role, str)$/;"	f
 compare_from_string	application/curl/cJSON/tests/compare_tests.c	/^static cJSON_bool compare_from_string(const char * const a, const char * const b, const cJSON_bool case_sensitive)$/;"	f	file:
@@ -1678,6 +1698,7 @@ configure_toolchain	application/curl/cJSON/tests/unity/extras/fixture/rakefile_h
 configure_toolchain	application/curl/cJSON/tests/unity/test/rakefile_helper.rb	/^  def configure_toolchain(config_file = DEFAULT_CONFIG_FILE)$/;"	f	class:RakefileHelpers
 consume	examples/thread/consume.c	/^void *consume(void *arg){$/;"	f
 consume_id	examples/thread/consume.c	/^unsigned short consume_id = 0;$/;"	v
+container_of	application/curl/lib/list.h	73;"	d
 content	application/curl/cJSON/cJSON.c	/^    const unsigned char *content;$/;"	m	struct:__anon5	file:
 count	application/curl/cJSON/tests/unity/extras/fixture/test/unity_output_Spy.c	/^static int count;$/;"	v	file:
 count	application/curl/md5.h	/^	unsigned int count[2];$/;"	m	struct:__anon3
@@ -1726,6 +1747,8 @@ data_buf	examples/sound/record_play/sndwav_common.h	/^	uint8_t *data_buf; $/;"	m
 data_len	application/curl/voice/wavplay.c	/^  uint32_t data_len;$/;"	m	struct:wav_info	file:
 data_lock	modules/pwm/stree.c	/^    struct mutex data_lock;$/;"	m	struct:tbs2701_data	typeref:struct:tbs2701_data::mutex	file:
 data_queue	modules/pwm/stree.c	/^    wait_queue_head_t data_queue;$/;"	m	struct:tbs2701_data	file:
+datacmd_thread	application/curl/mplayer/test/songplay.c	/^void *datacmd_thread(void *arg)$/;"	f
+deal_data	application/curl/mplayer/test/songplay.c	/^void deal_data(char *arg)$/;"	f
 deallocate	application/curl/cJSON/cJSON.c	/^    void (*deallocate)(void *pointer);$/;"	m	struct:internal_hooks	file:
 decode	application/curl/alsaplay.c	/^int decode(unsigned char const *start, unsigned long length)$/;"	f	file:
 decode_array_index_from_pointer	application/curl/cJSON/cJSON_Utils.c	/^static cJSON_bool decode_array_index_from_pointer(const unsigned char * const pointer, size_t * const index)$/;"	f	file:
@@ -1739,6 +1762,8 @@ destroy	application/curl/cJSON/tests/unity/auto/generate_module.rb	/^  def destr
 detach_item_from_array	application/curl/cJSON/cJSON_Utils.c	/^static cJSON *detach_item_from_array(cJSON *array, size_t which)$/;"	f	file:
 detach_path	application/curl/cJSON/cJSON_Utils.c	/^static cJSON *detach_path(cJSON *object, const unsigned char *path, const cJSON_bool case_sensitive)$/;"	f	file:
 detect_os	application/curl/cJSON/tests/unity/auto/parse_output.rb	/^  def detect_os$/;"	f	class:ParseOutput
+devid	application/curl/device/zigbee.h	/^	int devid;$/;"	m	struct:stgDevNode
+devtype	application/curl/device/zigbee.h	/^	int devtype;$/;"	m	struct:stgDevNode
 dld	application/curl/alsaplay_wav.c	/^    char dld[4]; \/\/”data“$/;"	m	struct:WAV_HEADER	file:
 dld	application/sound/playback_wav.c	/^    char dld[4]; \/\/”data“$/;"	m	struct:WAV_HEADER	file:
 dld	examples/sound/wav/playback_wav.c	/^    char dld[4]; \/\/”data“$/;"	m	struct:WAV_HEADER	file:
@@ -1780,6 +1805,7 @@ failing_malloc	application/curl/cJSON/tests/cjson_add.c	/^static void *failing_m
 failing_realloc	application/curl/cJSON/tests/misc_tests.c	/^static void *failing_realloc(void *pointer, size_t size)$/;"	f	file:
 false	application/curl/cJSON/cJSON.c	62;"	d	file:
 false	application/curl/cJSON/cJSON_Utils.c	54;"	d	file:
+fdpp	application/curl/mplayer/test/songplay.c	/^int fdpp[2];	\/\/无名管道$/;"	v
 file_test10_should_be_parsed_and_printed	application/curl/cJSON/tests/parse_examples.c	/^static void file_test10_should_be_parsed_and_printed(void)$/;"	f	file:
 file_test11_should_be_parsed_and_printed	application/curl/cJSON/tests/parse_examples.c	/^static void file_test11_should_be_parsed_and_printed(void)$/;"	f	file:
 file_test1_should_be_parsed_and_printed	application/curl/cJSON/tests/parse_examples.c	/^static void file_test1_should_be_parsed_and_printed(void)$/;"	f	file:
@@ -1799,6 +1825,8 @@ find_source_file	application/curl/cJSON/tests/unity/examples/example_3/rakefile_
 find_source_file	application/curl/cJSON/tests/unity/test/rakefile_helper.rb	/^  def find_source_file(header, paths)$/;"	f	class:RakefileHelpers
 find_tests	application/curl/cJSON/tests/unity/auto/generate_test_runner.rb	/^  def find_tests(source)$/;"	f	class:UnityTestRunnerGenerator
 firstName	application/curl/json.c	/^	char firstName[32];$/;"	m	struct:__anon1	file:
+flag	application/curl/mplayer/test/songplay.c	/^int flag = 0;	\/\/显示数据标志	1：显示  0：不显示$/;"	v
+flagpause	application/curl/mplayer/test/songplay.c	/^int flagpause = -1;	\/\/暂停标志$/;"	v
 fld	application/curl/alsaplay_wav.c	/^    char fld[4]; \/\/"fmt"$/;"	m	struct:WAV_HEADER	file:
 fld	application/sound/playback_wav.c	/^    char fld[4]; \/\/"fmt"$/;"	m	struct:WAV_HEADER	file:
 fld	examples/sound/wav/playback_wav.c	/^    char fld[4]; \/\/"fmt"$/;"	m	struct:WAV_HEADER	file:
@@ -1819,6 +1847,7 @@ free	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture.c	161;"
 free	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture_malloc_overrides.h	40;"	d
 free_fn	application/curl/cJSON/cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
 free_fn	application/curl/cJSON/include/cjson/cJSON.h	/^      void (*free_fn)(void *ptr);$/;"	m	struct:cJSON_Hooks
+g_DevNode	application/curl/device/zigbee.c	/^LS_HEAD_S g_DevNode;$/;"	v
 g_buffer	examples/thread/consume.c	/^int g_buffer[BUFFSIZE];    \/\/缓冲区数目$/;"	v
 g_demo_error_msg	application/curl/rest-api-tts/common.c	/^char g_demo_error_msg[1024] = {0};$/;"	v
 g_msid	application/curl/pvoice.c	/^int g_msid = -1;$/;"	v
@@ -1846,6 +1875,8 @@ get_item_from_pointer	application/curl/cJSON/cJSON_Utils.c	/^static cJSON *get_i
 get_object_item	application/curl/cJSON/cJSON.c	/^static cJSON *get_object_item(const cJSON * const object, const char * const name, const cJSON_bool case_sensitive)$/;"	f	file:
 get_object_item	application/curl/cJSON/cJSON_Utils.c	/^static cJSON *get_object_item(const cJSON * const object, const char* name, const cJSON_bool case_sensitive)$/;"	f	file:
 get_sigset	application/curl/main.c	/^sigset_t get_sigset(void){$/;"	f
+get_song_list	application/curl/mplayer/test/songplay.c	/^List_head *get_song_list(char *pathname)$/;"	f
+getcmd_thread	application/curl/mplayer/test/songplay.c	/^void *getcmd_thread(void *arg)$/;"	f
 getexitsigle	application/curl/main.c	/^int getexitsigle()$/;"	f
 getvoicesock	application/curl/voiceclient.c	/^int getvoicesock()$/;"	f
 giExit	application/curl/main.c	/^int giExit = 0;$/;"	v
@@ -1864,6 +1895,8 @@ guid_tag	examples/sound/record_play/wav_parser.h	/^	uint8_t guid_tag[14];   \/* 
 handle	application/curl/alsaplay.c	/^snd_pcm_t* handle=NULL; \/\/PCI设备句柄$/;"	v
 handle	examples/sound/record_play/sndwav_common.h	/^	snd_pcm_t *handle; $/;"	m	struct:SNDPCMContainer
 has_error	application/curl/rest-api-tts/ttscurl.h	/^    int has_error;$/;"	m	struct:http_result
+head	application/curl/mplayer/test/songplay.h	/^	struct song *head;$/;"	m	struct:list_head	typeref:struct:list_head::song
+head_create	application/curl/mplayer/test/songplay.c	/^List_head *head_create(void)$/;"	f
 header	examples/sound/record_play/wav_parser.h	/^	WAVHeader_t header; $/;"	m	struct:WAVContainer
 header_callback	application/curl/rest-api-tts/ttscurl.c	/^size_t header_callback(char *buffer, size_t size, size_t nitems, struct http_result *result) {$/;"	f
 heap_index	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static size_t heap_index;$/;"	v	file:
@@ -1951,6 +1984,8 @@ length	examples/sound/record_play/wav_parser.h	/^	uint32_t length;        \/* �
 link_it	application/curl/cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def link_it(exe_name, obj_list)$/;"	f
 link_it	application/curl/cJSON/tests/unity/extras/fixture/rakefile_helper.rb	/^  def link_it(exe_name, obj_list)$/;"	f
 link_it	application/curl/cJSON/tests/unity/test/rakefile_helper.rb	/^  def link_it(exe_name, obj_list)$/;"	f
+list_destroy	application/curl/mplayer/test/songplay.c	/^void list_destroy(List_head *linklist)$/;"	f
+list_head	application/curl/mplayer/test/songplay.h	/^struct list_head$/;"	s
 listenmain	application/curl/plisten.c	/^void *listenmain(void*p){$/;"	f
 load_configuration	application/curl/cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def load_configuration(config_file)$/;"	f	class:RakefileHelpers
 load_configuration	application/curl/cJSON/tests/unity/extras/fixture/rakefile_helper.rb	/^  def load_configuration(config_file)$/;"	f	class:RakefileHelpers
@@ -1959,6 +1994,7 @@ local_include_dirs	application/curl/cJSON/tests/unity/examples/example_3/rakefil
 local_include_dirs	application/curl/cJSON/tests/unity/test/rakefile_helper.rb	/^  def local_include_dirs$/;"	f	class:RakefileHelpers
 log	examples/sound/record_play/sndwav_common.h	/^	snd_output_t *log; $/;"	m	struct:SNDPCMContainer
 lon	application/curl/cJSON/test.c	/^    double lon;$/;"	m	struct:record	file:
+ls_next	application/curl/lib/list.h	/^LS_NODE_S *ls_next(LS_NODE_S *pNode){$/;"	f
 magic	examples/sound/record_play/wav_parser.h	/^	uint32_t magic;     \/* 'RIFF'固定的头，描述文件类型 *\/ $/;"	m	struct:WAVHeader
 magic	examples/sound/record_play/wav_parser.h	/^	uint32_t magic;  \/* 'FMT '块的名字*\/ $/;"	m	struct:WAVFmt
 main	application/curl/cJSON/fuzzing/afl.c	/^int main(int argc, char** argv)$/;"	f
@@ -2009,7 +2045,10 @@ main	application/curl/cJSON/tests/unity/test/testdata/testRunnerGenerator.c	/^in
 main	application/curl/cJSON/tests/unity/test/testdata/testRunnerGeneratorWithMocks.c	/^int main(void)$/;"	f
 main	application/curl/client.c	/^int main(int argc,char* argv[])$/;"	f
 main	application/curl/fastcgi/fcgi_read.c	/^int main()$/;"	f
+main	application/curl/fastcgi/fcgi_write.c	/^int main()$/;"	f
 main	application/curl/main.c	/^int main()$/;"	f
+main	application/curl/mplayer/mplayer_slave.c	/^int main(void)$/;"	f
+main	application/curl/mplayer/test/mplayer.c	/^int main(void)$/;"	f
 main	application/curl/voice/wavplay.c	/^int main (int argc, char *argv[]) {$/;"	f
 main	application/sound/main.c	/^int main()$/;"	f
 main	examples/gpio/gpioN/togglygpionum.c	/^int main(void)$/;"	f
@@ -2048,7 +2087,12 @@ mockMock_Verify	application/curl/cJSON/tests/unity/test/testdata/cmock.h	/^void 
 mockMock_Verify_Counter	application/curl/cJSON/tests/unity/test/testdata/cmock.h	/^int mockMock_Verify_Counter = 0;$/;"	v
 mor_done	application/curl/pwork.c	/^    char mor_done;    $/;"	m	struct:tagmor_s	file:
 mor_flag	application/curl/pwork.c	/^    char mor_flag;$/;"	m	struct:tagmor_s	file:
+mplayer_slave_exit	application/curl/pvoice.c	/^void mplayer_slave_exit(void)$/;"	f
+mplayer_slave_set	application/curl/pvoice.c	/^int mplayer_slave_set(void) $/;"	f
+mplayer_slave_setvolume	application/curl/pvoice.c	/^void mplayer_slave_setvolume(int num)$/;"	f
+mplayer_slave_snd	application/curl/pvoice.c	/^int mplayer_slave_snd(char *arg)$/;"	f
 mqd	application/curl/prevpkt.c	/^mqd_t mqd;$/;"	v
+mqd_w	application/curl/prevpkt.c	/^mqd_t mqd_w;$/;"	v
 mqdwork	application/curl/pwork.c	/^mqd_t mqdwork;$/;"	v
 mqueue_send2pkt	application/curl/prevpkt.c	/^int mqueue_send2pkt(const char *buf,long len)$/;"	f
 mqueue_send2work	application/curl/pwork.c	/^int mqueue_send2work(const char *buf,long len)$/;"	f
@@ -2077,10 +2121,16 @@ nSamplesPersec	application/curl/alsaplay_wav.c	/^    int nSamplesPersec ; \/\/�
 nSamplesPersec	application/sound/playback_wav.c	/^    int nSamplesPersec ; \/\/采样频率$/;"	m	struct:WAV_HEADER	file:
 nSamplesPersec	examples/sound/wav/playback_wav.c	/^    int nSamplesPersec ; \/\/采样频率$/;"	m	struct:WAV_HEADER	file:
 name	application/curl/cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static const char* name[] = {$/;"	v	file:
+name	application/curl/mplayer/test/songplay.h	/^	char name[NAMESIZE];$/;"	m	struct:song
 next	application/curl/cJSON/cJSON.h	/^    struct cJSON *next;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
 next	application/curl/cJSON/include/cjson/cJSON.h	/^    struct cJSON *next;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
+next	application/curl/mplayer/test/songplay.h	/^	struct song *next;$/;"	m	struct:song	typeref:struct:song::song
 noOptions	application/curl/cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static const char* noOptions[] = {$/;"	v	file:
 noalloc	application/curl/cJSON/cJSON.c	/^    cJSON_bool noalloc;$/;"	m	struct:__anon6	file:
+node_create	application/curl/mplayer/test/songplay.c	/^Song *node_create(char *name)$/;"	f
+node_insert_tail	application/curl/mplayer/test/songplay.c	/^void node_insert_tail(List_head *linklist, Song *pSong)$/;"	f
+node_print	application/curl/mplayer/test/songplay.c	/^void node_print(List_head *linklist)$/;"	f
+node_search	application/curl/mplayer/test/songplay.c	/^Song *node_search(List_head *linklist, char *name)$/;"	f
 nowTime	application/curl/pwork.c	/^struct tm nowTime;$/;"	v	typeref:struct:tm
 obj-m	modules/pwm/Makefile	/^obj-m := stree.o$/;"	m
 obj-m	modules/test/Makefile	/^obj-m := hello.o$/;"	m
@@ -2099,6 +2149,8 @@ output	application/curl/alsaplay.c	/^enum mad_flow output(void *data,$/;"	f	file
 overwrite_item	application/curl/cJSON/cJSON_Utils.c	/^static void overwrite_item(cJSON * const root, const cJSON replacement)$/;"	f	file:
 p1	application/curl/cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static char *p1;$/;"	v	file:
 p2	application/curl/cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static char *p2;$/;"	v	file:
+pFirst	application/curl/lib/list.h	/^	LS_NODE_S *pFirst; $/;"	m	struct:stghead_s
+pNext	application/curl/lib/list.h	/^	struct stgnode_s *pNext; $/;"	m	struct:stgnode_s	typeref:struct:stgnode_s::stgnode_s
 params	application/curl/alsaplay.c	/^snd_pcm_hw_params_t* params=NULL;\/\/硬件信息和PCM流配置$/;"	v
 paratest_ShouldHandleNonParameterizedTestsWhenParameterizationValid	application/curl/cJSON/tests/unity/test/testdata/testRunnerGenerator.c	/^void paratest_ShouldHandleNonParameterizedTestsWhenParameterizationValid(void)$/;"	f
 paratest_ShouldHandleNonParameterizedTestsWhenParameterizationValid	application/curl/cJSON/tests/unity/test/testdata/testRunnerGeneratorWithMocks.c	/^void paratest_ShouldHandleNonParameterizedTestsWhenParameterizationValid(void)$/;"	f
@@ -2163,10 +2215,12 @@ per	application/curl/rest-api-tts/ttsmain.h	/^    int per;$/;"	m	struct:tts_conf
 period	modules/pwm/stree.c	/^	int period;\/\/周期$/;"	m	struct:tbs2701_data	file:
 pit	application/curl/rest-api-tts/ttsmain.h	/^    int pit;$/;"	m	struct:tts_config
 pkt_send	application/curl/prevpkt.c	/^void pkt_send(char *pbuf, int lent)$/;"	f
+plast	application/curl/mplayer/test/songplay.c	/^Song *plast = NULL;$/;"	v
 playback_mp3	application/curl/alsaplay.c	/^int playback_mp3(char *strpath,char *strvolume) $/;"	f
 playback_wav	application/curl/alsaplay_wav.c	/^int playback_wav(char *path)$/;"	f
 playback_wav	application/sound/playback_wav.c	/^int playback_wav(void)$/;"	f
 playvoice	application/curl/pvoice.c	/^void playvoice(char *pbuf ,char *strvolume)$/;"	f
+pnow	application/curl/mplayer/test/songplay.c	/^Song *pnow = NULL;$/;"	v
 pointer	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^    void** pointer;$/;"	m	struct:PointerPair	file:
 pointer1	application/curl/cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static int* pointer1 = 0;$/;"	v	file:
 pointer2	application/curl/cJSON/tests/unity/extras/fixture/test/unity_fixture_Test.c	/^static int* pointer2 = (int*)2;$/;"	v	file:
@@ -2180,6 +2234,8 @@ power_gpio	modules/pwm/stree.c	/^	int power_gpio;\/\/供电控制$/;"	m	struct:t
 precision	application/curl/cJSON/test.c	/^    const char *precision;$/;"	m	struct:record	file:
 prev	application/curl/cJSON/cJSON.h	/^    struct cJSON *prev;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
 prev	application/curl/cJSON/include/cjson/cJSON.h	/^    struct cJSON *prev;$/;"	m	struct:cJSON	typeref:struct:cJSON::cJSON
+prev	application/curl/mplayer/test/songplay.h	/^	struct song *prev;$/;"	m	struct:song	typeref:struct:song::song
+prevpkt_tlvproc	application/curl/prevpkt.c	/^void prevpkt_tlvproc(char *arg,char len){$/;"	f
 prevpktmain	application/curl/prevpkt.c	/^void *prevpktmain(void *p)$/;"	f
 print	application/curl/cJSON/cJSON.c	/^static unsigned char *print(const cJSON * const item, cJSON_bool format, const internal_hooks * const hooks)$/;"	f	file:
 printFloatValue	application/curl/cJSON/tests/unity/test/tests/testunity.c	/^static void printFloatValue(float f)$/;"	f	file:
@@ -2243,12 +2299,14 @@ qwiktest_ThisTestPassesWhenNoTeardownRan	application/curl/cJSON/tests/unity/test
 rLen	application/curl/alsaplay_wav.c	/^    int rLen; $/;"	m	struct:WAV_HEADER	file:
 rLen	application/sound/playback_wav.c	/^    int rLen; $/;"	m	struct:WAV_HEADER	file:
 rLen	examples/sound/wav/playback_wav.c	/^    int rLen; $/;"	m	struct:WAV_HEADER	file:
+range	application/curl/device/zigbee.h	/^    int range;$/;"	m	struct:stgDevNode
 rate	application/curl/voice/wavplay.c	/^  int rate;$/;"	m	struct:wav_info	file:
 read_callback	application/curl/postcallback.c	/^static size_t read_callback(void *dest, size_t size, size_t nmemb, void *userp)$/;"	f	file:
 read_file	application/curl/cJSON/fuzzing/afl.c	/^static char *read_file(const char *filename)$/;"	f	file:
 read_file	application/curl/cJSON/tests/common.h	/^char* read_file(const char *filename) {$/;"	f
 read_handling	application/curl/client.c	/^void read_handling(int sock)$/;"	f
 read_handling	application/curl/voiceclient.c	/^void read_handling(int sock)$/;"	f
+read_thread	application/curl/mplayer/test/songplay.c	/^void *read_thread(void *arg)$/;"	f
 readptr	application/curl/postcallback.c	/^  const char *readptr;$/;"	m	struct:WriteThis	file:
 realloc	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture.c	163;"	d	file:
 realloc	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture_malloc_overrides.h	39;"	d
@@ -2311,6 +2369,7 @@ scale	application/curl/alsaplay.c	/^signed int scale(mad_fixed_t sample)$/;"	f	f
 search_header	application/curl/rest-api-tts/ttscurl.c	/^static RETURN_CODE search_header(const char *buffer, size_t len, const char *key, char *value) {$/;"	f	file:
 secret_key	application/curl/rest-api-tts/ttsmain.h	/^    char secret_key[40]; \/\/ 填写网页上申请的APP SECRET 如 $secretKey="94dc99566550d87f8fa8ece112xxxxx"$/;"	m	struct:tts_config
 selected	application/curl/cJSON/tests/unity/extras/fixture/src/unity_fixture.c	/^static int selected(const char* filter, const char* name)$/;"	f	file:
+sem	application/curl/mplayer/test/songplay.c	/^sem_t sem;		\/\/信号量$/;"	v
 serv_sock	application/curl/prevpkt.c	/^int serv_sock,clnt_sock;$/;"	v
 set	application/curl/main.c	/^sigset_t set;$/;"	v
 set	application/sound/main.c	/^sigset_t set;$/;"	v
@@ -2339,6 +2398,7 @@ set_targets	application/curl/cJSON/tests/unity/auto/unity_test_summary.py	/^    
 set_targets	application/curl/cJSON/tests/unity/auto/unity_to_junit.py	/^    def set_targets(self, target_array):$/;"	m	class:UnityTestSummary
 set_volume	application/curl/alsaplay.c	/^void set_volume(long volume)$/;"	f
 set_xml_output	application/curl/cJSON/tests/unity/auto/parse_output.rb	/^  def set_xml_output$/;"	f	class:ParseOutput
+shelpstr	application/curl/device/zigbee.c	/^char *shelpstr[]={$/;"	v
 shightemp	application/curl/json.h	/^    char shightemp[20];$/;"	m	struct:__anon11
 should	application/curl/cJSON/tests/unity/test/rakefile_helper.rb	/^  def should(behave, &block)$/;"	f
 should_RunTestsStartingWithShouldByDefault	application/curl/cJSON/tests/unity/test/testdata/testRunnerGenerator.c	/^void should_RunTestsStartingWithShouldByDefault(void)$/;"	f
@@ -2353,9 +2413,16 @@ sizeleft	application/curl/postcallback.c	/^  size_t sizeleft;$/;"	m	struct:Write
 skip_utf8_bom	application/curl/cJSON/cJSON.c	/^static parse_buffer *skip_utf8_bom(parse_buffer * const buffer)$/;"	f	file:
 skip_utf8_bom_should_not_skip_bom_if_not_at_beginning	application/curl/cJSON/tests/misc_tests.c	/^static void skip_utf8_bom_should_not_skip_bom_if_not_at_beginning(void)$/;"	f	file:
 skip_utf8_bom_should_skip_bom	application/curl/cJSON/tests/misc_tests.c	/^static void skip_utf8_bom_should_skip_bom(void)$/;"	f	file:
+sl_addafter	application/curl/lib/list.h	/^void sl_addafter(LS_HEAD_S *pHead,LS_NODE_S *pNode){$/;"	f
+sl_addhead	application/curl/lib/list.h	/^void sl_addhead(LS_HEAD_S *pHead,LS_NODE_S *pNode){$/;"	f
+sl_del	application/curl/lib/list.h	/^void sl_del(LS_HEAD_S *pHead,LS_NODE_S *pNode){$/;"	f
+sl_first	application/curl/lib/list.h	/^LS_NODE_S *sl_first(LS_HEAD_S *pHead){$/;"	f
+sl_init	application/curl/lib/list.h	/^void sl_init(LS_HEAD_S *pstLsHead){$/;"	f
 slowtemp	application/curl/json.h	/^    char slowtemp[20];$/;"	m	struct:__anon11
 snotice	application/curl/json.h	/^	char snotice[40];$/;"	m	struct:__anon11
 sock	application/curl/voiceclient.c	/^int sock;$/;"	v
+song	application/curl/mplayer/test/songplay.h	/^struct song$/;"	s
+song_num	application/curl/mplayer/test/songplay.h	/^	int song_num;$/;"	m	struct:list_head
 sort_list	application/curl/cJSON/cJSON_Utils.c	/^static cJSON *sort_list(cJSON *list, const cJSON_bool case_sensitive)$/;"	f	file:
 sort_object	application/curl/cJSON/cJSON_Utils.c	/^static void sort_object(cJSON * const object, const cJSON_bool case_sensitive)$/;"	f	file:
 sort_tests	application/curl/cJSON/tests/old_utils_tests.c	/^static void sort_tests(void)$/;"	f	file:
@@ -2373,11 +2440,15 @@ spy_enable	application/curl/cJSON/tests/unity/extras/fixture/test/unity_output_S
 squash	application/curl/cJSON/tests/unity/examples/example_3/rakefile_helper.rb	/^  def squash(prefix, items)$/;"	f
 squash	application/curl/cJSON/tests/unity/extras/fixture/rakefile_helper.rb	/^  def squash(prefix, items)$/;"	f
 squash	application/curl/cJSON/tests/unity/test/rakefile_helper.rb	/^  def squash(prefix, items)$/;"	f
+stNode	application/curl/device/zigbee.h	/^	LS_NODE_S stNode;$/;"	m	struct:stgDevNode
 start	application/curl/alsaplay.c	/^  unsigned char const *start;$/;"	m	struct:buffer	file:
 startPutcharSpy	application/curl/cJSON/tests/unity/test/tests/testunity.c	/^void startPutcharSpy(void) {indexSpyBuffer = 0; putcharSpyEnabled = 1;}$/;"	f
 state	application/curl/cJSON/test.c	/^    const char *state;$/;"	m	struct:record	file:
 state	application/curl/md5.h	/^	unsigned int state[4];$/;"	m	struct:__anon3
 status	application/curl/json.h	/^	int status;$/;"	m	struct:__anon11
+stgDevNode	application/curl/device/zigbee.h	/^typedef struct stgDevNode$/;"	s
+stghead_s	application/curl/lib/list.h	/^typedef struct stghead_s$/;"	s
+stgnode_s	application/curl/lib/list.h	/^typedef struct stgnode_s$/;"	s
 str2	application/curl/puart.c	/^unsigned char str2 = 0x0;$/;"	v
 string	application/curl/cJSON/cJSON.h	/^    char *string;$/;"	m	struct:cJSON
 string	application/curl/cJSON/include/cjson/cJSON.h	/^    char *string;$/;"	m	struct:cJSON
@@ -3040,4 +3111,8 @@ write_xml_header	application/curl/cJSON/tests/unity/auto/stylize_as_junit.rb	/^ 
 write_xml_output	application/curl/cJSON/tests/unity/auto/parse_output.rb	/^  def write_xml_output$/;"	f	class:ParseOutput
 writefunc	application/curl/rest-api-tts/common.c	/^size_t writefunc(void *ptr, size_t size, size_t nmemb, char **result) {$/;"	f
 writefunc_data	application/curl/rest-api-tts/ttscurl.c	/^size_t writefunc_data(void *ptr, size_t size, size_t nmemb, struct http_result *result) {$/;"	f
+zigbee_devnode_add	application/curl/device/zigbee.c	/^void zigbee_devnode_add(int devid,$/;"	f
+zigbee_devnode_del	application/curl/device/zigbee.c	/^void zigbee_devnode_del(int devid){$/;"	f
+zigbee_devnode_delall	application/curl/device/zigbee.c	/^void zigbee_devnode_delall(void){$/;"	f
+zigbee_devnode_init	application/curl/device/zigbee.c	/^void zigbee_devnode_init(){$/;"	f
 zip	application/curl/cJSON/test.c	/^    const char *zip;$/;"	m	struct:record	file:

@@ -15,6 +15,7 @@
 #include <curl/curl.h>
 #include "queue.h"
 #include "prevpkt.h"
+#include "lib/list.h"
 #include "device/zigbee.h"
 
 #define BUF_SIZE 30
@@ -104,7 +105,8 @@ void *prevpktmain(void *p)
     struct epoll_event* pevents;
     int ret = 0;
     _Bool bisbreak = 0;
-
+   /*关于设备的初始化*/ 
+    zigbee_devnode_init();
     int count;/*facgi 请求数目 ** ****/
    /* 
     if(argc!=2)
@@ -257,6 +259,9 @@ void *prevpktmain(void *p)
     shutdown(serv_sock,SHUT_RDWR);
     close(ep_fd);
 	(void)mq_close(mqd_w);
+
+    zigbee_devnode_delall();
+
     printf("pkt thread exit\n");
     return 0;
 }
@@ -269,25 +274,35 @@ void error_handler(const char* message)
 }
 void prevpkt_tlvproc(char *arg,char len){
     uint16_t type,i;
-    uint16_t ucValue;;
+    uint16_t ucValue;
+    uint16_t devid;
     if (arg[0] != len)
         return;
     if (arg[1] != 0xff)
         return;
+    devid = arg[2];
     for(i = 0; i < len;)
     {
         type = arg[i+3];
         len = arg[i+4];
         ucValue = arg[i+5];
-        i += len +2;
         switch(type)
         {
             case GET_KEY:
                 printf("get key value = %d\n\r", ucValue);
                 quemsg_snd_voice("opendoor.mp3","40");
                 break;
+            case MO_DISTANCE:
+                printf("get distance = %d\n\r", ucValue);
+                quemsg_snd_voice("opendoor.mp3","40");
+                break;
+            case REQ_DISCOVE:
+                printf("get discove = %d\n\r", ucValue);
+                zigbee_devnode_add(arg[i+5],arg[i+6],arg[i+7]);
+                break;
             default:break;
         }
+        i += len +2;
     
     }
 }

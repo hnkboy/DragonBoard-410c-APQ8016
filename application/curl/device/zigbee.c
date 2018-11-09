@@ -40,6 +40,23 @@ void zigbee_devnode_add(int devid,
 	sl_addhead(&g_DevNode,&pstDevNode->stNode);
 
 }
+LS_NODE_S zigbee_devnode_find(int devid){
+
+	DEV_NODE_S *pstDevNode = NULL;
+	LS_NODE_S *pstNode = NULL;
+	LS_NODE_S *pstNext = NULL;
+	SL_FOREACH_SAFE(&g_DevNode,pstNode,pstNext){
+
+		pstDevNode = SL_ENTRY(pstNode,DEV_NODE_S,stNode);
+
+		if(devid == pstDevNode->devid)
+		{
+			sl_del(&g_DevNode,pstNode);
+			free(pstDevNode);
+			break;
+		}
+	}
+}
 void zigbee_devnode_del(int devid){
 
 	DEV_NODE_S *pstDevNode = NULL;
@@ -68,6 +85,7 @@ void zigbee_devnode_delall(void){
 		free(pstDevNode);
 	}
 }
+#if 0
 void main(){
 
 	DEV_NODE_S *pstDevNode = NULL;
@@ -91,3 +109,4 @@ void main(){
     zigbee_devnode_delall();
 
 }
+#endif
