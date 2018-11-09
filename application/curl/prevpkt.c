@@ -36,10 +36,10 @@ int mqueue_send2pkt(const char *buf,long len)
     if (ret == -1) {
         perror("mq_send()");
 		return -1;
-    } 
+    }
     printf("send to pkt mqueue msg: %s.\n",buf);
 	return 0;
-    
+
 }
 void error_handler(const char* message);
 
@@ -62,11 +62,11 @@ void uartchar_proc(char *buf, unsigned int len)
 		//printf("str2=%d\n\n\r", str2);
 		switch(str2){
 			case 0x0:
-				if (temp == 0x0D)str2=0x1;break;	
+				if (temp == 0x0D)str2=0x1;break;
 			case 0x1:
-				if (temp == 0x0A)str2=0x2;else str2=0x0;break;	
+				if (temp == 0x0A)str2=0x2;else str2=0x0;break;
 			case 0x2:
-				if (temp == 0xef)str2=0x0;else {str2=0x3;Uart2_Buffer[Uart2_Rx]=temp; Uart2_Rx++;}break;	
+				if (temp == 0xef)str2=0x0;else {str2=0x3;Uart2_Buffer[Uart2_Rx]=temp; Uart2_Rx++;}break;
 			case 0x3:
 				Uart2_Buffer[Uart2_Rx]=temp;
 				Uart2_Rx++;
@@ -105,10 +105,10 @@ void *prevpktmain(void *p)
     struct epoll_event* pevents;
     int ret = 0;
     _Bool bisbreak = 0;
-   /*关于设备的初始化*/ 
+   /*关于设备的初始化*/
     zigbee_devnode_init();
     int count;/*facgi 请求数目 ** ****/
-   /* 
+   /*
     if(argc!=2)
     {
         printf("Usage %s <port>\n",argv[0]);
@@ -121,14 +121,14 @@ void *prevpktmain(void *p)
     if (mqd == -1) {
         perror("pkt mq_open()");
         exit(1);
-    } 
+    }
     /*fcgi mqueue*/
     mqd_w = mq_open("/fastcgi_write", O_RDWR|O_CREAT, 0600, NULL);
     if (mqd_w == -1)
     {
         perror("pkt fcgi  mq_open()");
         exit(1);
-    } 
+    }
 
     serv_sock=socket(AF_INET,SOCK_STREAM,0);
     on = 1;
@@ -217,6 +217,9 @@ void *prevpktmain(void *p)
                         buf[t] = 0xff;
                         }
                         write(pevents[i].data.fd,buf,str_len);
+						if (-1 != g_ZigbeeFd){
+							g_ZigbeeFd = pevents[i].data.fd;
+						}
                         #endif
                     }
 
@@ -236,7 +239,7 @@ void *prevpktmain(void *p)
 					(void)mq_close(mqd);
                     bisbreak = 1;
 					break;
-        		}	
+        		}
 				else
 				{
                     char wbuf[BUFSIZ] = {0};
@@ -249,7 +252,7 @@ void *prevpktmain(void *p)
 					}
 					printf("send mqueue msg, prio: %d value: %s\r",val,wbuf);
 					count ++;
-				}	
+				}
             }
         }
     }
@@ -270,7 +273,7 @@ void error_handler(const char* message)
     fputs(message,stderr);
     fputc('\n',stderr);
     //exit(1);
-    
+
 }
 void prevpkt_tlvproc(char *arg,char len){
     uint16_t type,i;
@@ -297,12 +300,21 @@ void prevpkt_tlvproc(char *arg,char len){
                 quemsg_snd_voice("opendoor.mp3","40");
                 break;
             case REQ_DISCOVE:
+				DEV_NODE_S *pstNode = NULL;
                 printf("get discove = %d\n\r", ucValue);
-                zigbee_devnode_add(arg[i+5],arg[i+6],arg[i+7]);
+
+				pstNode = zigbee_devnode_find(arg[i+5]);
+				if(NULL == pstNode){
+					zigbee_devnode_add(arg[i+5],arg[i+6],arg[i+7]);
+				}
+				else{
+					pstNode->devtype = arg[i+6];
+					pstNode->range   = arg[i+7];
+				}
                 break;
             default:break;
         }
         i += len +2;
-    
+
     }
 }

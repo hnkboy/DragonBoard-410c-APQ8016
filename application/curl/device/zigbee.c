@@ -20,7 +20,7 @@ char *shelpstr[]={
 };
 
 
-LS_HEAD_S g_DevNode;
+SL_HEAD_S g_DevNode;
 
 
 void zigbee_devnode_init(){
@@ -40,28 +40,27 @@ void zigbee_devnode_add(int devid,
 	sl_addhead(&g_DevNode,&pstDevNode->stNode);
 
 }
-LS_NODE_S zigbee_devnode_find(int devid){
+DEV_NODE_S *zigbee_devnode_find(int devid){
 
 	DEV_NODE_S *pstDevNode = NULL;
-	LS_NODE_S *pstNode = NULL;
-	LS_NODE_S *pstNext = NULL;
+	SL_NODE_S *pstNode = NULL;
+	SL_NODE_S *pstNext = NULL;
 	SL_FOREACH_SAFE(&g_DevNode,pstNode,pstNext){
 
 		pstDevNode = SL_ENTRY(pstNode,DEV_NODE_S,stNode);
 
 		if(devid == pstDevNode->devid)
 		{
-			sl_del(&g_DevNode,pstNode);
-			free(pstDevNode);
-			break;
+			return pstDevNode;
 		}
 	}
+	return NULL;
 }
 void zigbee_devnode_del(int devid){
 
 	DEV_NODE_S *pstDevNode = NULL;
-	LS_NODE_S *pstNode = NULL;
-	LS_NODE_S *pstNext = NULL;
+	SL_NODE_S *pstNode = NULL;
+	SL_NODE_S *pstNext = NULL;
 	SL_FOREACH_SAFE(&g_DevNode,pstNode,pstNext){
 
 		pstDevNode = SL_ENTRY(pstNode,DEV_NODE_S,stNode);
@@ -77,20 +76,36 @@ void zigbee_devnode_del(int devid){
 void zigbee_devnode_delall(void){
 
 	DEV_NODE_S *pstDevNode = NULL;
-	LS_NODE_S *pstNode = NULL;
-	LS_NODE_S *pstNext = NULL;
+	SL_NODE_S *pstNode = NULL;
+	SL_NODE_S *pstNext = NULL;
 	SL_FOREACH_SAFE(&g_DevNode,pstNode,pstNext){
 		pstDevNode = SL_ENTRY(pstNode,DEV_NODE_S,stNode);
 	    sl_del(&g_DevNode,pstNode);
 		free(pstDevNode);
 	}
 }
+void zigbee_devnode_printall(){
+
+	DEV_NODE_S *pstDevNode = NULL;
+	SL_NODE_S *pstNode = NULL;
+	SL_NODE_S *pstNext = NULL;
+	SL_FOREACH_SAFE(&g_DevNode,pstNode,pstNext){
+
+		pstDevNode = SL_ENTRY(pstNode,DEV_NODE_S,stNode);
+        printf("/****************/\n");
+        printf("dev    id: %d\n",pstDevNode->devid);
+        printf("dev  type: %d\n",pstDevNode->devtype);
+        printf("dev range: %d\n",pstDevNode->range);
+	}
+}
+
+
 #if 0
 void main(){
 
 	DEV_NODE_S *pstDevNode = NULL;
-	LS_NODE_S *pstNode = NULL;
-	LS_NODE_S *pstNext = NULL;
+	SL_NODE_S *pstNode = NULL;
+	SL_NODE_S *pstNext = NULL;
 
     zigbee_devnode_init();
     zigbee_devnode_add(1,1,2);
@@ -110,3 +125,30 @@ void main(){
 
 }
 #endif
+
+int g_ZigbeeFd = -1;
+
+/*
+ * @brief   | SOP | Data Length  |   CMD   |   Data   |  FCS  |
+ *          |  1  |     1        |    2    |  0-Len   |   1   |
+*/
+
+void zigbee_send_discover(void){
+
+	char buf[8];
+	buf[0] = 0xFE;
+
+	buf[1] = 0x02;  /*数据长度*/
+
+	buf[2] = 0x00;  /* CMD */
+	buf[3] = 0x00;
+
+	buf[5] = REQ_DISCOVE;
+	buf[6] = 0x00;
+
+	buf[7] = 0x00;
+	write(g_ZigbeeFd,buf,8);
+}
+
+
+

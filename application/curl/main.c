@@ -22,10 +22,15 @@
 #include "prevpkt.h"
 #include "queue.h"
 
+#include "lib/list.h"
+#include "device/zigbee.h"
+
+
+
 #if 0
 pthread_t tlistenid;
 pthread_t tuartid;
-#endif 
+#endif
 pthread_t tid;
 pthread_t tvoiceid;
 pthread_t tworkid;
@@ -51,11 +56,11 @@ static void *mythread(void*p){
 	}
 }
 sigset_t get_sigset(void){
-    return set;    
+    return set;
 }
 int getexitsigle()
 {
-    return giExit;    
+    return giExit;
 }
 int main()
 {
@@ -63,7 +68,7 @@ int main()
 	void *status;
     weather stweather;
 
-	/* 信号初始化 */     
+	/* 信号初始化 */
 	sigemptyset(&set);
 	sigaddset(&set,SIGUSR1);
 	sigaddset(&set,SIGUSR2);
@@ -74,13 +79,13 @@ int main()
 	pthread_create(&trevpktid,NULL,prevpktmain,NULL);
 	pthread_create(&tworkid,NULL,workmain,NULL);
 #if 0
-	pthread_create(&tlistenid,NULL,listenmain,NULL);	
+	pthread_create(&tlistenid,NULL,listenmain,NULL);
 	pthread_create(&tuartid,NULL,puartmain,NULL);
-    voicesockopen();	
-#endif 
+    voicesockopen();
+#endif
     usleep(100);
     while(1)
-    {    
+    {
 
         printf("\n:");
         tmp = 'j';
@@ -92,6 +97,7 @@ int main()
        //   pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
        //  (void)quemsg_snd_voice("opendoor.wav","50");
        //   (void)quemsg_snd_voice("oclock.mp3","90");
+       /*
             char pbuf[7];
             pbuf[0]=0x0d;
             pbuf[1]=0x0a;
@@ -101,11 +107,15 @@ int main()
             pbuf[5]=0x0d;
             pbuf[6]='\0';
             pkt_send(pbuf,6);
+		*/
+			zigbee_send_discover();
         }
-		else if ('p'==tmp)
+		else if ('b'==tmp)
         {
 //            pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
-          (void)quemsg_snd_voice("tmp.mp3","90");
+          //(void)quemsg_snd_voice("tmp.mp3","90");
+			zigbee_devnode_printal();
+
  		}
 		else if ('w'==tmp)
         {
@@ -145,10 +155,10 @@ int main()
             giExit = -1;
 			ipthread_join(tlistenid,&status);
 			pthread_join(tuartid,&status);
-			#endif 
+			#endif
             sleep(1);
 			pthread_join(tid,&status);
-			pthread_join(tvoiceid,&status);		
+			pthread_join(tvoiceid,&status);
 			pthread_join(trevpktid,&status);
 			pthread_join(tworkid,&status);
 			printf("finish\n");

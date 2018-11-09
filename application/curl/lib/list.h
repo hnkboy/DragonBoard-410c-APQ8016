@@ -1,27 +1,27 @@
 
-#ifndef _LIST 
-#define _LIST 
+#ifndef _LIST
+#define _LIST
 typedef struct stgnode_s
-{   
-	struct stgnode_s *pNext; 
-}LS_NODE_S;
+{
+	struct stgnode_s *pNext;
+}SL_NODE_S;
 
 typedef struct stghead_s
-{   
-	LS_NODE_S *pFirst; 
-}LS_HEAD_S;
+{
+	SL_NODE_S *pFirst;
+}SL_HEAD_S;
 
 
 
 
 
-void sl_init(LS_HEAD_S *pstLsHead){
+void sl_init(SL_HEAD_S *pstLsHead){
 
 	pstLsHead->pFirst = NULL;
 }
 
-void sl_addafter(LS_HEAD_S *pHead,LS_NODE_S *pNode){
-    LS_NODE_S *pstNodeTemp = NULL;
+void sl_addafter(SL_HEAD_S *pHead,SL_NODE_S *pNode){
+    SL_NODE_S *pstNodeTemp = NULL;
 	if (NULL == pHead->pFirst){
 
 		pHead->pFirst = pNode;
@@ -32,23 +32,23 @@ void sl_addafter(LS_HEAD_S *pHead,LS_NODE_S *pNode){
 		{
             pstNodeTemp = pstNodeTemp->pNext;
 		}
-		pstNodeTemp->pNext = pNode;		
+		pstNodeTemp->pNext = pNode;
 	}
 }
-void sl_addhead(LS_HEAD_S *pHead,LS_NODE_S *pNode){
+void sl_addhead(SL_HEAD_S *pHead,SL_NODE_S *pNode){
 	pNode->pNext = pHead->pFirst;
 	pHead->pFirst = pNode;
 }
 
 
-void sl_del(LS_HEAD_S *pHead,LS_NODE_S *pNode){
+void sl_del(SL_HEAD_S *pHead,SL_NODE_S *pNode){
 
-    LS_NODE_S *pstNodeTemp = NULL;
+    SL_NODE_S *pstNodeTemp = NULL;
 	if (NULL == pHead->pFirst){
         return;
 	}
     if (pNode == pHead->pFirst){
-        pHead->pFirst = pNode->pNext;  
+        pHead->pFirst = pNode->pNext;
     }
     else{
         pstNodeTemp = pHead->pFirst;
@@ -56,15 +56,15 @@ void sl_del(LS_HEAD_S *pHead,LS_NODE_S *pNode){
 		{
             pstNodeTemp = pstNodeTemp->pNext;
 		}
-		pstNodeTemp->pNext = pNode->pNext;		
+		pstNodeTemp->pNext = pNode->pNext;
     }
 }
 
-LS_NODE_S *ls_next(LS_NODE_S *pNode){
+SL_NODE_S *ls_next(SL_NODE_S *pNode){
 
 	return (pNode->pNext);
 }
-LS_NODE_S *sl_first(LS_HEAD_S *pHead){
+SL_NODE_S *sl_first(SL_HEAD_S *pHead){
 
 	return (pHead->pFirst);
 }
