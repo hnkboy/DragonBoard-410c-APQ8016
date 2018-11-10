@@ -26,16 +26,50 @@ extern int g_ZigbeeFd;
 #define CMD_END        0x01              //发往终端
 
 
+
+
+#define ZIGBEE_MAX_DATALEN 50         /*与zigbee 通信 数据缓冲区大小*/
+
 typedef struct stgDevNode
 {
 	SL_NODE_S stNode;
-	SL_HEAD_S stHead; /*属性节点头地址*/
+	SL_HEAD_S stTlvHead; /*属性节点头地址*/
 	int devid;
 	int devtype;
     int range;
 }DEV_NODE_S;
 
+typedef struct stgEndNode
+{
+	SL_NODE_S stNode;
+    unsigned int uiTag;    /*T*/
+    unsigned int uiLen;  /*L*/
+    unsigned char *pValue; /*V*/
+}END_NODE_S;
+
+
+
 extern char *shelpstr[];
+
+
+
+void zigbee_endtlvnode_del(SL_HEAD_S *pstHead,
+						          uint32_t uiTag);
+
+END_NODE_S *zigbee_endtlvnode_find(SL_HEAD_S *pstHead,
+										 uint32_t uiTag);
+
+void zigbee_endtlvnode_add(SL_HEAD_S *pstHead,
+							     uint32_t uiTag,
+    						     uint32_t uiLen,
+    							 uint8_t *pValue );
+void zigbee_endtlvnode_delall(SL_HEAD_S *pstHead);
+
+
+void zigbee_endtlvnode_printall(SL_HEAD_S *pstHead);
+
+
+
 void zigbee_devnode_init(void);
 void zigbee_devnode_add(int devid,
 						int devtype,

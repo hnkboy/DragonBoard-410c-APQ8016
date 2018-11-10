@@ -26,6 +26,112 @@ char *shelpstr[]={
 SL_HEAD_S g_DevNode;
 
 
+
+/*
+ * 设备tlv 节点内容
+ */
+
+ void zigbee_endtlvnode_del(SL_HEAD_S *pstHead,
+								  uint32_t uiTag){
+	END_NODE_S *pstEndNode = NULL;
+	SL_NODE_S *pstNode = NULL;
+	SL_NODE_S *pstNext = NULL;
+	SL_FOREACH_SAFE(pstHead,pstNode,pstNext){
+
+		pstEndNode = SL_ENTRY(pstNode,END_NODE_S,stNode);
+
+		if(uiTag == pstEndNode->uiTag)
+		{
+			sl_del(pstHead,pstNode);
+			free(pstEndNode);
+			break;
+		}
+	}
+}
+
+END_NODE_S *zigbee_endtlvnode_find(SL_HEAD_S *pstHead,
+										 uint32_t uiTag){
+
+	END_NODE_S *pstEndNode = NULL;
+	SL_NODE_S *pstNode = NULL;
+	SL_NODE_S *pstNext = NULL;
+	SL_FOREACH_SAFE(pstHead,pstNode,pstNext){
+
+		pstEndNode = SL_ENTRY(pstNode,END_NODE_S,stNode);
+
+		if(uiTag == pstEndNode->uiTag)
+		{
+		 return pstEndNode;
+		}
+	}
+	return NULL;
+}
+
+void zigbee_endtlvnode_add(SL_HEAD_S *pstHead,
+							     uint32_t uiTag,
+    						     uint32_t uiLen,
+    							 uint8_t *pValue ){
+	uint32_t uiTemp;
+	END_NODE_S *pstEndNode;
+	pstEndNode = zigbee_endtlvnode_find(pstHead,uiTag);
+	if (NULL != pstEndNode){
+		zigbee_endtlvnode_del(pstHead,uiTag);
+		pstEndNode = NULL
+	}
+	pstEndNode = (END_NODE_S *)malloc(sizeof(END_NODE_S) + uiLen);
+
+    pstEndNode->uiTag = uiTag;
+    pstEndNode->uiLen = uiLen;
+
+	for(uiTemp = 0; uiTemp < uiLen; uiTemp ++){
+
+		pstEndNode->pValue[uiTemp] = pValue[uiTemp];
+
+	}
+	pstEndNode->pValue[uiLen]  = '/0';
+
+	sl_addhead(pstHead,&pstEndNode->stNode);
+
+}
+
+ void zigbee_endtlvnode_delall(SL_HEAD_S *pstHead){
+
+	END_NODE_S *pstEndNode = NULL;
+	SL_NODE_S *pstNode = NULL;
+	SL_NODE_S *pstNext = NULL;
+	SL_FOREACH_SAFE(pstHead,pstNode,pstNext){
+		pstEndNode = SL_ENTRY(pstNode,END_NODE_S,stNode);
+		sl_del(pstHead,pstNode);
+		free(pstEndNode);
+	}
+ }
+ void zigbee_endtlvnode_printall(SL_HEAD_S *pstHead){
+
+	 END_NODE_S *pstEndNode = NULL;
+	 SL_NODE_S *pstNode = NULL;
+	 SL_NODE_S *pstNext = NULL;
+	 SL_FOREACH_SAFE(pstHead,pstNode,pstNext){
+
+		 pstEndNode = SL_ENTRY(pstNode,END_NODE_S,stNode);
+		 printf("/****************/\n");
+		 printf("tlv   tag: %d\n",pstEndNode->uiTag);
+		 printf("tlv   len: %d\n",pstEndNode->uiLen);
+		 printf("tlv vlaue: %s\n",pstEndNode->pValue);
+	 }
+ }
+
+
+
+
+
+
+
+
+
+
+/*设备节点*/
+
+
 void zigbee_devnode_init(){
 	sl_init(&g_DevNode);
 }
@@ -39,7 +145,7 @@ void zigbee_devnode_add(int devid,
     pstDevNode->devid = devid;
     pstDevNode->devtype = devtype;
     pstDevNode->range = range;
-
+	sl_init(&pstDevNode->stTlvHead);
 	sl_addhead(&g_DevNode,&pstDevNode->stNode);
 
 }
@@ -71,6 +177,7 @@ void zigbee_devnode_del(int devid){
 		if(devid == pstDevNode->devid)
 		{
 			sl_del(&g_DevNode,pstNode);
+			zigbee_endtlvnode_delall(&pstDevNode->stTlvHead);
 			free(pstDevNode);
 			break;
 		}
@@ -84,6 +191,7 @@ void zigbee_devnode_delall(void){
 	SL_FOREACH_SAFE(&g_DevNode,pstNode,pstNext){
 		pstDevNode = SL_ENTRY(pstNode,DEV_NODE_S,stNode);
 	    sl_del(&g_DevNode,pstNode);
+		zigbee_endtlvnode_delall(&pstDevNode->stTlvHead);
 		free(pstDevNode);
 	}
 }
@@ -99,8 +207,13 @@ void zigbee_devnode_printall(void){
         printf("dev    id: %d\n",pstDevNode->devid);
         printf("dev  type: %d\n",pstDevNode->devtype);
         printf("dev range: %d\n",pstDevNode->range);
+		zigbee_endtlvnode_printall(&pstDevNode->stTlvHead);
 	}
 }
+
+
+
+
 
 
 #if 0

@@ -274,51 +274,61 @@ void error_handler(const char* message)
 
 }
 void prevpkt_tlvproc(char *arg,char len){
-    uint16_t type,i;
-    uint16_t ucValue;
+    uint16_t tag,i;
     uint16_t devid;
     uint16_t tlvlen;
-	DEV_NODE_S *pstNode = NULL;
+	uint8_t strbuf[ZIGBEE_MAX_DATALEN];
+	uint8_t *pstrbuf;
+
+	DEV_NODE_S *pstDevNode = NULL;
     if (arg[0] != len)
         return;
     if ((arg[1] != 0xff)&&(arg[1] != 0x02))
         return;
     devid = arg[2];
-    pstNode = zigbee_devnode_find(devid);
-    if(NULL == pstNode){
+    pstDevNode = zigbee_devnode_find(devid);
+    if(NULL == pstDevNode){
         zigbee_devnode_add(devid,0,0);
-        pstNode = zigbee_devnode_find(devid);
-        if(NULL == pstNode){
+        pstDevNode = zigbee_devnode_find(devid);
+        if(NULL == pstDevNode){
             return;
         }
     }
     for(i = 0; i < len-3;)
     {
-        type = arg[i+3];
+        tag = arg[i+3];
         tlvlen = arg[i+4];
-        ucValue = arg[i+5];
-        switch(type)
+		pstrbuf = &arg[i+5];
+        switch(tag)
         {
             case GET_KEY:
-                printf("get key value = %d\n\r", ucValue);
+                printf("get key value = %d\n\r", pstrbuf[0]);
                 quemsg_snd_voice("opendoor.mp3","40");
                 break;
             case MO_DISTANCE:
-                printf("get distance = %d\n\r", ucValue);
-                pstNode->range = ucValue;
+                printf("get distance = %d\n\r", pstrbuf[0]);
+                pstDevNode->range = pstrbuf[0];
                 break;
             case RESP_DISCOVE:
-                printf("get discove = %d\n\r", ucValue);
+                printf("get discove = %d\n\r", pstrbuf[0]);
 
-				pstNode = zigbee_devnode_find(arg[i+5]);
-				if(NULL == pstNode){
-					zigbee_devnode_add(arg[i+5],arg[i+6],arg[i+7]);
+				pstDevNode = zigbee_devnode_find(pstrbuf[0]);
+				if(NULL == pstDevNode){
+					zigbee_devnode_add(pstrbuf[0],pstrbuf[1],pstrbuf[2]);
 				}
 				else{
-					pstNode->devtype = arg[i+6];
-					pstNode->range   = arg[i+7];
+					pstDevNode->devtype = pstrbuf[1];
+					pstDevNode->range   = pstrbuf[2];
 				}
                 break;
+			case MO_HUMI:
+				itoa(pstrbuf[0], strbuf, 10);
+				//memcpy(strbuf,pstrbuf,tlvlen);
+				zigbee_endtlvnode_add(&pstDevNode->stTlvHead,tag,strbuf,tlvlen);
+			case MO_TEMPER:
+				itoa(pstrbuf[0], strbuf, 10);
+				//memcpy(strbuf,pstrbuf,tlvlen);
+				zigbee_endtlvnode_add(&pstDevNode->stTlvHead,tag,strbuf,tlvlen);
             default:break;
         }
         i += tlvlen +2;
