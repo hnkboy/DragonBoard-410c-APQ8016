@@ -176,6 +176,7 @@ void *prevpktmain(void *p)
                 event.events=EPOLLIN|EPOLLET;
                 event.data.fd=clnt_sock;
                 epoll_ctl(ep_fd,EPOLL_CTL_ADD,clnt_sock,&event);
+			    g_ZigbeeFd = clnt_sock;
             }
             else if(clnt_sock==pevents[i].data.fd)
             {
@@ -210,16 +211,13 @@ void *prevpktmain(void *p)
                         	//printf("%s\n",buf);
                         	//quemsg_snd_voice(buf,sizeof(buf));
 						}
-                        #if 1
+                        #if 0
                         /*暂时解决一个bug*/
                         for(t=0;str_len>t;t++)
                         {
                         buf[t] = 0xff;
                         }
                         write(pevents[i].data.fd,buf,str_len);
-						if (-1 != g_ZigbeeFd){
-							g_ZigbeeFd = pevents[i].data.fd;
-						}
                         #endif
                     }
 
@@ -279,15 +277,25 @@ void prevpkt_tlvproc(char *arg,char len){
     uint16_t type,i;
     uint16_t ucValue;
     uint16_t devid;
+    uint16_t tlvlen;
+	DEV_NODE_S *pstNode = NULL;
     if (arg[0] != len)
         return;
-    if (arg[1] != 0xff)
+    if ((arg[1] != 0xff)&&(arg[1] != 0x02))
         return;
     devid = arg[2];
-    for(i = 0; i < len;)
+    pstNode = zigbee_devnode_find(devid);
+    if(NULL == pstNode){
+        zigbee_devnode_add(devid,0,0);
+        pstNode = zigbee_devnode_find(devid);
+        if(NULL == pstNode){
+            return;
+        }
+    }
+    for(i = 0; i < len-3;)
     {
         type = arg[i+3];
-        len = arg[i+4];
+        tlvlen = arg[i+4];
         ucValue = arg[i+5];
         switch(type)
         {
@@ -297,10 +305,9 @@ void prevpkt_tlvproc(char *arg,char len){
                 break;
             case MO_DISTANCE:
                 printf("get distance = %d\n\r", ucValue);
-                quemsg_snd_voice("opendoor.mp3","40");
+                pstNode->range = ucValue;
                 break;
-            case REQ_DISCOVE:
-				DEV_NODE_S *pstNode = NULL;
+            case RESP_DISCOVE:
                 printf("get discove = %d\n\r", ucValue);
 
 				pstNode = zigbee_devnode_find(arg[i+5]);
@@ -314,7 +321,7 @@ void prevpkt_tlvproc(char *arg,char len){
                 break;
             default:break;
         }
-        i += len +2;
+        i += tlvlen +2;
 
     }
 }

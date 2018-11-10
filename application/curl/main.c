@@ -89,7 +89,7 @@ int main()
 
         printf("\n:");
         tmp = 'j';
-        sleep(1);
+        //sleep(1);
         scanf("%c",&tmp);
         if('a'==tmp)
         {
@@ -108,13 +108,24 @@ int main()
             pbuf[6]='\0';
             pkt_send(pbuf,6);
 		*/
+            char pbuf[9];
+            pbuf[0]=0xfe;
+            pbuf[1]=0x04;
+            pbuf[2]=0x01;
+            pbuf[3]=0x02;
+            pbuf[4]=0x03;
+            pbuf[5]=0x04;
+            pbuf[6]=0x00;
+            pbuf[7]=0x00;
+            pbuf[8]='\0';
+            //pkt_send(pbuf,9);
 			zigbee_send_discover();
         }
 		else if ('b'==tmp)
         {
 //            pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
           //(void)quemsg_snd_voice("tmp.mp3","90");
-			zigbee_devnode_printal();
+			zigbee_devnode_printall();
 
  		}
 		else if ('w'==tmp)

@@ -1,6 +1,6 @@
 
-#ifndef _LIST
-#define _LIST
+#ifndef _LIST_
+#define _LIST_
 typedef struct stgnode_s
 {
 	struct stgnode_s *pNext;
@@ -15,12 +15,12 @@ typedef struct stghead_s
 
 
 
-void sl_init(SL_HEAD_S *pstLsHead){
+static inline void sl_init(SL_HEAD_S *pstLsHead){
 
 	pstLsHead->pFirst = NULL;
 }
 
-void sl_addafter(SL_HEAD_S *pHead,SL_NODE_S *pNode){
+static inline void sl_addafter(SL_HEAD_S *pHead,SL_NODE_S *pNode){
     SL_NODE_S *pstNodeTemp = NULL;
 	if (NULL == pHead->pFirst){
 
@@ -35,13 +35,12 @@ void sl_addafter(SL_HEAD_S *pHead,SL_NODE_S *pNode){
 		pstNodeTemp->pNext = pNode;
 	}
 }
-void sl_addhead(SL_HEAD_S *pHead,SL_NODE_S *pNode){
+static inline void sl_addhead(SL_HEAD_S *pHead,SL_NODE_S *pNode){
 	pNode->pNext = pHead->pFirst;
 	pHead->pFirst = pNode;
 }
 
-
-void sl_del(SL_HEAD_S *pHead,SL_NODE_S *pNode){
+static inline void sl_del(SL_HEAD_S *pHead,SL_NODE_S *pNode){
 
     SL_NODE_S *pstNodeTemp = NULL;
 	if (NULL == pHead->pFirst){
@@ -60,11 +59,11 @@ void sl_del(SL_HEAD_S *pHead,SL_NODE_S *pNode){
     }
 }
 
-SL_NODE_S *ls_next(SL_NODE_S *pNode){
+static inline SL_NODE_S *ls_next(SL_NODE_S *pNode){
 
 	return (pNode->pNext);
 }
-SL_NODE_S *sl_first(SL_HEAD_S *pHead){
+static inline SL_NODE_S *sl_first(SL_HEAD_S *pHead){
 
 	return (pHead->pFirst);
 }

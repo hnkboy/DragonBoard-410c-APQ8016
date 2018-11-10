@@ -9,8 +9,9 @@ INCLUDE_PATH = $(curlin) $(alsain) $(cjsonin)
 LIB_PATH = $(curllib) $(alsalib) $(cjsonlib)
 ALSA_PATH = ./alsa
 REST_TTS_PATH = ./rest-api-tts
-all: main.o getinmemory.o json.o plisten.o prevpkt.o pwork.o pvoice.o  queue.o  postcallback rest_tts 
-	$(CC) main.o plisten.o pwork.o getinmemory.o postcallback.o md5.o json.o pvoice.o prevpkt.o queue.o alsaplay.o alsaplay_wav.o ./rest-api-tts/*.o  -o Hali $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
+DEV_PATH = ./device
+all: main.o getinmemory.o json.o plisten.o prevpkt.o pwork.o pvoice.o  queue.o  postcallback dev rest_tts 
+	$(CC) main.o plisten.o pwork.o getinmemory.o postcallback.o md5.o json.o pvoice.o prevpkt.o queue.o alsaplay.o alsaplay_wav.o ./device/*.o ./rest-api-tts/*.o  -o Hali $(LIBS) $(INCLUDE_PATH) $(LIB_PATH)
 main.o: main.c getinmemory.c json.c postcallback.c
 	$(CC) -c main.c  $(INCLUDE_PATH) $(LIB_PATH)
 puart.o: puart.c puart.h 
@@ -36,6 +37,8 @@ json.o: json.c json.h
 	$(CC) -c json.c -I ./cJSON
 voiceclient.o: voiceclient.c voiceclient.h
 	$(CC) -c voiceclient.c
+dev:  
+	make -C $(DEV_PATH)
 main_alsa:
 	make -C $(ALSA_PATH)
 rest_tts:
@@ -45,4 +48,5 @@ clean:
 	#rm ./*.wav
 	#rm ./*.txt
 	rm $(REST_TTS_PATH)/*.o
+	rm ./device/*.o
 	#rm $(REST_TTS_PATH)/*.wav

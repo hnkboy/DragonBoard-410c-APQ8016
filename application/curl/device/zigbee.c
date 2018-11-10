@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <stddef.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "../lib/list.h"
 #include "zigbee.h"
@@ -84,7 +87,7 @@ void zigbee_devnode_delall(void){
 		free(pstDevNode);
 	}
 }
-void zigbee_devnode_printall(){
+void zigbee_devnode_printall(void){
 
 	DEV_NODE_S *pstDevNode = NULL;
 	SL_NODE_S *pstNode = NULL;
@@ -136,19 +139,50 @@ int g_ZigbeeFd = -1;
 void zigbee_send_discover(void){
 
 	char buf[8];
+	char i;
+
+    printf("zigebee teset\n ");
 	buf[0] = 0xFE;
 
-	buf[1] = 0x02;  /*数据长度*/
+	buf[1] = 0x03;  /*数据长度*/
 
 	buf[2] = 0x00;  /* CMD */
 	buf[3] = 0x00;
 
-	buf[5] = REQ_DISCOVE;
+	buf[4] = REQ_DISCOVE;
+	buf[5] = 0x01;
 	buf[6] = 0x00;
 
 	buf[7] = 0x00;
+    for(i=0;i<8;i++){
+    printf("%2x ",buf[i]);
+    }
 	write(g_ZigbeeFd,buf,8);
 }
+void zigbee_send_cmd(uint8_t cmd,
+                    uint8_t devid,
+                    uint8_t tlvtype,
+                    uint8_t tlvalue,
+                    uint8_t tlvlen){
 
+	char buf[8];
+	char i;
 
+    printf("zigebee teset\n ");
+	buf[0] = 0xFE;
 
+	buf[1] = 0x03;  /*数据长度*/
+
+	buf[2] = cmd;  /* CMD */
+	buf[3] = devid;
+
+	buf[4] = tlvtype;
+	buf[5] = tlvlen;
+	buf[6] = tlvalue;
+
+	buf[7] = 0x00;
+    for(i=0;i<8;i++){
+    printf("%2x ",buf[i]);
+    }
+	write(g_ZigbeeFd,buf,8);
+}

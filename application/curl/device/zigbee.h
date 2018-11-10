@@ -20,7 +20,10 @@ extern int g_ZigbeeFd;
 #define MO_DISTANCE    0x0a              //终端距离协调器的距离
 #define REQ_DISCOVE    0x0b              //回复设备地址发现
 #define RESP_DISCOVE    0x0c              //回复设备地址发现
+/*cmd*/
 
+#define CMD_COOR       0x00              //发往协调器
+#define CMD_END        0x01              //发往终端
 
 
 typedef struct stgDevNode
@@ -41,10 +44,15 @@ DEV_NODE_S *zigbee_devnode_find(int devid);
 
 void zigbee_devnode_del(int devid);
 void zigbee_devnode_delall(void);
-void zigbee_devnode_printal(void);
+void zigbee_devnode_printall(void);
 
 
 
 void zigbee_send_discover(void);
 
+void zigbee_send_cmd(uint8_t cmd,
+                    uint8_t devid,
+                    uint8_t tlvtype,
+                    uint8_t tlvalue,
+                    uint8_t tlvlen);
 #endif

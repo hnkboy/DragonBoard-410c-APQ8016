@@ -171,7 +171,7 @@ void *workmain(void*p){
                 read(pevents[i].data.fd, &data, sizeof(uint64_t));
 				
     			//printf("timerfd read data is %lu.\n",data);
-		        task_proc();
+//		        task_proc();
 			}
         }
 		
