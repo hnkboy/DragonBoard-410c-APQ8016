@@ -78,10 +78,12 @@ void *voicemain(void*p){
     sigset_t gset;
     gset = get_sigset();
     myfunc();
+#if 0
     if (0 != mplayer_slave_set())
     {
         return 0;
     }
+#endif
 	while(1){
 		/* 队列初始化 */
 		g_msid = queue_init(123);  

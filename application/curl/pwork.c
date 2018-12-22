@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <signal.h>
@@ -19,6 +20,11 @@
 #include "pvoice.h"
 #include "./rest-api-tts/common.h"
 #include "./rest-api-tts/ttsmain.h"
+
+#include "./lib/list.h"
+#include "./cJSON/cJSON.h"
+#include "./device/zigbee.h"
+
 struct tm nowTime;
 #define EPOLL_SIZE 20
 #define VOICEMQNAME "/pworkmq"
@@ -167,11 +173,17 @@ void *workmain(void*p){
 			else if ((timerfd == pevents[i].data.fd) &&
 					 pevents[i].events & EPOLLIN)
 			{
+                static uint16_t usSecNum = 0;
                 uint64_t data;
                 read(pevents[i].data.fd, &data, sizeof(uint64_t));
 				
     			//printf("timerfd read data is %lu.\n",data);
 //		        task_proc();
+                usSecNum ++;
+                if (30 < usSecNum) {
+                    usSecNum = 0;
+                    zigbee_devproc_syncdata();
+                }
 			}
         }
 		

@@ -125,13 +125,24 @@ int main()
         {
 //            pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
           //(void)quemsg_snd_voice("tmp.mp3","90");
+            char buf[BUFSIZ];
+            uint16_t len = 0;
 			zigbee_devnode_printall();
+            zigbee_devnode_print2json(buf,&len);
+            printf("%s \n len = %d",buf,len);
 
  		}
-		else if ('w'==tmp)
+		else if ('c'==tmp)
         {
+            SL_HEAD_S stHead;
+            sl_init(&stHead);
+            zigbee_endtlvnode_add(&stHead,GET_HUMI,0,0);
+            zigbee_endtlvnode_add(&stHead,GET_TEMPER,0,0);
+            zigbee_send_tlvbysl(CMD_END,0x03,&stHead);
+            zigbee_send_tlvbysl(CMD_END,0x02,&stHead);
+            zigbee_endtlvnode_delall(&stHead);
 			//playback_wav("/root/02.wav","20");
-            pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
+            //pthread_kill(tid,SIGUSR1);//发送SIGUSR1，打印字符串。
  		}
 		else if ('e'==tmp)
         {

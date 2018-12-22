@@ -7,4 +7,5 @@ void *prevpktmain(void*p);
 
 
 void prevpkt_tlvproc(char *arg,char len);
+void prevpkt_mq_fcgiwrite(void);
 #endif

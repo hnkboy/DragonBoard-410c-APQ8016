@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 
 #define PKTMQNAME "/pktmq"
 int main()
@@ -31,12 +32,19 @@ int main()
     } 
     while (FCGI_Accept() >= 0)
     {
+//        printf("Content-type: text/html\r\n");
+        printf("Content-type: application/json\r\n"
+                "\r\n"
+                "");
+#if 0
         printf("Content-type: text/html\r\n"
                 "\r\n"
                 ""
                 "FastCGI Hello!"
                 "Request number %d running on host%s "
                 "Process ID: %d\n", ++count, getenv("SERVER_NAME"), getpid());
+#endif
+                
         val = 8089;
 		ret = mq_send(mqd_w, wbuf, BUFSIZ, val);
 		if (ret == -1) {
@@ -47,7 +55,11 @@ int main()
 		if (ret == -1) {
 			perror("pkt mq_receive err()");
 		}
-		printf("pktthr rcv mqueue msg %s,prio:%d\n",rbuf,val);
+		//printf("pktthr rcv mqueue msg %s,prio:%d\n",rbuf,val);
+		//printf("callback(%s);",rbuf);
+	    printf("callback(%s)",rbuf);
+        memset(rbuf,0,BUFSIZ);
+	//	printf("%s",rbuf);
     }
     (void)mq_close(mqd_r);
     (void)mq_close(mqd_w);

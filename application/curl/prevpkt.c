@@ -244,11 +244,15 @@ void *prevpktmain(void *p)
                     int val = 1,ret;
 					bzero(wbuf,BUFSIZ);
 					sprintf(wbuf,"\r\n hello fcgi %d\r\n",count);
+
+                    prevpkt_mq_fcgiwrite();
+#if 0
 					ret = mq_send(mqd_w, wbuf, BUFSIZ, val);
 					if (ret == -1) {
 						perror("pkt mq_receive err()");
 					}
 					printf("send mqueue msg, prio: %d value: %s\r",val,wbuf);
+#endif
 					count ++;
 				}
             }
@@ -274,18 +278,21 @@ void error_handler(const char* message)
 
 }
 void prevpkt_tlvproc(char *arg,char len){
-    uint16_t tag,i;
-    uint16_t devid;
-    uint16_t tlvlen;
+    uint32_t tag,i;
+    uint32_t devid;
+    uint32_t tlvlen;
 	uint8_t strbuf[ZIGBEE_MAX_DATALEN];
 	uint8_t *pstrbuf;
 
 	DEV_NODE_S *pstDevNode = NULL;
     if (arg[0] != len)
         return;
-    if ((arg[1] != 0xff)&&(arg[1] != 0x02))
+    if ((arg[1] != 0xff)&&(arg[2] != 0x02))
         return;
-    devid = arg[2];
+    devid = arg[1];
+    if (255 == devid){
+        return;
+    }
     pstDevNode = zigbee_devnode_find(devid);
     if(NULL == pstDevNode){
         zigbee_devnode_add(devid,0,0);
@@ -299,6 +306,7 @@ void prevpkt_tlvproc(char *arg,char len){
         tag = arg[i+3];
         tlvlen = arg[i+4];
 		pstrbuf = &arg[i+5];
+        memset(strbuf,0,ZIGBEE_MAX_DATALEN);
         switch(tag)
         {
             case GET_KEY:
@@ -322,16 +330,37 @@ void prevpkt_tlvproc(char *arg,char len){
 				}
                 break;
 			case MO_HUMI:
-				itoa(pstrbuf[0], strbuf, 10);
+                printf("get humi = %d\n\r", pstrbuf[0]);
+                sprintf(strbuf,"%d\n",pstrbuf[0]);
+                printf("get humi = %s,len = %d\n\r", strbuf,strlen(strbuf));
 				//memcpy(strbuf,pstrbuf,tlvlen);
-				zigbee_endtlvnode_add(&pstDevNode->stTlvHead,tag,strbuf,tlvlen);
+				zigbee_endtlvnode_add(&pstDevNode->stTlvHead,tag,strbuf,strlen(strbuf) - 1);
+                break;
 			case MO_TEMPER:
-				itoa(pstrbuf[0], strbuf, 10);
+                printf("get temper = %d\n\r", pstrbuf[0]);
+				//itoa(pstrbuf[0], strbuf, 10);
+                sprintf(strbuf,"%d\n",pstrbuf[0]);
+                //printf("get temper = %s\n\r", strbuf);
 				//memcpy(strbuf,pstrbuf,tlvlen);
-				zigbee_endtlvnode_add(&pstDevNode->stTlvHead,tag,strbuf,tlvlen);
+				zigbee_endtlvnode_add(&pstDevNode->stTlvHead,tag,strbuf,strlen(strbuf) - 1);
             default:break;
         }
         i += tlvlen +2;
 
     }
 }
+void prevpkt_mq_fcgiwrite(void){
+
+
+    char buf[BUFSIZ];
+    int ret,val = 1;
+    uint16_t len = 0;
+    zigbee_devnode_printall();
+    zigbee_devnode_print2json(buf,&len);
+    printf("%s \n len = %d",buf,len);
+	ret = mq_send(mqd_w, buf, len, val);
+    if (ret == -1) {
+        perror("pkt mq_send err()");
+    }
+}
+
