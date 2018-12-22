@@ -46,6 +46,8 @@ typedef struct stgDevNode
 	int devid;
 	int devtype;
     int range;
+	int ioldheartnum;
+	int iheartnum;
 }DEV_NODE_S;
 
 typedef struct stgEndNode
@@ -101,4 +103,6 @@ void zigbee_send_cmd(uint8_t cmd,
 void zigbee_send_tlvbysl(uint8_t cmd,uint8_t devid,SL_HEAD_S *pstHead);
 void zigbee_devnode_print2json(char *poutbuf,uint16_t *plen);
 void zigbee_devproc_syncdata(void);
+void zigbee_devproc_checkheart(void);
+
 #endif

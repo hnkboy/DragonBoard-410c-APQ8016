@@ -153,6 +153,8 @@ void zigbee_devnode_add(int devid,
     pstDevNode->devid = devid;
     pstDevNode->devtype = devtype;
     pstDevNode->range = range;
+	pstDevNode->ioldheartnum = 0;
+	pstDevNode->iheartnum = 1;
 	sl_init(&pstDevNode->stTlvHead);
 	sl_addhead(&g_DevNode,&pstDevNode->stNode);
 
@@ -306,7 +308,7 @@ void zigbee_send_cmd(uint8_t cmd,
     printf("%2x ",buf[i]);
     }
 	write(g_ZigbeeFd,buf,8);
-}		
+}
 void zigbee_send_broadcast(void){
 
     zigbee_send_cmd(0,0xff,0,0,0);
@@ -331,8 +333,8 @@ void zigbee_send_broadcast(void){
             ucNum += pstEndNode->uiLen;
          }
 	 }
-     sndstrbuf[1] = ucNum - 4; 
-     sndstrbuf[ucNum ++] = 0x0; 
+     sndstrbuf[1] = ucNum - 4;
+     sndstrbuf[ucNum ++] = 0x0;
     for(int i=0;i<ucNum;i++){
     printf("%2x ",sndstrbuf[i]);
     }
@@ -392,7 +394,7 @@ static int print_preallocated(cJSON *root,int8_t *poutbuf,uint16_t *plen)
     if (NULL != poutbuf)
     {
         if (len < BUFSIZ){
-            *plen = snprintf(poutbuf,len - 1,"%s\n",buf); 
+            *plen = snprintf(poutbuf,len - 1,"%s\n",buf);
         }
     }
 
@@ -460,7 +462,7 @@ void zigbee_devnode_print2json(char *poutbuf,uint16_t *plen){
         {
 		    cJSON_AddItemToObject(devnode, "devdata", devdata = cJSON_CreateObject());
             SL_FOREACH_SAFE(&pstDevNode->stTlvHead,pstNode,pstNext){
-            
+
                 pstEndNode = SL_ENTRY(pstNode,END_NODE_S,stNode);
                 cJSON_AddStringToObject(devdata, shelpstr[pstEndNode->uiTag], pstEndNode->pValue);
             }
@@ -490,7 +492,26 @@ void zigbee_devproc_syncdata(void){
         //zigbee_send_tlvbysl(CMD_END,0x03,&stHead);
         //zigbee_send_tlvbysl(CMD_END,0x02,&stHead);
         zigbee_endtlvnode_delall(&stHead);
-    } 
+    }
     usSecNum ++;
 
 }
+void zigbee_devproc_checkheart(void){
+
+	DEV_NODE_S *pstDevNode = NULL;
+	SL_NODE_S *pstNode = NULL;
+	SL_NODE_S *pstNext = NULL;
+	SL_FOREACH_SAFE(&g_DevNode,pstNode,pstNext){
+		pstDevNode = SL_ENTRY(pstNode,DEV_NODE_S,stNode);
+
+		if(pstDevNode->ioldheartnum == pstDevNode->ioldheartnum){
+			sl_del(&g_DevNode,pstNode);
+			zigbee_endtlvnode_delall(&pstDevNode->stTlvHead);
+			free(pstDevNode);
+		}
+		else{
+			pstDevNode->ioldheartnum = pstDevNode->ioldheartnum;
+		}
+	}
+}
+

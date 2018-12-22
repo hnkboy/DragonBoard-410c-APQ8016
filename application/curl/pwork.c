@@ -37,10 +37,10 @@ int mqueue_send2work(const char *buf,long len)
     if (ret == -1) {
         perror("voice mq_send()");
 		return -1;
-    } 
+    }
     printf("send to pwork mqueue msg: %s.\n",buf);
 	return 0;
-    
+
 }
 
 static void myfunc()
@@ -52,9 +52,9 @@ static void myfunc()
 unsigned char gsm_mor_flag;
 struct tagmor_s {
     char mor_flag;
-    char mor_done;    
+    char mor_done;
     char clocksharp_flag;
-    char clocksharp_done;  
+    char clocksharp_done;
 }gmor_s;
 /*函数声明*/
 int getNowTime(void);
@@ -69,12 +69,12 @@ void task_proc(){
 		printf("gsm_flag == 1\n");
         (void)quemsg_snd_voice("opendoor.wav",12);
 		gsm_flag = 0;
-			
+
 	}
 #endif
     switch (getNowTime())
     {
-        case 1: 
+        case 1:
            // (void)quemsg_snd_voice("morning.wav",12);
             sleep(1);
             (void)quemsg_snd_voice("oclock.mp3","90");
@@ -82,7 +82,7 @@ void task_proc(){
             sleep(10);
             pwork_sayweather();
             break;
-        case 2: 
+        case 2:
            // (void)quemsg_snd_voice("oclock.wav",12);
         (void)quemsg_snd_voice("oclock.mp3","10");
 		    printf("clock sharp task\n");
@@ -94,7 +94,7 @@ void task_proc(){
 void *workmain(void*p){
 	int signum;
     sigset_t gset;
-    int timerfd;	
+    int timerfd;
     int ep_fd_vo,ep_cnt,i,flag;
     int ret = 0;
     int isbreak = 0;
@@ -105,13 +105,13 @@ void *workmain(void*p){
     gset = get_sigset();
     myfunc();
     /* timerfd */
-   	timerfd = timerfd_create(CLOCK_REALTIME, TFD_NONBLOCK);  
+   	timerfd = timerfd_create(CLOCK_REALTIME, TFD_NONBLOCK);
     if (timerfd < 0)
     {
         perror("work timerfd_open()");
         exit(1);
     }
-	startTime.tv_sec = 1;    
+	startTime.tv_sec = 1;
     startTime.tv_nsec = 0;                                //相当于立即到达超时时间
     intervalTime.tv_sec = 1;                             //首次超时后，每三秒超时一次
     intervalTime.tv_nsec = 0;
@@ -129,7 +129,7 @@ void *workmain(void*p){
     if (mqdwork == -1) {
         perror("work mq_open()");
         exit(1);
-    } 
+    }
     /*epoll*/
 	ep_fd_vo=epoll_create(20);
     event.events=EPOLLIN;
@@ -174,9 +174,10 @@ void *workmain(void*p){
 					 pevents[i].events & EPOLLIN)
 			{
                 static uint16_t usSecNum = 0;
+				static uint16_t usSecNumHeart = 0;
                 uint64_t data;
                 read(pevents[i].data.fd, &data, sizeof(uint64_t));
-				
+
     			//printf("timerfd read data is %lu.\n",data);
 //		        task_proc();
                 usSecNum ++;
@@ -184,9 +185,19 @@ void *workmain(void*p){
                     usSecNum = 0;
                     zigbee_devproc_syncdata();
                 }
+				usSecNumHeart ++;
+                if (60 < usSecNumHeart) { /*60秒检测一下心跳*/
+                    usSecNumHeart = 0;
+                    zigbee_devproc_checkheart();
+                }
+
+
+
+
+
 			}
         }
-		
+
     }
     close(timerfd);
     close(mqdwork);
@@ -205,7 +216,7 @@ int getNowTime(void)
     clock_gettime(CLOCK_REALTIME, &time);  //获取相对于1970到现在的秒数
     localtime_r(&time.tv_sec, &nowTime);
 
-    sprintf(current, "%04d%02d%02d%02d:%02d:%02d", nowTime.tm_year + 1900, nowTime.tm_mon+1, nowTime.tm_mday, 
+    sprintf(current, "%04d%02d%02d%02d:%02d:%02d", nowTime.tm_year + 1900, nowTime.tm_mon+1, nowTime.tm_mday,
       nowTime.tm_hour, nowTime.tm_min, nowTime.tm_sec);
     printf("%s\n",current);
     if (nowTime.tm_hour >= 7 )
@@ -224,9 +235,9 @@ int getNowTime(void)
             }
         }
     }
-    else 
+    else
     {
-         gmor_s.mor_flag = 0;          
+         gmor_s.mor_flag = 0;
          gmor_s.mor_done = 0;
     }
     #if 0
@@ -271,7 +282,7 @@ void pwork_sayweather()
                                                                     stweather.stype);
     }
     printf("svstrp message is %s\n",svstrp);
-    
+
     //curl_post_data(svstrp,strlen(svstrp));
     tts_post(svstrp);
 //    playback_wav("./tmp.wav");

@@ -301,6 +301,10 @@ void prevpkt_tlvproc(char *arg,char len){
             return;
         }
     }
+	else{
+		/*增加心跳*/
+		pstDevNode->iheartnum ++;
+	}
     for(i = 0; i < len-3;)
     {
         tag = arg[i+3];
