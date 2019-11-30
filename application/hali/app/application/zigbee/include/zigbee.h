@@ -64,12 +64,31 @@ typedef struct stgzigbeedevnode
     int range;
 	int ioldheartnum;
 	int iheartnum;
+    void *pdata;  /*不同属性结构不一样*/
 }ZIGBEE_DEV_NODE_S;
 
 
 
+
+typedef enum tg_switchstate
+{
+	 SWITCH_STATE_OFF = 0,
+	 SWITCH_STATE_ON
+}ZIGBEE_DEV_SWITCH_STATE_E;
+
+
+
+
+
+
+
+
+
+
+
 API void zigbee_serialsenddiscover(void);
-API void zigbee_serialsendswitch(ushort usaddr, uchar onstate);
+API void zigbee_serialsendswitchcmd(ushort usaddr, uchar onstate);
+API void zigbee_serialsendsinglemsg(ushort usaddr, uint tlvtype, void *data, uint len);
 
 API ulong zigbee_serialinit(ushort usport);
 
@@ -89,6 +108,8 @@ API ZIGBEE_DEV_NODE_S *zigbee_devnode_find(int devid);
 API void zigbee_devnode_del(int devid);
 API void zigbee_devnode_delall(void);
 API void zigbee_devnode_printall(void);
+API ulong zigbee_devnode_getattrvlaue(int devid, uint uitag, void *pvalue);
+API ulong zigbee_devnode_setattrvlaue(int devid, uint uitag, void *pvalue, uint size);
 
 
 API ulong hali_dev_syntimeout(int itimerfd);
@@ -96,6 +117,7 @@ API ulong hali_dev_syntimeout(int itimerfd);
 
 API void zigbee_mqttmsgproc(void *pdata);
 API void zigbee_mqttsub(void );
+API void zigbee_mqttswitchpub(int devid, uint uistate);
 
 #endif
 

@@ -16,6 +16,8 @@ API HALI_TLV_NODE_S *hali_tlv_creatnode(uint uitag,uchar *pvalue,uint uisize);
 API void hali_tlv_freenode(void *pstnode);
 API void hali_tlv_printdebug(SL_HEAD_S *psthead);
 
+API ulong hali_tlv_getvalue(SL_HEAD_S *phead, uint uitag, void *pvalue);
+API ulong hali_tlv_changevalue(SL_HEAD_S *phead, uint uitag, void *pvalue);
 
 
 #endif

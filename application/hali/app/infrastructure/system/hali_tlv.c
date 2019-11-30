@@ -24,7 +24,7 @@ extern "C"{
 
 
 
-API HALI_TLV_NODE_S *hali_tlv_creatnode(uint uitag,uchar *pvalue,uint uisize)
+API HALI_TLV_NODE_S *hali_tlv_creatnode(uint uitag,uchar *pvalue, uint uisize)
 {
 
     HALI_TLV_NODE_S *pstlvnode = NULL;
@@ -34,7 +34,10 @@ API HALI_TLV_NODE_S *hali_tlv_creatnode(uint uitag,uchar *pvalue,uint uisize)
         memset(pstlvnode, 0, sizeof(HALI_TLV_NODE_S) + uisize);
         pstlvnode->uitag = uitag;
         pstlvnode->uilen = uisize;
-        memcpy(pstlvnode->aucdata, pvalue, uisize);
+        if (NULL != pvalue)
+        {
+            memcpy(pstlvnode->aucdata, pvalue, uisize);
+        }
     }
     return pstlvnode;
 }
@@ -47,6 +50,45 @@ void hali_tlv_destroynode(HALI_TLV_NODE_S *pstlvnode)
     }
     return ;
 }
+API ulong hali_tlv_getvalue(SL_HEAD_S *phead, uint uitag, void *pvalue)
+{
+    ulong ulerr = ERROR_FAILED;
+    HALI_TLV_NODE_S *pstlvnode = NULL;
+
+	SL_NODE_S *pstnode = NULL;
+	SL_NODE_S *pstnext = NULL;
+	SL_FOREACH_SAFE(phead,pstnode,pstnext){
+		pstlvnode = SL_ENTRY(pstnode, HALI_TLV_NODE_S,stnode);
+        if (uitag == pstlvnode->uitag)
+        {
+            memcpy(pvalue, pstlvnode->aucdata, pstlvnode->uilen);
+            ulerr = ERROR_SUCCESS;
+            break;
+        }
+	}
+    return ulerr;
+}
+API ulong hali_tlv_changevalue(SL_HEAD_S *phead, uint uitag, void *pvalue)
+{
+    ulong ulerr = ERROR_FAILED;
+    HALI_TLV_NODE_S *pstlvnode = NULL;
+
+	SL_NODE_S *pstnode = NULL;
+	SL_NODE_S *pstnext = NULL;
+	SL_FOREACH_SAFE(phead,pstnode,pstnext){
+		pstlvnode = SL_ENTRY(pstnode, HALI_TLV_NODE_S,stnode);
+        if (uitag == pstlvnode->uitag )
+        {
+            memcpy(pstlvnode->aucdata, pvalue, pstlvnode->uilen);
+            ulerr = ERROR_SUCCESS;
+            break;
+        }
+	}
+
+    return ulerr;
+}
+
+
 /**
  *  功能描述:
  *  @param param1

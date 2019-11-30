@@ -3,10 +3,12 @@
 
 #define IN
 #define OUT
+#define INOUT
 
 #define API
 #define NO_API
 
+#define VOID void
 
 /*
 

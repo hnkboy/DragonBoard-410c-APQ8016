@@ -12,7 +12,8 @@
 
 
 //#define MQTT_HOST "192.168.0.1"
-#define MQTT_HOST "127.0.0.1"
+//#define MQTT_HOST "127.0.0.1"
+#define MQTT_HOST "192.168.0.1"
 
 #define MQTT_PORT  1883
 #define MQTT_KEEP_ALIVE 60
@@ -55,7 +56,7 @@ API void hali_mosquitto_publish(char *puctopic, char *pucmessage)
         return ;
     }
 
-    mosquitto_publish(g_pstmosq,NULL,puctopic,strlen(pucmessage)+1,pucmessage,0,0);
+    mosquitto_publish(g_pstmosq,NULL,puctopic,strlen(pucmessage),pucmessage,0,0);
 }
 
 void hali_mosquitto_connectcallback(struct mosquitto *pstmosq, void *userdata, int iresult)
