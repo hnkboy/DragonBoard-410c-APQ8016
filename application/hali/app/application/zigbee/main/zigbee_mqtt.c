@@ -97,6 +97,18 @@ API void zigbee_mqttswitchpub(int devid, uint uistate)
     return;
 }
 
+API void zigbee_mqtttemperpub(int devid, uint temper,uint humi)
+{
+    char str[50];
+    str[0]= '\0';
+
+    snprintf(str,
+           "{\n\r\"temperatrue\" : %u,\n\r\"humidity\" : %u\n\r }",50,temper,humi);
+
+    hali_mosquitto_publish("home/sensor1", str);
+    return;
+}
+
 
 #ifdef __cplusplus
 }

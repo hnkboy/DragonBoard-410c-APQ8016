@@ -41,6 +41,7 @@ typedef enum tgtlvtype
     TLV_RESP_SWITCH_STATE = 0x10,
     TLV_REQ_DO_SWITCH  = 0x0e,
     TLV_RESP_DO_SWITCH  = 0x0e,
+    TLV_MO_GET_TEMPHUMI,
 
     TLV_MAX,
 }SERIAL_TLV_E;
@@ -95,6 +96,11 @@ typedef struct sttyperespswitchstate
     uchar switchstate;   /*设备ID*/
 }SERIAL_TLV_RESP_SWITCH_S;
 
+typedef struct sttyperesptemphumi
+{
+    uchar temper;
+    uchar humi;
+}SERIAL_TLV_MO_GET_TEMPHUMI;
 
 
 

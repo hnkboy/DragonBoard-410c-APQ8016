@@ -338,42 +338,25 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                     printf("get switch state error\n");
                 }
             }
-            case TLV_RESP_GET_TEMPER:
+            case TLV_MO_GET_TEMPHUMI:
             {
                 ulret = zigbee_devnode_setattrvlaue((int)pstmsg->addr2,
                                                     TLV_RESP_GET_TEMPER,
-                                                    (VOID *)strbuf,
+                                                    (VOID *)(SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf,
                                                     pstmsgtlvhead->len);
+                SERIAL_TLV_MO_GET_TEMPHUMI *psttemper;
+                psttemper = (SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf;
 
                 if (ERROR_SUCCESS == ulret)
                 {
-                    #if 0
-                    zigbee_mqttswitchpub((int)pstmsg->addr2, *(uchar *)strbuf);
-                    #endif
+                    zigbee_mqtttemperpub((int)pstmsg->addr2, psttemper->temper,psttemper->humi);
                 }
                 else
                 {
                     printf("get temper state error\n");
                 }
             }
-            case TLV_RESP_GET_HUMI:
-            {
-                ulret = zigbee_devnode_setattrvlaue((int)pstmsg->addr2,
-                                                    TLV_RESP_GET_HUMI,
-                                                    (VOID *)strbuf,
-                                                    pstmsgtlvhead->len);
 
-                if (ERROR_SUCCESS == ulret)
-                {
-                    #if 0
-                    zigbee_mqttswitchpub((int)pstmsg->addr2, *(uchar *)strbuf);
-                    #endif
-                }
-                else
-                {
-                    printf("get humi state error\n");
-                }
-            }
             default:break;
 
         }

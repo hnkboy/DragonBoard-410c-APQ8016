@@ -118,6 +118,8 @@ API ulong hali_dev_syntimeout(int itimerfd);
 API void zigbee_mqttmsgproc(void *pdata);
 API void zigbee_mqttsub(void );
 API void zigbee_mqttswitchpub(int devid, uint uistate);
+API void zigbee_mqtttemperpub(int devid, uint temper,uint humi);
+
 
 #endif
 
