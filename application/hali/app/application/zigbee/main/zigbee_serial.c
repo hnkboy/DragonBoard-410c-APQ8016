@@ -337,6 +337,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                 {
                     printf("get switch state error\n");
                 }
+                break；
             }
             case TLV_MO_GET_TEMPHUMI:
             {
@@ -355,6 +356,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                 {
                     printf("get temper state error\n");
                 }
+                break；
             }
 
             default:break;
