@@ -341,7 +341,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
             case TLV_MO_GET_TEMPHUMI:
             {
                 ulret = zigbee_devnode_setattrvlaue((int)pstmsg->addr2,
-                                                    TLV_RESP_GET_TEMPER,
+                                                    TLV_MO_GET_TEMPHUMI,
                                                     (VOID *)(SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf,
                                                     pstmsgtlvhead->len);
                 SERIAL_TLV_MO_GET_TEMPHUMI *psttemper;
