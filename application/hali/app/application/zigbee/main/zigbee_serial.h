@@ -39,8 +39,8 @@ typedef enum tgtlvtype
 
     TLV_REQ_SWITCH_STATE  = 0x0f,
     TLV_RESP_SWITCH_STATE = 0x10,
-    TLV_REQ_DO_SWITCH  = 0x0e,
-    TLV_RESP_DO_SWITCH  = 0x0e,
+    TLV_REQ_DO_SWITCH  = 0x11,
+    TLV_RESP_DO_SWITCH  = 0x12,
     TLV_MO_GET_TEMPHUMI,
 
     TLV_MAX,
