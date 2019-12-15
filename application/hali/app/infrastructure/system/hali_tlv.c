@@ -112,16 +112,19 @@ API void hali_tlv_printdebug(SL_HEAD_S *psthead)
     HALI_TLV_NODE_S *pstlvnode = NULL;
     SL_NODE_S *pstnode = NULL;
     SL_NODE_S *pstnext = NULL;
+    UINT tmpnum;
     SL_FOREACH_SAFE(psthead,pstnode,pstnext){
 
         pstlvnode = SL_ENTRY(pstnode,HALI_TLV_NODE_S,stnode);
         printf("/****************/\n");
         printf("tlv   tag: %d\n",pstlvnode->uitag);
         printf("tlv   len: %d\n",pstlvnode->uilen);
-        if (1 == pstlvnode->uilen)
+        printf("tlv vlaue: ");
+        for (tmpnum = 0 ; tmpnum < pstlvnode->uilen; tmpnum ++)
         {
-            printf("tlv vlaue: %x\n",pstlvnode->aucdata[0]);
+            printf("%2x ",pstlvnode->aucdata[tmpnum]);
         }
+        printf("\n");
     }
     return ;
 }
