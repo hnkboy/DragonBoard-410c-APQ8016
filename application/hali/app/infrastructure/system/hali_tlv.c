@@ -112,7 +112,7 @@ API void hali_tlv_printdebug(SL_HEAD_S *psthead)
     HALI_TLV_NODE_S *pstlvnode = NULL;
     SL_NODE_S *pstnode = NULL;
     SL_NODE_S *pstnext = NULL;
-    UINT tmpnum;
+    uint tmpnum;
     SL_FOREACH_SAFE(psthead,pstnode,pstnext){
 
         pstlvnode = SL_ENTRY(pstnode,HALI_TLV_NODE_S,stnode);
