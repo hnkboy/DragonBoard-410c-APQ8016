@@ -118,9 +118,9 @@ API void hali_tlv_printdebug(SL_HEAD_S *psthead)
         printf("/****************/\n");
         printf("tlv   tag: %d\n",pstlvnode->uitag);
         printf("tlv   len: %d\n",pstlvnode->uilen);
-        if (0 < pstlvnode->uilen)
+        if (1 = pstlvnode->uilen)
         {
-            printf("tlv vlaue: %s\n",pstlvnode->aucdata);
+            printf("tlv vlaue: %x\n",pstlvnode->aucdata[0]);
         }
     }
     return ;
