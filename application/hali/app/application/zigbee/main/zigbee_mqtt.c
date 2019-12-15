@@ -103,7 +103,7 @@ API void zigbee_mqtttemperpub(int devid, uint temper,uint humi)
     str[0]= '\0';
 
     snprintf(str,50,
-           "{\n\r\"temperatrue\" : %u,\n\r\"humidity\" : %u\n\r }",temper,humi);
+           "{\"temperature\" : %u,\"humidity\" : %u}\n",temper,humi);
 
     hali_mosquitto_publish("home/sensor1", str);
     return;
