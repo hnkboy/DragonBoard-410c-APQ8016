@@ -337,7 +337,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                 {
                     printf("get switch state error\n");
                 }
-                break；
+                break;
             }
             case TLV_MO_GET_TEMPHUMI:
             {
@@ -345,6 +345,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                                                     TLV_MO_GET_TEMPHUMI,
                                                     (VOID *)(SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf,
                                                     pstmsgtlvhead->len);
+                
                 SERIAL_TLV_MO_GET_TEMPHUMI *psttemper;
                 psttemper = (SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf;
 
@@ -356,7 +357,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                 {
                     printf("get temper state error\n");
                 }
-                break；
+                break;
             }
 
             default:break;
@@ -411,7 +412,7 @@ ulong zigbee_serialmsgcallback(int fd)
                 printf("%02x ",aucbuf[i]);
             }
             printf("\n len = %d\n",istrlen);
-            write(fd,aucbuf,istrlen);
+            //write(fd,aucbuf,istrlen);
 
             remainlen = istrlen;
 
@@ -420,6 +421,7 @@ ulong zigbee_serialmsgcallback(int fd)
                 (void)zigbee_serialmsgproc(&aucbuf[istrlen - remainlen],remainlen, &remainlen);
 
             }
+            memset(aucbuf,0,sizeof(aucbuf));
 
 
             #if 0

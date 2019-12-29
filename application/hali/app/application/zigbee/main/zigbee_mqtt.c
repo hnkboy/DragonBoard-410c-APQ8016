@@ -41,6 +41,8 @@ API void zigbee_mqttmsgproc(void *pdata)
     uchar ucstate = SWITCH_STATE_OFF;
     pstmessage = ( struct mosquitto_message *)pdata;
     ulong ulerr;
+    uint id;
+    id = 0x7970;
     if(pstmessage->payloadlen)
     {
         printf("zigbee%s %s", pstmessage->topic, pstmessage->payload);
@@ -48,7 +50,7 @@ API void zigbee_mqttmsgproc(void *pdata)
         if (0 == strcmp(pstmessage->topic, "/mqtt/topic/light01/command"))
         {
 
-            ulerr = zigbee_devnode_getattrvlaue(0x796F, TLV_RESP_SWITCH_STATE, &ucstate);
+            ulerr = zigbee_devnode_getattrvlaue(id, TLV_RESP_SWITCH_STATE, &ucstate);
             if(ERROR_SUCCESS == ulerr)
             {
                 printf("zigbee get switch state %d\n",ucstate);
@@ -58,14 +60,14 @@ API void zigbee_mqttmsgproc(void *pdata)
             {
                 if (SWITCH_STATE_OFF == ucstate)
                 {
-                    zigbee_serialsendswitchcmd(0x796F,SWITCH_STATE_ON);
+                    zigbee_serialsendswitchcmd(id,SWITCH_STATE_ON);
                 }
             }
             else
             {
                 if (SWITCH_STATE_ON == ucstate)
                 {
-                    zigbee_serialsendswitchcmd(0x796F, SWITCH_STATE_OFF);
+                    zigbee_serialsendswitchcmd(id, SWITCH_STATE_OFF);
                 }
             }
         }

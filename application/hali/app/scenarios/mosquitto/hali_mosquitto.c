@@ -13,7 +13,7 @@
 
 //#define MQTT_HOST "192.168.0.1"
 //#define MQTT_HOST "127.0.0.1"
-#define MQTT_HOST "192.168.0.1"
+#define MQTT_HOST "192.168.0.136"
 
 #define MQTT_PORT  1883
 #define MQTT_KEEP_ALIVE 60
