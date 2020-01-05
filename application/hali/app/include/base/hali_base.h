@@ -16,6 +16,8 @@ typedef unsigned long ulong;
 typedef unsigned int uint;
 */
 typedef unsigned char uchar;
+/*16进制字符串转换init型*/
+int htoi(char s[])；
 
 
 #endif

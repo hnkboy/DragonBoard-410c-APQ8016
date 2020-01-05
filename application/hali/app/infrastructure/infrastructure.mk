@@ -1,3 +1,4 @@
+SRCS+=./infrastructure/base/common.c
 SRCS+=./infrastructure/system/hali_thread.c
 SRCS+=./infrastructure/system/hali_threadmgr.c
 SRCS+=./infrastructure/system/hali_epoll.c

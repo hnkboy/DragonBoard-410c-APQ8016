@@ -78,7 +78,13 @@ API void zigbee_devnode_add(int devid,
 
             sl_addhead(&g_stdevlisthead, &pstdevnode->stnode);
             zigbee_devnode_attrvlaueinit(pstdevnode);
+            /*订阅事件*/
+            if(DEV_MODE_SWITCH == devtype)
+            {
+                zigbee_mqttswitchsub(devid);
+            }
         }
+
     }
 
 }

@@ -22,7 +22,7 @@
 
 typedef enum tgtlvtype
 {
-    TLV_DO_LIGHT = 1,     /*开灯操作*/
+    TLV_DO_LIGHT = 1,         /*开灯操作*/
     TLV_GET_KEY,
     TLV_GET_TEMPER,
     TLV_GET_HUMI,
@@ -39,9 +39,10 @@ typedef enum tgtlvtype
 
     TLV_REQ_SWITCH_STATE  = 0x0f,
     TLV_RESP_SWITCH_STATE = 0x10,
-    TLV_REQ_DO_SWITCH  = 0x11,
+    TLV_REQ_DO_SWITCH   = 0x11,
     TLV_RESP_DO_SWITCH  = 0x12,
-    TLV_MO_GET_TEMPHUMI,
+    TLV_MO_GET_TEMPHUMI = 0x13,
+    TLV_MO_DEVNAME,            /* 设备别名      */
 
     TLV_MAX,
 }SERIAL_TLV_E;
