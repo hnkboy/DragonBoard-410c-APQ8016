@@ -32,11 +32,11 @@
 #define CMD_COOR       0x00              //发往协调器
 #define CMD_END        0x01              //发往终端
 /*devid */
-#define DEVEND_ID_0 0x00
-#define DEVEND_ID_ALL 0xff
+#define DEVEND_ID_0    0x00
+#define DEVEND_ID_ALL  0xff
 
 
-
+#define DEVEND_NAME_MAXSIZE 20
 
 
 
@@ -58,13 +58,14 @@ typedef enum tg_endevmod
 typedef struct stgzigbeedevnode
 {
 	SL_NODE_S stnode;
-	SL_HEAD_S stattributelist; /*属性节点头地址*/
+	SL_HEAD_S stattributelist;                     /*属性节点头地址*/
 	int devid;
 	int devtype;
     int range;
 	int ioldheartnum;
 	int iheartnum;
-    void *pdata;  /*不同属性结构不一样*/
+    void *pdata;                                   /*不同属性结构不一样*/
+    unsigned char devname[DEVEND_NAME_MAXSIZE];    /*设备的别名*/
 }ZIGBEE_DEV_NODE_S;
 
 
@@ -117,6 +118,7 @@ API ulong hali_dev_syntimeout(int itimerfd);
 
 API void zigbee_mqttmsgproc(void *pdata);
 API void zigbee_mqttsub(void );
+API void zigbee_mqttswitchsub(int devid);
 API void zigbee_mqttswitchpub(int devid, uint uistate);
 API void zigbee_mqtttemperpub(int devid, uint temper,uint humi);
 
