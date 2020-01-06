@@ -345,7 +345,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                 SERIAL_TLV_MO_GET_TEMPHUMI *psttemper;
                 psttemper = (SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf;
                 /*检查合法性*/
-                if (（100 <= psttemper->temper ）|| (100 <= psttemper->humi))
+                if ((100 <= psttemper->temper)|| (100 <= psttemper->humi))
                 {
                     printf(" temper or humi is  invalid \n");
                     break;
