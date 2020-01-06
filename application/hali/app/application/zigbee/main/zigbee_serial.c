@@ -341,21 +341,27 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
             }
             case TLV_MO_GET_TEMPHUMI:
             {
+ 
+                SERIAL_TLV_MO_GET_TEMPHUMI *psttemper;
+                psttemper = (SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf;
+                /*检查合法性*/
+                if (（100 <= psttemper->temper ）|| (100 <= psttemper->humi))
+                {
+                    printf(" temper or humi is  invalid \n");
+                    break;
+                }
                 ulret = zigbee_devnode_setattrvlaue((int)pstmsg->addr2,
                                                     TLV_MO_GET_TEMPHUMI,
                                                     (VOID *)(SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf,
                                                     pstmsgtlvhead->len);
                 
-                SERIAL_TLV_MO_GET_TEMPHUMI *psttemper;
-                psttemper = (SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf;
-
                 if (ERROR_SUCCESS == ulret)
                 {
                     zigbee_mqtttemperpub((int)pstmsg->addr2, psttemper->temper,psttemper->humi);
                 }
                 else
                 {
-                    printf("get temper state error\n");
+                    printf("get temper and humi state error\n");
                 }
                 break;
             }
