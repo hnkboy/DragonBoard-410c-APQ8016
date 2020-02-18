@@ -91,6 +91,7 @@ API void zigbee_mqttmsgproc(void *pdata)
 API void zigbee_mqttsub(void )
 {
     hali_mosquitto_subscribe("/home/mqtt/topic/switch/0x7970/command");
+    hali_mosquitto_subscribe("/home/mqtt/topic/switch/0x7971/command");
     return;
 }
 API void zigbee_mqttswitchsub(int devid)
