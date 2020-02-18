@@ -123,5 +123,19 @@ API void zigbee_mqttswitchpub(int devid, uint uistate);
 API void zigbee_mqtttemperpub(int devid, uint temper,uint humi);
 
 
+/*debug类型*/
+typedef enum tagzigbeedebugtype
+{
+    ZIGBEE_DEBUG_PKT = 0,
+    ZIGBEE_DEBUG_MAX
+}ZIGBEE_DEBUGTYPE_E;
+
+#define MSG_MAX_LEN  256
+
+API void zigbee_setdebugsw(ushort type, BOOL_T bswitch);
+API void zigbee_debug(ushort type,const char *cmd, ...);
+API void zigbee_setdebugpkt();
+
+
 #endif
 

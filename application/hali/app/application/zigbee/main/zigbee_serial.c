@@ -31,6 +31,8 @@ extern "C"{
 
 #include "zigbee_serial.h"
 
+#define PKT_TYPE_SEND 0
+#define PKT_TYPE_RCV 1
 
 
 
@@ -57,6 +59,39 @@ char *shelpstr[]={
 	"RESP_DISTANCE",
 	"default"
 };
+
+/*
+* @brief
+*/
+API void zigbee_serialdebugmsg(ushort type,const char *paudata, uint len)
+{
+
+    uchar szdata[MSG_MAX_LEN + 1];
+    uchar *ptr = NULL;
+    memset(szdata,0,sizeof(szdata));
+    uint index;
+    uint length = 0;
+    uint uselen = 0;
+    ptr = szdata;
+
+    for(index = 0; ((index < len)&&(MSG_MAX_LEN > uselen)); index++)
+    {
+        length = snprintf(ptr, (MSG_MAX_LEN - uselen), "%02x ", paudata[index]);
+        ptr += length;
+        uselen += length;
+    }
+    if (PKT_TYPE_SEND == type)
+    {
+        zigbee_debug(ZIGBEE_DEBUG_PKT,"send data\n%s\n  len = %d\n",ptr,len);
+    }
+    else
+    {
+        zigbee_debug(ZIGBEE_DEBUG_PKT,"rcv data\n%s\n  len = %d\n",ptr,len);
+
+    }
+
+
+}
 
 
 /*
@@ -116,13 +151,15 @@ uint zigbee_serialsend(ushort shortaddr, SL_HEAD_S *pstdatalist){
 
     uisendlen = (uint)ptrn;
 
-
+    #if 0
     printf("\n send \n");
     for(uchar ucnum=0; ucnum < uisendlen; ucnum++)
     {
         printf("%02x ",ucbuf[ucnum]);
     }
     printf("\n len = %d\n",uisendlen);
+    #endif
+    zigbee_serialdebugmsg(PKT_TYPE_SEND, ucbuf, uisendlen);
 
     write(g_izigbee_soketacceptfd,"dd",2);
 
@@ -229,7 +266,8 @@ void zigbee_serialsendcmd(uint8_t cmd,
 	char buf[8];
 	char i;
 
-    printf("zigebee teset\n ");
+    //printf("zigebee teset\n ");
+
 	buf[0] = 0xFE;
 
 	buf[1] = 0x03;  /*数据长度*/
@@ -242,9 +280,12 @@ void zigbee_serialsendcmd(uint8_t cmd,
 	buf[6] = tlvalue;
 
 	buf[7] = 0x00;
-    for(i=0; i<8; i++){
-        printf("%2x ",buf[i]);
-    }
+
+    //for(i=0; i<8; i++){
+    //    printf("%2x ",buf[i]);
+    //}
+
+    zigbee_serialdebugmsg(PKT_TYPE_SEND, buf, 8);
 	write(g_izigbee_soketacceptfd, buf, 8);
 }
 /*
@@ -411,6 +452,8 @@ ulong zigbee_serialmsgcallback(int fd)
             int t;
             int i;
             int remainlen = 0;
+            aucbuf[istrlen] = 0;
+            #if 0
             printf("\n");
             for (i = 0; i < istrlen; i++)
             {
@@ -418,9 +461,12 @@ ulong zigbee_serialmsgcallback(int fd)
                 printf("%02x ",aucbuf[i]);
             }
             printf("\n len = %d\n",istrlen);
+            #endif
             //write(fd,aucbuf,istrlen);
 
             remainlen = istrlen;
+
+            zigbee_serialdebugmsg(PKT_TYPE_RCV, aucbuf, istrlen);
 
             for ( ; 0 < remainlen; )
             {

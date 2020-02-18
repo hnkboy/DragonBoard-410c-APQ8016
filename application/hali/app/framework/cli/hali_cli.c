@@ -27,6 +27,7 @@ char *g_clistr[HALI_CLI_MAX]=
 
 	[HALI_CLI_DISPLAY_ZIGBEEDEV]    =   "devls",
     [HALI_CLI_DISPLAY_HELP]    =   "help",
+    [HALI_CLI_DISPLAY_DEVPKTBUG]    =   "pktdebug",
 
 };
 

@@ -10,6 +10,15 @@
 
 #define VOID void
 
+#ifndef BOOL_T
+#define BOOL_T ushort
+#endif
+
+#define BOOL_TRUE  ((BOOL_T)1)
+#define BOOL_FALSE ((BOOL_T)0)
+
+
+
 /*
 
 typedef unsigned long ulong;
