@@ -56,7 +56,7 @@ API void zigbee_mqttmsgproc(void *pdata)
             memset(aidhex, 0, sizeof(aidhex));
             strncpy(aidhex, hitstr, 6);
             devid = htoi(aidhex);
-            
+
             printf("zigbee get id:%x ,%s\n", devid,hitstr);
             ulerr = zigbee_devnode_getattrvlaue(devid, TLV_RESP_SWITCH_STATE, &ucstate);
             if(ERROR_SUCCESS == ulerr)
@@ -73,7 +73,7 @@ API void zigbee_mqttmsgproc(void *pdata)
             }
             else
             {
-                if (SWITCH_STATE_ON == ucstate)
+                if (SWITCH_STATE_OFF != ucstate)
                 {
                     zigbee_serialsendswitchcmd(devid, SWITCH_STATE_OFF);
                 }
@@ -109,14 +109,14 @@ API void zigbee_mqttswitchpub(int devid, uint uistate)
     memset(topic,0,sizeof(topic));
     snprintf(topic, 50,
              "/home/mqtt/topic/switch/0x%4x/state", devid);
-    if (SWITCH_STATE_ON == uistate)
-    {
-        hali_mosquitto_publish(topic,"ON");
-
-    }
-    else if (SWITCH_STATE_OFF == uistate)
+    if (SWITCH_STATE_OFF == uistate)
     {
         hali_mosquitto_publish(topic,"OFF");
+
+    }
+    else
+    {
+        hali_mosquitto_publish(topic,"ON");
     }
     return;
 }

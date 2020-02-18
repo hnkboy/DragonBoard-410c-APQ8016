@@ -32,6 +32,7 @@ API ulong zigbee_init()
     hali_module_regmqttmsgproc(HALI_MODULE_ZIGBEE, zigbee_mqttmsgproc);
     hali_module_regmqttsubproc(HALI_MODULE_ZIGBEE, zigbee_mqttsub);
 
+    hali_cli_reg(HALI_CLI_DISPLAY_HELP, hali_cli_printfhelpmsg);
     hali_cli_reg(HALI_CLI_DISPLAY_ZIGBEEDEV, zigbee_devnode_printall);
     /*创建10S定时器广播发现设备*/
     hali_timer_create(10, hali_dev_syntimeout, &g_zigbeetimerfd);

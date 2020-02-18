@@ -341,7 +341,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
             }
             case TLV_MO_GET_TEMPHUMI:
             {
- 
+
                 SERIAL_TLV_MO_GET_TEMPHUMI *psttemper;
                 psttemper = (SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf;
                 /*检查合法性*/
@@ -354,7 +354,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                                                     TLV_MO_GET_TEMPHUMI,
                                                     (VOID *)(SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf,
                                                     pstmsgtlvhead->len);
-                
+
                 if (ERROR_SUCCESS == ulret)
                 {
                     zigbee_mqtttemperpub((int)pstmsg->addr2, psttemper->temper,psttemper->humi);
@@ -371,7 +371,7 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
         }
     }
 
-    zigbee_devnode_printall();
+    //zigbee_devnode_printall();
     //zigbee_serialsenddiscover();
     return ERROR_SUCCESS;
 }

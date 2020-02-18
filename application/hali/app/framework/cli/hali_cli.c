@@ -24,7 +24,10 @@ HALI_CLI_PROC_PF apfclifunc[HALI_CLI_MAX];
 
 char *g_clistr[HALI_CLI_MAX]=
 {
+
 	[HALI_CLI_DISPLAY_ZIGBEEDEV]    =   "devls",
+    [HALI_CLI_DISPLAY_HELP]    =   "help",
+
 };
 
 
@@ -67,6 +70,15 @@ API ulong hali_cli_msgcallbackproc(int fd)
 API void hali_cli_reg(uint type, HALI_CLI_PROC_PF pfunc)
 {
     apfclifunc[type] = pfunc;
+    return;
+}
+API void hali_cli_printfhelpmsg()
+{
+    uint uindex;
+    for (uindex = 0; uindex < HALI_CLI_MAX; uindex++)
+    {
+        printf("CMD: %s \n",g_clistr[uindex]);
+    }
     return;
 }
 
