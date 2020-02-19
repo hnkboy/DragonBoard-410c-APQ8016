@@ -38,7 +38,7 @@ extern "C"{
 
 uint g_debugswich;
 
-char *g_debugstr[HALI_CLI_MAX]=
+char *g_debugstr[ZIGBEE_DEBUG_MAX]=
 {
 
 	[ZIGBEE_DEBUG_PKT]      = "[zibgee][pkt]\n",
