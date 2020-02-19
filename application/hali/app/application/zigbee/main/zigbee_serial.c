@@ -82,11 +82,11 @@ API void zigbee_serialdebugmsg(ushort type,const char *paudata, uint len)
     }
     if (PKT_TYPE_SEND == type)
     {
-        zigbee_debug(ZIGBEE_DEBUG_PKT,"send data\n%s\n  len = %d\n",szdata,len);
+        zigbee_debug(ZIGBEE_DEBUG_PKT,"send data\n%s\nlen = %d\n",szdata,len);
     }
     else
     {
-        zigbee_debug(ZIGBEE_DEBUG_PKT,"rcv data\n%s\n  len = %d\n",szdata,len);
+        zigbee_debug(ZIGBEE_DEBUG_PKT,"rcv data\n%s\nlen = %d\n",szdata,len);
 
     }
 
@@ -386,9 +386,10 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                 SERIAL_TLV_MO_GET_TEMPHUMI *psttemper;
                 psttemper = (SERIAL_TLV_MO_GET_TEMPHUMI *)strbuf;
                 /*检查合法性*/
-                if ((100 <= psttemper->temper)|| (100 <= psttemper->humi))
+                if ((100 <= psttemper->temper) || (100 <= psttemper->humi))
                 {
-                    printf(" temper or humi is  invalid \n");
+                    //printf(" temper or humi is  invalid \n");
+                    zigbee_debug(ZIGBEE_DEBUG_ERROR, " temper or humi is  invalid \n");
                     break;
                 }
                 ulret = zigbee_devnode_setattrvlaue((int)pstmsg->addr2,

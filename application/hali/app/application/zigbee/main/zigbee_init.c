@@ -34,7 +34,7 @@ API ulong zigbee_init()
 
     hali_cli_reg(HALI_CLI_DISPLAY_HELP, hali_cli_printfhelpmsg);
     hali_cli_reg(HALI_CLI_DISPLAY_ZIGBEEDEV, zigbee_devnode_printall);
-    hali_cli_reg(HALI_CLI_DISPLAY_DEVPKTBUG, zigbee_setdebugpkt);
+    hali_cli_reg(HALI_CLI_DISPLAY_DEVPKTBUG, zigbee_setdebug);
     /*创建10S定时器广播发现设备*/
     hali_timer_create(10, hali_dev_syntimeout, &g_zigbeetimerfd);
     return ERROR_SUCCESS;

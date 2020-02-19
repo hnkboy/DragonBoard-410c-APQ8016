@@ -138,7 +138,7 @@ API void zigbee_devnode_delall(void)
 	}
 }
 
-API void zigbee_devnode_printall(void)
+API void zigbee_devnode_printall(char *pstr)
 {
 
 	ZIGBEE_DEV_NODE_S *pstdevnode = NULL;

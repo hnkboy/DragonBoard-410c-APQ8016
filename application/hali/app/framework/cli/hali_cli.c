@@ -27,7 +27,7 @@ char *g_clistr[HALI_CLI_MAX]=
 
 	[HALI_CLI_DISPLAY_ZIGBEEDEV]    =   "devls",
     [HALI_CLI_DISPLAY_HELP]    =   "help",
-    [HALI_CLI_DISPLAY_DEVPKTBUG]    =   "pktdebug",
+    [HALI_CLI_DISPLAY_DEVPKTBUG]    =   "debug",
 
 };
 
@@ -56,7 +56,7 @@ API ulong hali_cli_msgcallbackproc(int fd)
             }
             if (NULL != cmp)
             {
-                apfclifunc[tmp]();
+                apfclifunc[tmp](cmp);
                 break;
             }
 
@@ -73,7 +73,7 @@ API void hali_cli_reg(uint type, HALI_CLI_PROC_PF pfunc)
     apfclifunc[type] = pfunc;
     return;
 }
-API void hali_cli_printfhelpmsg()
+API void hali_cli_printfhelpmsg(char *pstr)
 {
     uint uindex;
     for (uindex = 0; uindex < HALI_CLI_MAX; uindex++)

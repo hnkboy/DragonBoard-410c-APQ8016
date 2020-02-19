@@ -108,7 +108,7 @@ API void zigbee_devnode_add(int devid,
 API ZIGBEE_DEV_NODE_S *zigbee_devnode_find(int devid);
 API void zigbee_devnode_del(int devid);
 API void zigbee_devnode_delall(void);
-API void zigbee_devnode_printall(void);
+API void zigbee_devnode_printall(char *pstr);
 API ulong zigbee_devnode_getattrvlaue(int devid, uint uitag, void *pvalue);
 API ulong zigbee_devnode_setattrvlaue(int devid, uint uitag, void *pvalue, uint size);
 
@@ -127,6 +127,8 @@ API void zigbee_mqtttemperpub(int devid, uint temper,uint humi);
 typedef enum tagzigbeedebugtype
 {
     ZIGBEE_DEBUG_PKT = 0,
+    ZIGBEE_DEBUG_ERROR,
+    ZIGBEE_DEBUG_EVENT,
     ZIGBEE_DEBUG_MAX
 }ZIGBEE_DEBUGTYPE_E;
 
@@ -134,7 +136,7 @@ typedef enum tagzigbeedebugtype
 
 API void zigbee_setdebugsw(ushort type, BOOL_T bswitch);
 API void zigbee_debug(ushort type,const char *cmd, ...);
-API void zigbee_setdebugpkt();
+API void zigbee_setdebug(char *pstr);
 
 
 #endif
