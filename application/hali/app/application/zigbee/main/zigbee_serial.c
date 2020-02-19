@@ -82,11 +82,11 @@ API void zigbee_serialdebugmsg(ushort type,const char *paudata, uint len)
     }
     if (PKT_TYPE_SEND == type)
     {
-        zigbee_debug(ZIGBEE_DEBUG_PKT,"send data\n%s\n  len = %d\n",ptr,len);
+        zigbee_debug(ZIGBEE_DEBUG_PKT,"send data\n%s\n  len = %d\n",szdata,len);
     }
     else
     {
-        zigbee_debug(ZIGBEE_DEBUG_PKT,"rcv data\n%s\n  len = %d\n",ptr,len);
+        zigbee_debug(ZIGBEE_DEBUG_PKT,"rcv data\n%s\n  len = %d\n",szdata,len);
 
     }
 
