@@ -64,7 +64,7 @@ API void zigbee_mqttmsgproc(void *pdata)
                 printf("zigbee get id:%x switch state %d\n", devid, ucstate);
             }
 
-            if (0 == strcmp(pstmessage->payload, "ON"))
+            if (NULL != strstr(pstmessage->payload, "ON"))
             {
                 if (SWITCH_STATE_OFF == ucstate)
                 {
