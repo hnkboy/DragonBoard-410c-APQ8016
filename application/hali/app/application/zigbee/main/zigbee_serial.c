@@ -37,7 +37,7 @@ extern "C"{
 
 
 static int g_izigbee_soketfd = -1;
-static int g_izigbee_soketacceptfd = -1;
+static int g_izigbee_socketacceptfd = -1;
 
 #define SERIAL_BUF_SIZE 1024
 
@@ -110,8 +110,10 @@ uint zigbee_serialsend(ushort shortaddr, SL_HEAD_S *pstdatalist){
     SL_NODE_S *pstnext = NULL;
     uchar ptrn = 0;
 
-    if (-1 == g_izigbee_soketacceptfd)
+    if (-1 == g_izigbee_socketacceptfd)
     {
+
+        zigbee_debug(ZIGBEE_DEBUG_ERROR,"g_izigbee_socketacceptfd is invaild");
         return uisendlen;
     }
 
@@ -161,9 +163,9 @@ uint zigbee_serialsend(ushort shortaddr, SL_HEAD_S *pstdatalist){
     #endif
     zigbee_serialdebugmsg(PKT_TYPE_SEND, ucbuf, uisendlen);
 
-    write(g_izigbee_soketacceptfd,"dd",2);
+    write(g_izigbee_socketacceptfd,"dd",2);
 
-    write(g_izigbee_soketacceptfd,ucbuf,uisendlen);
+    write(g_izigbee_socketacceptfd,ucbuf,uisendlen);
 
     return uisendlen;
 }
@@ -286,7 +288,7 @@ void zigbee_serialsendcmd(uint8_t cmd,
     //}
 
     zigbee_serialdebugmsg(PKT_TYPE_SEND, buf, 8);
-	write(g_izigbee_soketacceptfd, buf, 8);
+	write(g_izigbee_socketacceptfd, buf, 8);
 }
 /*
 * @brief
@@ -403,7 +405,8 @@ ulong zigbee_serialmsgproc(IN uchar *aucbuf,IN int msglen,INOUT int *premainlen)
                 }
                 else
                 {
-                    printf("get temper and humi state error\n");
+                    //printf("get temper and humi state error\n");
+                    zigbee_debug(ZIGBEE_DEBUG_ERROR, "get temper and humi state error\n");
                 }
                 break;
             }
@@ -438,7 +441,7 @@ ulong zigbee_serialmsgcallback(int fd)
         {
             (void *)hali_epoll_del(fd);
             close(fd);
-            g_izigbee_soketacceptfd = -1;
+            g_izigbee_socketacceptfd = -1;
             break;
         }
         else if(0 > istrlen)
@@ -516,7 +519,14 @@ ulong zigbee_serialconnectcallback(int fd)
         //将套接字设置成非阻塞模式
         flag = fcntl(iaccsocketfd, F_GETFL, 0);
         fcntl(iaccsocketfd, F_SETFL, flag | O_NONBLOCK);
-        g_izigbee_soketacceptfd = iaccsocketfd;
+
+        if (-1  != g_izigbee_socketacceptfd)
+        {
+            (void *)hali_epoll_del(g_izigbee_socketacceptfd);
+            close(g_izigbee_socketacceptfd);
+            g_izigbee_socketacceptfd = -1;
+        }
+        g_izigbee_socketacceptfd = iaccsocketfd;
 
         ulerrcode = hali_epoll_add(iaccsocketfd, zigbee_serialmsgcallback);
         if(ERROR_SUCCESS == ulerrcode)
@@ -578,7 +588,7 @@ API void zigbee_serialfini()
         shutdown(g_izigbee_soketfd, SHUT_RDWR);
         (void)hali_epoll_del(g_izigbee_soketfd);
     }
-    if (-1 != g_izigbee_soketacceptfd)
+    if (-1 != g_izigbee_socketacceptfd)
     {
         (void)hali_epoll_del(g_izigbee_soketfd);
     }

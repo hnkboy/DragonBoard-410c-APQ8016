@@ -169,7 +169,8 @@ API ulong zigbee_devnode_getattrvlaue(int devid, uint uitag, void *pvalue)
 
     if(NULL != pstdevnode)
     {
-        printf("get success devnode\n");
+        //printf("get success devnode\n");
+        zigbee_debug(ZIGBEE_DEBUG_EVENT, "get success devnode\n");
         ulerr = hali_tlv_getvalue(&pstdevnode->stattributelist, uitag, pvalue);
 
     }
@@ -226,8 +227,8 @@ API void zigbee_devnode_attrvlaueinit(ZIGBEE_DEV_NODE_S *pstdevnode)
         pstlvnode = hali_tlv_creatnode(TLV_RESP_SWITCH_STATE, &data, sizeof(data));
         if(NULL != pstlvnode)
         {
-
-            printf("init success devnode\n");
+            //printf("init success devnode\n");
+            zigbee_debug(ZIGBEE_DEBUG_EVENT, "init success devnode\n");
             sl_addafter(&pstdevnode->stattributelist, pstlvnode);
         }
 

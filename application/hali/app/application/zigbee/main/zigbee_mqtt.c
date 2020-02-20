@@ -57,11 +57,12 @@ API void zigbee_mqttmsgproc(void *pdata)
             strncpy(aidhex, hitstr, 6);
             devid = htoi(aidhex);
 
-            printf("zigbee get id:%x ,%s\n", devid,hitstr);
+            zigbee_debug(ZIGBEE_DEBUG_EVENT, "zigbee get id:%x ,%s\n", devid,hitstr);
+
             ulerr = zigbee_devnode_getattrvlaue(devid, TLV_RESP_SWITCH_STATE, &ucstate);
             if(ERROR_SUCCESS == ulerr)
             {
-                printf("zigbee get id:%x switch state %d\n", devid, ucstate);
+                zigbee_debug(ZIGBEE_DEBUG_EVENT, "zigbee get id:%x switch state %d\n", devid, ucstate);
             }
 
             if (NULL != strstr(pstmessage->payload, "ON"))

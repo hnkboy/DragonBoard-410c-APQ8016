@@ -36,7 +36,7 @@ extern "C"{
 
 
 
-uint g_debugswich;
+uint g_debugswich |= (1 << ZIGBEE_DEBUG_ERROR);
 
 char *g_debugstr[ZIGBEE_DEBUG_MAX]=
 {

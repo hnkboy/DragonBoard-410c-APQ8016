@@ -44,7 +44,8 @@ API void hali_mosquitto_subscribe(char *puctopic)
     {
         mosquitto_subscribe(g_pstmosq, NULL, puctopic, 2);
     }
-    printf("sub:%s,\n",puctopic);
+    zigbee_debug(ZIGBEE_DEBUG_EVENT,"sub:%s,\n",puctopic);
+
 }
 API void hali_mosquitto_publish(char *puctopic, char *pucmessage)
 {
@@ -56,7 +57,7 @@ API void hali_mosquitto_publish(char *puctopic, char *pucmessage)
         return ;
     }
 
-    printf("pub:%s,\n",puctopic);
+    zigbee_debug(ZIGBEE_DEBUG_EVENT,"pub:%s,\n",puctopic);
     mosquitto_publish(g_pstmosq,NULL,puctopic,strlen(pucmessage),pucmessage,0,0);
 }
 
