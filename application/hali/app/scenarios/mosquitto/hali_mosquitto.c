@@ -9,6 +9,7 @@
 #include "../../include/base/hali_thread.h"
 #include "../../include/base/hali_modules.h"
 
+#include "../include/zigbee.h"
 
 
 //#define MQTT_HOST "192.168.0.1"
