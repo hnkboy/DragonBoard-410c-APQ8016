@@ -9,7 +9,6 @@
 #include "../../include/base/hali_thread.h"
 #include "../../include/base/hali_modules.h"
 
-#include "../include/zigbee.h"
 
 
 //#define MQTT_HOST "192.168.0.1"
@@ -45,7 +44,8 @@ API void hali_mosquitto_subscribe(char *puctopic)
     {
         mosquitto_subscribe(g_pstmosq, NULL, puctopic, 2);
     }
-    zigbee_debug(ZIGBEE_DEBUG_EVENT,"sub:%s,\n",puctopic);
+    //zigbee_debug(ZIGBEE_DEBUG_EVENT,"sub:%s,\n",puctopic);
+    printf("sub:%s,\n",puctopic);
 
 }
 API void hali_mosquitto_publish(char *puctopic, char *pucmessage)
@@ -58,7 +58,7 @@ API void hali_mosquitto_publish(char *puctopic, char *pucmessage)
         return ;
     }
 
-    zigbee_debug(ZIGBEE_DEBUG_EVENT,"pub:%s,\n",puctopic);
+    printf(ZIGBEE_DEBUG_EVENT,"pub:%s,\n",puctopic);
     mosquitto_publish(g_pstmosq,NULL,puctopic,strlen(pucmessage),pucmessage,0,0);
 }
 
