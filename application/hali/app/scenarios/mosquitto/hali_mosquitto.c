@@ -58,7 +58,7 @@ API void hali_mosquitto_publish(char *puctopic, char *pucmessage)
         return ;
     }
 
-    printf(ZIGBEE_DEBUG_EVENT,"pub:%s,\n",puctopic);
+    printf("pub:%s,\n",puctopic);
     mosquitto_publish(g_pstmosq,NULL,puctopic,strlen(pucmessage),pucmessage,0,0);
 }
 
