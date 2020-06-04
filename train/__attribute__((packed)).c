@@ -11,7 +11,7 @@ typedef struct __attribute__((packed)) {
 	char pad1;
 	char pad2;
 	int a;
-}vec_header_t;
+}vec_header2_t;
 
 
 
