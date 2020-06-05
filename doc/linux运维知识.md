@@ -64,8 +64,16 @@ route add -host 10.20.30.148 gw 10.20.30.40
 ```
 
 ```
-route add default gw 192.168.1.1 添加默认路由
+route add default gw 192.168.1.1 添加默认路由，指向网关
 ```
+
+###### 查看进程线程状态
+
+`ps -T -p` 查看特定进程的线程
+
+###### 查看页的大小
+
+`getconf PAGE_SIZE`
 
 
 
@@ -90,6 +98,30 @@ passwd  jerry//设置用户密码
 smbpasswd -a jerry //创建用户
 smbpasswd -x //删除用户
 ```
+
+
+
+###### 配置大页内存
+
+查看大页内存
+
+```
+root@ubuntu:~/train# cat /proc/meminfo  | grep  Huge
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+HugePages_Total:    1024
+HugePages_Free:      978
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:         2097152 kB
+```
+
+
+
+
+
+
 
 
 
@@ -131,7 +163,7 @@ vim /etc/samba/smb.conf
 service smbd restart
 ```
 
-
+[1]: https://jingyan.baidu.com/article/3a2f7c2ed314ef26afd611a1.html	"参考"
 
 
 
@@ -178,11 +210,23 @@ cmake .
 
 > https://blog.csdn.net/weixin_38705903/article/details/100120285
 
+配置了类似proxy的环境变量，
+
+可以用export验证，
+
+`export -p`
+
+解决办法
+
+```
+export -n ftp_proxy  
+export -n http_proxy 
+export -n https_proxy 
+```
 
 
-###### Samba 配置
 
-> https://jingyan.baidu.com/article/3a2f7c2ed314ef26afd611a1.html
+
 
 
 

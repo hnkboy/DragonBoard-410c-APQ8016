@@ -1,15 +1,23 @@
-#include<stdio.h> 
-__attribute__((constructor)) void before_main() { 
-   printf("before main\n"); 
-} 
+#include<stdio.h>
 
-__attribute__((destructor)) void after_main() { 
-   printf("after main\n"); 
-} 
-  
-int main(int argc, char **argv) { 
-   printf("in main\n"); 
-   return 0; 
+__attribute__((constructor(102))) void before2_main() {
+   printf("before2 main\n");
+}
+__attribute__((constructor(101))) void before_main() {
+   printf("before main\n");
+}
+__attribute__((constructor)) void before1_main() {
+   printf("before1 main\n");
+}
+__attribute__((destructor)) void after_main() {
+   printf("after main\n");
+}
+
+
+
+int main(int argc, char **argv) {
+   printf("in main\n");
+   return 0;
 }
 
 

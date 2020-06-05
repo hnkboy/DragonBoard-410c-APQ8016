@@ -185,5 +185,5 @@ vpp性能分析
 
 开发者文档
 
-[1]: https://fd.io/docs/vpp/master/gettingstarted/developers/gdb_examples.html	"开发者文档，包括build gdb"
+[1]: https://fd.io/docs/vpp/master/gettingstarted/developers/gdb_examples.html	"开发者文档，包括build gdb，和各模块代码介绍"
 
