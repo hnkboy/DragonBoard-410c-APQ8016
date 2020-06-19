@@ -127,6 +127,7 @@ set interface span <if-name> [disable | destination <if-name> [l2] [both|rx|tx]]
 
 acl_add_replace permit, ipv4 permit
 acl_add_replace   ipv4 deny src 192.168.41.128/32  
+
 acl_add_replace 0  ipv4 deny src 192.168.41.127/32      //作为修改使用
 acl_interface_add_del  sw_if_index 1 add  input  acl 0
 acl_interface_add_del  sw_if_index 1 del  input  acl 0  //删除使用
@@ -135,6 +136,8 @@ acl_interface_add_del  sw_if_index 1 del  input  acl 0  //删除使用
 ```
 
 [参考链接](https://blog.csdn.net/turbock/article/details/100731125)
+
+[]: https://wiki.fd.io/view/VPP/SecurityGroups
 
 
 
@@ -165,6 +168,18 @@ OK...
 
 
 
+查看node节点命令
+
+VirtualEthernet0/0/0
+
+show interface VirtualEthernet0/0/0 features
+
+set interface feature  VirtualEthernet0/0/0 jer3 arc device-input 
+
+
+
+
+
 ## VPP学习计划
 
 set interface l2 rewrite  
@@ -186,4 +201,19 @@ vpp性能分析
 开发者文档
 
 [1]: https://fd.io/docs/vpp/master/gettingstarted/developers/gdb_examples.html	"开发者文档，包括build gdb，和各模块代码介绍"
+
+[2]: https://blog.csdn.net/wangcg123/article/details/71682145	"命令汇总"
+
+[3]: https://www.jianshu.com/p/524b2c7627d8	"vpp Makefile解读"
+[4]: https://blog.csdn.net/jqh9804/article/details/55100994	"VPP Bihash分析"
+
+[5]: https://blog.csdn.net/turbock/article/details/100731125	"CLASSIFY 和ACL命令"
+
+
+
+
+
+参考博客
+
+[]: https://yq.aliyun.com/articles/610476?spm=a2c4e.11155435.0.0.5db8421eE5rhqm	"vpp的多线程"
 

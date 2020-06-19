@@ -235,3 +235,13 @@ export -n https_proxy
 ###### tcpdump
 
 `tcpdump src host 127.0.0.1 and port 4321 -i lo -w socket_test.pcap`
+
+
+
+
+
+##### 命令查询
+
+###### readelf
+
+一般用于查看ELF格式的文件信息，常见的文件如在Linux上的可执行文件，动态库(*.so)或者静态库(*.a) 等包含ELF格式的文件。以下命令的使用是基于android编译出来的so文件上面去运行。
