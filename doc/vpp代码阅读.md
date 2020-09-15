@@ -4,6 +4,22 @@ VLIB_EARLY_CONFIG_FUNCTION
 
 
 
+##### 编程技巧重点
+
+
+
+###### 下标和长度
+
+  if (slot == ~0)
+    slot = vec_len (node->next_nodes);
+
+  vec_validate_init_empty (node->next_nodes, slot, ~0);
+  /*取消最后的node节点注册，vec_validate是按照索引扩充的，正好是扩充一位*/
+  if ((old_next_index = node->next_nodes[slot]) != ~0u)
+    
+
+vec_validate_init_empty 是按照下标扩充的，以长度做下标刚好多出最后一个
+
 
 
 
@@ -543,3 +559,868 @@ acl_plugin_match_5tuple_inline  （）
 该函数为查找五元组，由多个模块调用
 
   acl_plugin_methods_t acl_plugin;   每个模块定义这个
+
+
+
+
+
+
+
+  l2input_intf_bitmap_enable (sw_if_index, L2INPUT_FEAT_FLOOD, enable);
+
+是能二层feature
+
+
+
+进入arp节点
+
+
+
+
+
+
+
+00:27:21:229371: vhost-user-input
+     VirtualEthernet0/0/0 queue 0
+   virtio flags:
+    SINGLE_DESC Single descriptor packet
+   virtio_net_hdr first_desc_len 374
+     flags 0x00 gso_type 0
+     num_buff 0
+00:27:21:229384: ethernet-input
+  frame: flags 0x1, hw-if-index 1, sw-if-index 1
+  IP4: 00:00:00:00:00:01 -> ff:ff:ff:ff:ff:ff
+00:27:21:229390: ip4-input
+  UDP: 0.0.0.0 -> 255.255.255.255
+    tos 0xc0, ttl 64, length 348, checksum 0x78d2
+    fragment id 0x0000
+  UDP: 68 -> 67
+    length 328, checksum 0xc3b2
+00:27:21:229395: ip4-lookup
+  fib 0 dpo-idx 0 flow hash: 0x00000000
+  UDP: 0.0.0.0 -> 255.255.255.255
+    tos 0xc0, ttl 64, length 348, checksum 0x78d2
+    fragment id 0x0000
+  UDP: 68 -> 67
+    length 328, checksum 0xc3b2
+00:27:21:229403: ip4-drop
+    UDP: 0.0.0.0 -> 255.255.255.255
+      tos 0xc0, ttl 64, length 348, checksum 0x78d2
+      fragment id 0x0000
+    UDP: 68 -> 67
+      length 328, checksum 0xc3b2
+00:27:21:229407: error-drop
+  rx:VirtualEthernet0/0/0
+00:27:21:229411: drop
+  null-node: blackholed packets
+
+
+
+进入ipv4-input节点
+
+00:27:21:229371: vhost-user-input
+     VirtualEthernet0/0/0 queue 0
+   virtio flags:
+    SINGLE_DESC Single descriptor packet
+   virtio_net_hdr first_desc_len 374
+     flags 0x00 gso_type 0
+     num_buff 0
+00:27:21:229384: ethernet-input
+  frame: flags 0x1, hw-if-index 1, sw-if-index 1
+  IP4: 00:00:00:00:00:01 -> ff:ff:ff:ff:ff:ff
+00:27:21:229390: ip4-input
+  UDP: 0.0.0.0 -> 255.255.255.255
+    tos 0xc0, ttl 64, length 348, checksum 0x78d2
+    fragment id 0x0000
+  UDP: 68 -> 67
+    length 328, checksum 0xc3b2
+00:27:21:229395: ip4-lookup
+  fib 0 dpo-idx 0 flow hash: 0x00000000
+  UDP: 0.0.0.0 -> 255.255.255.255
+    tos 0xc0, ttl 64, length 348, checksum 0x78d2
+    fragment id 0x0000
+  UDP: 68 -> 67
+    length 328, checksum 0xc3b2
+00:27:21:229403: ip4-drop
+    UDP: 0.0.0.0 -> 255.255.255.255
+      tos 0xc0, ttl 64, length 348, checksum 0x78d2
+      fragment id 0x0000
+    UDP: 68 -> 67
+      length 328, checksum 0xc3b2
+00:27:21:229407: error-drop
+  rx:VirtualEthernet0/0/0
+00:27:21:229411: drop
+  null-node: blackholed packets
+
+
+
+
+
+
+
+策略路由的报文流程
+
+00:20:06:422427: virtio-input
+  virtio: hw_if_index 1 next-index 4 vring 0 len 98
+    hdr: flags 0x00 gso_type 0x00 hdr_len 0 gso_size 0 csum_start 0 csum_offset 0 num_buffers 1
+00:20:06:422440: ethernet-input
+  IP4: 02:fe:a6:d9:e3:77 -> 02:fe:ae:f7:cb:61
+00:20:06:422446: ip4-input
+  ICMP: 192.168.10.2 -> 192.168.57.2
+    tos 0x00, ttl 64, length 84, checksum 0x61c9
+    fragment id 0x148b, flags DONT_FRAGMENT
+  ICMP echo_request checksum 0x9a58
+00:20:06:422454: abf-input-ip4
+   next 1 index 19
+00:20:06:422462: ip4-load-balance
+  fib 0 dpo-idx 4 flow hash: 0x00000000
+  ICMP: 192.168.10.2 -> 192.168.57.2
+    tos 0x00, ttl 64, length 84, checksum 0x61c9
+    fragment id 0x148b, flags DONT_FRAGMENT
+  ICMP echo_request checksum 0x9a58
+00:20:06:422470: ip4-rewrite
+  tx_sw_if_index 4 dpo-idx 4 : ipv4 via 192.168.57.3 loop0: mtu:9000 000000000002dead000000000800 flow hash: 0x00000000
+  00000000: 000000000002dead00000000080045000054148b40003f0162c9c0a80a02c0a8
+  00000020: 390208009a5810b101d49d37f85e00000000f6b80000000000001011
+00:20:06:422475: loop0-output
+  loop0 l2_hdr_offset_valid l3_hdr_offset_valid 
+  IP4: de:ad:00:00:00:00 -> 00:00:00:00:00:02
+  ICMP: 192.168.10.2 -> 192.168.57.2
+    tos 0x00, ttl 63, length 84, checksum 0x62c9
+    fragment id 0x148b, flags DONT_FRAGMENT
+  ICMP echo_request checksum 0x9a58
+00:20:06:422484: l2-input
+  l2-input: sw_if_index 4 dst 00:00:00:00:00:02 src de:ad:00:00:00:00
+00:20:06:422487: l2-fwd
+  l2-fwd:   sw_if_index 4 dst 00:00:00:00:00:02 src de:ad:00:00:00:00 bd_index 1 result [0x1050000000003, 3] none
+00:20:06:422491: l2-output
+  l2-output: sw_if_index 3 dst 00:00:00:00:00:02 src de:ad:00:00:00:00 data 08 00 45 00 00 54 14 8b 40 00 3f 01
+00:20:06:422494: VirtualEthernet0/0/1-output
+  VirtualEthernet0/0/1 l2_hdr_offset_valid l3_hdr_offset_valid 
+  IP4: de:ad:00:00:00:00 -> 00:00:00:00:00:02
+  ICMP: 192.168.10.2 -> 192.168.57.2
+    tos 0x00, ttl 63, length 84, checksum 0x62c9
+    fragment id 0x148b, flags DONT_FRAGMENT
+  ICMP echo_request checksum 0x9a58
+00:20:06:422496: VirtualEthernet0/0/1-tx
+     VirtualEthernet0/0/1 queue 0
+   virtio flags:
+    SINGLE_DESC Single descriptor packet
+   virtio_net_hdr first_desc_len 1536
+     flags 0x00 gso_type 0
+     num_buff 1
+
+
+
+
+
+/*二层构造报文*/
+
+00:03:14:856674: virtio-input
+  virtio: hw_if_index 3 next-index 4 vring 0 len 60
+    hdr: flags 0x00 gso_type 0x00 hdr_len 0 gso_size 0 csum_start 0 csum_offset 0 num_buffers 1
+00:03:14:856709: ethernet-input
+  IP4: 00:00:00:00:00:02 -> 02:fe:3c:21:b6:84
+00:03:14:856715: l2-input
+  l2-input: sw_if_index 3 dst 02:fe:3c:21:b6:84 src 00:00:00:00:00:02
+00:03:14:856720: l2-fwd
+  l2-fwd:   sw_if_index 3 dst 02:fe:3c:21:b6:84 src 00:00:00:00:00:02 bd_index 1 result [0xffffffffffffffff, -1] static age-not bvi filter learn-event learn-move 
+00:03:14:856724: l2-flood
+  l2-flood: sw_if_index 3 dst 02:fe:3c:21:b6:84 src 00:00:00:00:00:02 bd_index 1
+  l2-flood: sw_if_index 3 dst 02:fe:3c:21:b6:84 src 00:00:00:00:00:02 bd_index 1
+00:03:14:856732: l2-output
+  l2-output: sw_if_index 2 dst 02:fe:3c:21:b6:84 src 00:00:00:00:00:02 data 08 00 45 00 00 1c 12 34 40 00 ff 01
+  l2-output: sw_if_index 1 dst 02:fe:3c:21:b6:84 src 00:00:00:00:00:02 data 08 00 45 00 00 1c 12 34 40 00 ff 01
+00:03:14:856737: VirtualEthernet0/0/1-output
+  VirtualEthernet0/0/1 l2_hdr_offset_valid l3_hdr_offset_valid 
+  IP4: 00:00:00:00:00:02 -> 02:fe:3c:21:b6:84
+  ICMP: 192.168.10.23 -> 192.168.57.3
+    tos 0x00, ttl 255, length 28, checksum 0xa541
+    fragment id 0x1234, flags DONT_FRAGMENT
+  ICMP echo_request checksum 0xf7fd
+00:03:14:856751: VirtualEthernet0/0/0-output
+  VirtualEthernet0/0/0 l2_hdr_offset_valid l3_hdr_offset_valid 
+  IP4: 00:00:00:00:00:02 -> 02:fe:3c:21:b6:84
+  ICMP: 192.168.10.23 -> 192.168.57.3
+    tos 0x00, ttl 255, length 28, checksum 0xa541
+    fragment id 0x1234, flags DONT_FRAGMENT
+  ICMP echo_request checksum 0xf7fd
+00:03:14:856753: VirtualEthernet0/0/1-tx
+     VirtualEthernet0/0/1 queue 0
+   virtio flags:
+    SINGLE_DESC Single descriptor packet
+   virtio_net_hdr first_desc_len 1536
+     flags 0x00 gso_type 0
+     num_buff 1
+00:03:14:856758: VirtualEthernet0/0/0-tx
+     VirtualEthernet0/0/0 queue 0
+   virtio flags:
+    SINGLE_DESC Single descriptor packet
+   virtio_net_hdr first_desc_len 1536
+     flags 0x00 gso_type 0
+     num_buff 1
+
+
+
+
+
+
+
+
+
+![Contiv / VPP架构](https://github.com/contiv/vpp/raw/master/docs/img/contiv-arch.png)
+
+
+
+https://docs.ligato.io/en/latest/intro/overview/
+
+![agent-vpp](C:\Users\Jerry\Documents\agent-vpp.png)
+
+![ligato框架](https://docs.ligato.io/en/latest/img/intro/ligato-framework-arch2.svg)
+
+
+
+![数据同步](https://docs.ligato.io/en/latest/img/user-guide/datasync_watch.png)
+
+参考风格
+
+https://developer.aliyun.com/article/610476
+
+vpp中的acl实现
+
+
+
+先了解几个关键的结构体
+
+acl_rule_t  基础的rule规则数据单元，一个acl可以由多个rule组成；
+
+acl_list_t  vec指针，指向该acl的所有rule；
+
+hash_acl_info_t   存放所引用的lc_index表，hash_ace_info_t
+
+
+
+acl的规则下发，主要函数
+
+基础函数
+
+hash_acl_apply(acl_main_t *am, u32 lc_index, int acl_index, u32 acl_position)  acl_position：acl的排序
+
+hash_acl_unapply(acl_main_t *am, u32 lc_index, int acl_index)
+
+
+
+
+
+一条线是acl模块内部的acl增加修改。
+
+acl_add_list--->acl_plugin_lookup_context_notify_acl_change--->hash_acl_add--->hash_acl_reapply-->hash_acl_unapply
+
+​                                                                                                                                                                                  **hash_acl_apply**
+
+另一条是acl lib供外部的模块调用，只支持全部刷新。
+
+acl_plugin_set_acl_vec_for_context--->apply_acl_vec--->**hash_acl_apply**
+
+​                                                             ---->unapply_acl_vec--->hash_acl_unapply
+
+
+
+
+
+
+
+ACL	匹配支持两种方式：
+
+普通的遍历：拿acl rule表项一个一个和报文if；
+
+HASH遍历： 报文做hash，再冲突检测找出acl rule；遍历前先对报文掩码处理，有几种掩码规格就需要hash几次；
+
+
+
+multi_acl_match_get_applied_ace_index  
+
+数据来的时候，查找按照am->hash_applied_mask_info_vec_by_lc_index，生效掩码表项处理。循环hash
+
+
+
+
+
+
+
+
+
+疑问关于数据直接操作移动和增加不考虑，线程间的问题，
+
+目前有个解决的希望
+
+acl_set_heap
+
+
+
+
+
+
+
+vlib_process_signal_event_data
+
+
+
+
+
+vl_api_clnt_process
+
+
+
+VLIB_API_INIT_FUNCTION (interface_api_hookup);
+
+
+
+
+
+新的cli new session的处理
+
+
+
+vlib_process_wait_for_event
+
+
+
+(gdb) bt
+
+#0  vlib_process_wait_for_event (vm=0x7ffff639c980 <vlib_global_main>) at /home/test/vpp/src/vlib/node_funcs.h:595
+#1  0x00007ffff61601d9 in unix_cli_new_session_process (vm=0x7ffff639c980 <vlib_global_main>, rt=0x7fffb5acb000, f=0x0) at /home/test/vpp/src/vlib/unix/cli.c:1283
+#2  0x00007ffff60e3624 in vlib_process_bootstrap (_a=140736223297976) at /home/test/vpp/src/vlib/main.c:1502
+#3  0x00007ffff5532964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#4  0x00007fffb498c1b0 in ?? ()
+#5  0x00007ffff60e31c1 in vlib_process_startup (vm=0x4, p=0x7fffb5a87f80, f=0xe) at /home/test/vpp/src/vlib/main.c:1524
+Backtrace stopped: previous frame inner to this frame (corrupt stack?)
+
+Breakpoint 2 at 0x7fffb1279123: vlib_process_get_events. (30 locations)
+
+
+
+
+
+vlib_process_get_events
+
+#0  vlib_process_get_events (vm=0x7ffff639c980 <vlib_global_main>, data_vector=0x7fffb5387f48) at /home/test/vpp/src/vlib/node_funcs.h:518
+#1  0x00007ffff6f8f986 in bfd_process (vm=0x7ffff639c980 <vlib_global_main>, rt=0x7fffb537f000, f=0x0) at /home/test/vpp/src/vnet/bfd/bfd_main.c:1195
+#2  0x00007ffff60e3624 in vlib_process_bootstrap (_a=140736223299640) at /home/test/vpp/src/vlib/main.c:1502
+#3  0x00007ffff5532964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#4  0x00007fffb498c830 in ?? ()
+#5  0x00007ffff60e31c1 in vlib_process_startup (vm=0x11600000000, p=0x77fae775eca60, f=0x0) at /home/test/vpp/src/vlib/main.c:1524
+
+
+
+vlib_register_node
+
+#0  vlib_register_node (vm=0x7ffff639c980 <vlib_global_main>, r=0x7fffb498c9d0) at /home/test/vpp/src/vlib/node.c:530
+#1  0x00007ffff6b48a56 in vnet_register_interface (vnm=0x7ffff7b52fb8 <vnet_main>, dev_class_index=23, dev_instance=0, hw_class_index=22, hw_instance=0) at /home/test/vpp/src/vnet/interface.c:911
+#2  0x00007ffff6b8e2cb in vnet_main_init (vm=0x7ffff639c980 <vlib_global_main>) at /home/test/vpp/src/vnet/misc.c:81
+#3  0x00007ffff60bb006 in call_init_exit_functions_internal (vm=0x7ffff639c980 <vlib_global_main>, headp=0x7ffff639cfa8 <vlib_global_main+1576>, call_once=1, do_sort=1) at /home/test/vpp/src/vlib/init.c:350
+#4  0x00007ffff60baf28 in vlib_call_init_exit_functions (vm=0x7ffff639c980 <vlib_global_main>, headp=0x7ffff639cfa8 <vlib_global_main+1576>, call_once=1) at /home/test/vpp/src/vlib/init.c:364
+#5  0x00007ffff60bb0b1 in vlib_call_all_init_functions (vm=0x7ffff639c980 <vlib_global_main>) at /home/test/vpp/src/vlib/init.c:386
+#6  0x00007ffff60e0298 in vlib_main (vm=0x7ffff639c980 <vlib_global_main>, input=0x7fffb498cfa8) at /home/test/vpp/src/vlib/main.c:2171
+#7  0x00007ffff61678f5 in thread0 (arg=140737324370304) at /home/test/vpp/src/vlib/unix/main.c:658
+#8  0x00007ffff5532964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#9  0x00007fffffffcf30 in ?? ()
+#10 0x00007ffff6167487 in vlib_unix_main (argc=84, argv=0x722770) at /home/test/vpp/src/vlib/unix/main.c:730
+#11 0x0000000000406888 in main (argc=84, argv=0x722770) at /home/test/vpp/src/vpp/vnet/main.c:291
+
+
+
+dispatch_process
+
+#0  dispatch_process (vm=0x7ffff639c980 <vlib_global_main>, p=0x7fffb5302000, f=0x0, last_time_stamp=2151866632861440) at /home/test/vpp/src/vlib/main.c:1547
+#1  0x00007ffff60de878 in vlib_main_or_worker_loop (vm=0x7ffff639c980 <vlib_global_main>, is_main=1) at /home/test/vpp/src/vlib/main.c:1764
+#2  0x00007ffff60e0c6a in vlib_main_loop (vm=0x7ffff639c980 <vlib_global_main>) at /home/test/vpp/src/vlib/main.c:1990
+#3  0x00007ffff60e0a3f in vlib_main (vm=0x7ffff639c980 <vlib_global_main>, input=0x7fffb498cfa8) at /home/test/vpp/src/vlib/main.c:2236
+#4  0x00007ffff61678f5 in thread0 (arg=140737324370304) at /home/test/vpp/src/vlib/unix/main.c:658
+#5  0x00007ffff5532964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#6  0x00007fffffffcf30 in ?? ()
+#7  0x00007ffff6167487 in vlib_unix_main (argc=84, argv=0x722770) at /home/test/vpp/src/vlib/unix/main.c:730
+#8  0x0000000000406888 in main (argc=84, argv=0x722770) at /home/test/vpp/src/vpp/vnet/main.c:291
+
+
+
+
+
+
+
+命令行的调用
+
+
+
+
+
+#0  vlib_start_process (vm=0x7ffff639c980 <vlib_global_main>, process_index=37) at /home/test/vpp/src/vlib/main.c:1619
+#1  0x00007ffff614a07b in unix_cli_file_add (cm=0x7ffff639d2f8 <unix_cli_main>, name=0x0, fd=34) at /home/test/vpp/src/vlib/unix/cli.c:2900
+#2  0x00007ffff614ab2b in unix_cli_listen_read_ready (uf=0x7fffb5780e48) at /home/test/vpp/src/vlib/unix/cli.c:2935
+#3  0x00007ffff6165050 in linux_epoll_input_inline (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, frame=0x0, thread_index=0) at /home/test/vpp/src/vlib/unix/input.c:314
+#4  0x00007ffff61646e9 in linux_epoll_input (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, frame=0x0) at /home/test/vpp/src/vlib/unix/input.c:364
+#5  0x00007ffff60e41f5 in dispatch_node (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, type=VLIB_NODE_TYPE_PRE_INPUT, dispatch_state=VLIB_NODE_STATE_POLLING, frame=0x0, last_time_stamp=2153111643587460)
+    at /home/test/vpp/src/vlib/main.c:1235
+#6  0x00007ffff60debd2 in vlib_main_or_worker_loop (vm=0x7ffff639c980 <vlib_global_main>, is_main=1) at /home/test/vpp/src/vlib/main.c:1807
+#7  0x00007ffff60e0c6a in vlib_main_loop (vm=0x7ffff639c980 <vlib_global_main>) at /home/test/vpp/src/vlib/main.c:1990
+#8  0x00007ffff60e0a3f in vlib_main (vm=0x7ffff639c980 <vlib_global_main>, input=0x7fffb498cfa8) at /home/test/vpp/src/vlib/main.c:2236
+#9  0x00007ffff61678f5 in thread0 (arg=140737324370304) at /home/test/vpp/src/vlib/unix/main.c:658
+#10 0x00007ffff5532964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#11 0x00007fffffffcf30 in ?? ()
+#12 0x00007ffff6167487 in vlib_unix_main (argc=84, argv=0x722770) at /home/test/vpp/src/vlib/unix/main.c:730
+#13 0x0000000000406888 in main (argc=84, argv=0x722770) at /home/test/vpp/src/vpp/vnet/main.c:291
+(gdb) c
+Continuing.
+
+Thread 1 "vpp_main" hit Breakpoint 4, vlib_start_process (vm=0x7ffff639c980 <vlib_global_main>, process_index=38) at /home/test/vpp/src/vlib/main.c:1619
+1619      vlib_node_main_t *nm = &vm->node_main;
+(gdb) bt
+#0  vlib_start_process (vm=0x7ffff639c980 <vlib_global_main>, process_index=38) at /home/test/vpp/src/vlib/main.c:1619
+#1  0x00007ffff60f4f72 in vlib_process_create (vm=0x7ffff639c980 <vlib_global_main>, name=0x7ffff6180841 "unix-cli-new-session", f=0x7ffff6160140 <unix_cli_new_session_process>, log2_n_stack_bytes=16)
+    at /home/test/vpp/src/vlib/node.c:791
+#2  0x00007ffff614af6b in unix_cli_listen_read_ready (uf=0x7fffb5780ee8) at /home/test/vpp/src/vlib/unix/cli.c:2994
+#3  0x00007ffff6165050 in linux_epoll_input_inline (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, frame=0x0, thread_index=0) at /home/test/vpp/src/vlib/unix/input.c:314
+#4  0x00007ffff61646e9 in linux_epoll_input (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, frame=0x0) at /home/test/vpp/src/vlib/unix/input.c:364
+#5  0x00007ffff60e41f5 in dispatch_node (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, type=VLIB_NODE_TYPE_PRE_INPUT, dispatch_state=VLIB_NODE_STATE_POLLING, frame=0x0, last_time_stamp=2153111643587460)
+    at /home/test/vpp/src/vlib/main.c:1235
+#6  0x00007ffff60debd2 in vlib_main_or_worker_loop (vm=0x7ffff639c980 <vlib_global_main>, is_main=1) at /home/test/vpp/src/vlib/main.c:1807
+#7  0x00007ffff60e0c6a in vlib_main_loop (vm=0x7ffff639c980 <vlib_global_main>) at /home/test/vpp/src/vlib/main.c:1990
+#8  0x00007ffff60e0a3f in vlib_main (vm=0x7ffff639c980 <vlib_global_main>, input=0x7fffb498cfa8) at /home/test/vpp/src/vlib/main.c:2236
+#9  0x00007ffff61678f5 in thread0 (arg=140737324370304) at /home/test/vpp/src/vlib/unix/main.c:658
+#10 0x00007ffff5532964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#11 0x00007fffffffcf30 in ?? ()
+#12 0x00007ffff6167487 in vlib_unix_main (argc=84, argv=0x722770) at /home/test/vpp/src/vlib/unix/main.c:730
+#13 0x0000000000406888 in main (argc=84, argv=0x722770) at /home/test/vpp/src/vpp/vnet/main.c:291
+
+
+
+
+
+
+
+#0  vlib_start_process (vm=0x7ffff639c980 <vlib_global_main>, process_index=37) at /home/test/vpp/src/vlib/main.c:1619
+#1  0x00007ffff614a07b in unix_cli_file_add (cm=0x7ffff639d2f8 <unix_cli_main>, name=0x7fffb5adca50 "unix-cli-local:1", fd=34) at /home/test/vpp/src/vlib/unix/cli.c:2900
+#2  0x00007ffff614ab2b in unix_cli_listen_read_ready (uf=0x7fffb5780e48) at /home/test/vpp/src/vlib/unix/cli.c:2935
+#3  0x00007ffff6165050 in linux_epoll_input_inline (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, frame=0x0, thread_index=0) at /home/test/vpp/src/vlib/unix/input.c:314
+#4  0x00007ffff61646e9 in linux_epoll_input (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, frame=0x0) at /home/test/vpp/src/vlib/unix/input.c:364
+#5  0x00007ffff60e41f5 in dispatch_node (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, type=VLIB_NODE_TYPE_PRE_INPUT, dispatch_state=VLIB_NODE_STATE_POLLING, frame=0x0, last_time_stamp=2156789178422128)
+    at /home/test/vpp/src/vlib/main.c:1235
+#6  0x00007ffff60debd2 in vlib_main_or_worker_loop (vm=0x7ffff639c980 <vlib_global_main>, is_main=1) at /home/test/vpp/src/vlib/main.c:1807
+#7  0x00007ffff60e0c6a in vlib_main_loop (vm=0x7ffff639c980 <vlib_global_main>) at /home/test/vpp/src/vlib/main.c:1990
+#8  0x00007ffff60e0a3f in vlib_main (vm=0x7ffff639c980 <vlib_global_main>, input=0x7fffb498cfa8) at /home/test/vpp/src/vlib/main.c:2236
+#9  0x00007ffff61678f5 in thread0 (arg=140737324370304) at /home/test/vpp/src/vlib/unix/main.c:658
+#10 0x00007ffff5532964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#11 0x00007fffffffcf30 in ?? ()
+#12 0x00007ffff6167487 in vlib_unix_main (argc=84, argv=0x722770) at /home/test/vpp/src/vlib/unix/main.c:730
+#13 0x0000000000406888 in main (argc=84, argv=0x722770) at /home/test/vpp/src/vpp/vnet/main.c:291
+
+
+
+
+
+
+
+
+
+
+
+Thread 1 "vpp_main" hit Breakpoint 9, linux_epoll_input_inline (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, frame=0x0, thread_index=0) at /home/test/vpp/src/vlib/unix/input.c:137
+137       unix_main_t *um = &unix_main;
+(gdb) bt
+#0  linux_epoll_input_inline (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, frame=0x0, thread_index=0) at /home/test/vpp/src/vlib/unix/input.c:137
+#1  0x00007ffff61646e9 in linux_epoll_input (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, frame=0x0) at /home/test/vpp/src/vlib/unix/input.c:364
+#2  0x00007ffff60e41f5 in dispatch_node (vm=0x7ffff639c980 <vlib_global_main>, node=0x7fffb53399c0, type=VLIB_NODE_TYPE_PRE_INPUT, dispatch_state=VLIB_NODE_STATE_POLLING, frame=0x0, last_time_stamp=2157513659652028)
+    at /home/test/vpp/src/vlib/main.c:1235
+#3  0x00007ffff60debd2 in vlib_main_or_worker_loop (vm=0x7ffff639c980 <vlib_global_main>, is_main=1) at /home/test/vpp/src/vlib/main.c:1807
+#4  0x00007ffff60e0c6a in vlib_main_loop (vm=0x7ffff639c980 <vlib_global_main>) at /home/test/vpp/src/vlib/main.c:1990
+#5  0x00007ffff60e0a3f in vlib_main (vm=0x7ffff639c980 <vlib_global_main>, input=0x7fffb498cfa8) at /home/test/vpp/src/vlib/main.c:2236
+#6  0x00007ffff61678f5 in thread0 (arg=140737324370304) at /home/test/vpp/src/vlib/unix/main.c:658
+#7  0x00007ffff5532964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#8  0x00007fffffffcf30 in ?? ()
+#9  0x00007ffff6167487 in vlib_unix_main (argc=84, argv=0x722770) at /home/test/vpp/src/vlib/unix/main.c:730
+#10 0x0000000000406888 in main (argc=84, argv=0x722770) at /home/test/vpp/src/vpp/vnet/main.c:291
+
+
+
+
+
+vpp 注册事件
+
+vl_msg_api_config
+
+
+
+
+
+vpp-bihash实现分析
+
+
+
+bihash是vpp里面少有的保证线程安全的数据结构，acl和l2-fib都用到了bihash（但不是表明acl和l2-fib命令都是线程安全的）。
+
+```
+typedef struct
+{
+  union
+  {
+    struct
+    {
+      u64 offset:BIHASH_BUCKET_OFFSET_BITS;
+      u64 lock:1;
+      u64 linear_search:1;
+      u64 log2_pages:8;
+      u64 refcnt:16;
+    };
+    u64 as_u64;
+  };
+} BVT (clib_bihash_bucket);
+```
+
+offseet共有36bit, 能寻址64G bytes的内存空间。这里使用offset而不是一个明确的指针，是因为BIHASH初始时直接从系统获取一块大内存，然后在此基础上再分配。这里的offset指的是相对于大内存首地址的偏移。用来找到 BVT (clib_bihash_value)
+
+lock 主要用于多线程对bucket的互斥访问。
+
+log2_pages主要代表当前hash槽有几页( 1 << log2_pages) 数据。 即offset指向的内存的动态数组的大小( 如log2_pages为4时，此hash槽有16页）。
+
+
+
+
+
+key-value-pair，HASH表项，数据单元有键值对组成，vpp中
+
+```
+typedef struct
+{
+  u64 key[6];
+  u64 value;
+} clib_bihash_kv_48_8_t;
+```
+
+hash bucket. HASH槽。主要用来组织具有相同hash值的hash表项，通过这个hash槽，可以找到此hash值的所有表项。hash槽，也称为hash冲突链。逻辑上，可以看成具有相同hash值的表项链接在一起。
+
+
+
+hash buckets. HASH桶，由多个HASH槽组成。一般定义成一个数组，数组下标即为对应hash槽的HASH值。
+
+
+
+```
+BVS (clib_bihash)
+{
+  BVT (clib_bihash_bucket) * buckets;
+  volatile u32 *alloc_lock;
+
+  BVT (clib_bihash_value) ** working_copies;
+  int *working_copy_lengths;
+  BVT (clib_bihash_bucket) saved_bucket;
+
+  u32 nbuckets;
+  u32 log2_nbuckets;
+  u64 memory_size;
+  u8 *name;
+
+  u64 *freelists;
+
+#if BIHASH_32_64_SVM
+  BVT (clib_bihash_shared_header) * sh;
+  int memfd;
+#else
+  BVT (clib_bihash_shared_header) sh;
+#endif
+
+  u64 alloc_arena;		/* Base of the allocation arena */
+  volatile u8 instantiated;
+
+  /**
+    * A custom format function to print the Key and Value of bihash_key instead of default hexdump
+    */
+  format_function_t *fmt_fn;
+
+  /** Optional statistics-gathering callback */
+#if BIHASH_ENABLE_STATS
+  void (*inc_stats_callback) (BVS (clib_bihash) *, int stat_id, u64 count);
+
+  /** Statistics callback context (e.g. address of stats data structure) */
+  void *inc_stats_context;
+#endif
+
+} BVT (clib_bihash);
+```
+
+每个模块调用BV (clib_bihash_init)会初始化hash表主结构放到clib_all_bihashes（全局数组指针）；
+
+buckets  存放的桶内存由mmap方式申请，
+
+nbuckets，总共的hash槽数，在创建hash表时，调整成2的幂指数形式。如创建hash表时，需要创建含500个hash槽的hash表，则软件调整成含512( 1 << 9) 个hash槽的hash表。这样做的目的是提高寻找hash槽的效率(用位运算&而不是%运算就可以定位hash槽)。在查找时，hash值的低log2_nbuckets bit用来索引桶号， offset = (hash & (h->nbuckets - 1));
+
+
+
+alloc_arena 指的是大内存块的首地址，和buckets 的区分出来，是分别申请
+
+
+
+```
+typedef struct
+{
+  BVT (clib_bihash) * h;
+  char *name;
+  u32 nbuckets;
+  uword memory_size;
+  format_function_t *fmt_fn;
+  u8 instantiate_immediately;
+  u8 dont_add_to_all_bihash_list;
+} BVT (clib_bihash_init2_args);
+```
+
+
+
+这个结构体是BV (clib_bihash_init)初始化用到的
+
+
+
+
+
+
+
+foreach_udp4_dst_port 定义udp端口
+
+
+
+nsh_add_del_proxy_session（）添加nsh-proxy node，这个是在判断封装是vxlan情况下自动添加proxy 
+
+
+
+###### vpp 2层flood
+
+
+
+classify_and_dispatch（）在这个函数实现逻辑，
+
+feat_mask = feat_mask & bd_config->feature_bitmap; 以桥的配置优先。
+
+如果桥为disable则肯定关闭，
+
+桥为enable，不一样enable（具体分情况，看代码）
+
+#，关闭flood功能，是指广播泛洪，有二层bridge的情况下，只需要关闭bridge
+
+set interface l2 flood VirtualEthernet0/0/0 disable
+
+set  bridge-domain flood 2 disable
+
+#，关闭uu-flood功能，是指未知单播泛洪
+
+set bridge-domain uu-flood
+
+
+
+###### vpp,nsh处理
+
+Packet 1
+
+00:31:30:071031: virtio-input
+  virtio: hw_if_index 2 next-index 4 vring 0 len 34
+    hdr: flags 0x00 gso_type 0x00 hdr_len 0 gso_size 0 csum_start 0 csum_offset 0 num_buffers 1
+00:31:30:071052: ethernet-input
+  IP4: 82:1f:cc:9d:e4:19 -> 1a:2b:3c:4d:5e:6f
+00:31:30:071072: l2-input
+  l2-input: sw_if_index 2 dst 1a:2b:3c:4d:5e:6f src 82:1f:cc:9d:e4:19
+00:31:30:071083: l2-input-classify
+  l2-classify: sw_if_index 2, table 2, offset 4b0, next 27
+00:31:30:071096: nsh-classifier
+
+  nsh ver 0 C-set ttl 40 len 43 (172 bytes) md_type 60 next_protocol 77
+  service path 6188930 service index 31
+
+00:31:30:071117: vxlan-gpe-encap
+  VXLAN-GPE-ENCAP: tunnel 0
+00:31:30:071133: ip4-lookup
+  fib 0 dpo-idx 1 flow hash: 0x00000000
+  UDP: 10.10.10.1 -> 10.10.10.3
+    tos 0x00, ttl 254, length 70, checksum 0x948f dscp CS0 ecn NON_ECN
+    fragment id 0x0000
+  UDP: 4790 -> 4790
+    length 50, checksum 0x0000
+00:31:30:071160: ip4-rewrite
+  tx_sw_if_index 4 dpo-idx 1 : ipv4 via 10.10.10.3 loop0: mtu:9000 next:3 02fe6bd556121a2b3c4d5e6f0800 flow hash: 0x00000000
+  00000000: 02fe6bd556121a2b3c4d5e6f08004500004600000000fd11958f0a0a0a010a0a
+  00000020: 0a0312b612b6003200000c000004000002001a2b3c4d5e6f821fcc9d
+00:31:30:071171: loop0-output
+  loop0 
+  IP4: 1a:2b:3c:4d:5e:6f -> 02:fe:6b:d5:56:12
+  UDP: 10.10.10.1 -> 10.10.10.3
+    tos 0x00, ttl 253, length 70, checksum 0x958f dscp CS0 ecn NON_ECN
+    fragment id 0x0000
+  UDP: 4790 -> 4790
+    length 50, checksum 0x0000
+00:31:30:071187: l2-input
+  l2-input: sw_if_index 4 dst 02:fe:6b:d5:56:12 src 1a:2b:3c:4d:5e:6f
+00:31:30:071189: l2-fwd
+  l2-fwd:   sw_if_index 4 dst 02:fe:6b:d5:56:12 src 1a:2b:3c:4d:5e:6f bd_index 1 result [0x1000000000002, 2] none
+00:31:30:071197: l2-output
+  l2-output: sw_if_index 2 dst 02:fe:6b:d5:56:12 src 1a:2b:3c:4d:5e:6f data 08 00 45 00 00 46 00 00 00 00 fd 11
+00:31:30:071204: tap0-output
+  tap0 
+  IP4: 1a:2b:3c:4d:5e:6f -> 02:fe:6b:d5:56:12
+  UDP: 10.10.10.1 -> 10.10.10.3
+    tos 0x00, ttl 253, length 70, checksum 0x958f dscp CS0 ecn NON_ECN
+    fragment id 0x0000
+  UDP: 4790 -> 4790
+    length 50, checksum 0x0000
+
+
+
+vxlan-input 解封后的处理
+
+ vxlan_gpe_register_decap_protocol (VXLAN_GPE_PROTOCOL_NSH, next_node);
+
+
+
+###### 接口相关
+
+ethernet_register_input_type  
+
+
+
+vnet_sw_interface_t *sw;
+
+vnet_hw_interface_t *hw;
+
+
+
+
+
+
+
+###### vhost代码阅读
+
+vrings数组  
+
+奇odd是接收
+
+偶even是发送
+
+
+
+设置接收关键函数
+
+vnet_hw_interface_set_rx_mode
+
+
+
+DBGvpp# show vhost-user 
+Virtio vhost-user interfaces
+Global:
+  coalesce frames 32 time 1e-3
+  Number of rx virtqueues in interrupt mode: 0
+  Number of GSO interfaces: 0
+Interface: VirtualEthernet0/0/0 (ifindex 3)
+virtio_net_hdr_sz 12
+ features mask (0xfffffffbffffa27c): 
+ features (0x150600000): 
+   VIRTIO_NET_F_GUEST_ANNOUNCE (21)
+   VIRTIO_NET_F_MQ (22)
+   VIRTIO_F_INDIRECT_DESC (28)
+   VHOST_USER_F_PROTOCOL_FEATURES (30)
+   VIRTIO_F_VERSION_1 (32)
+  protocol features (0x3)
+   VHOST_USER_PROTOCOL_F_MQ (0)
+   VHOST_USER_PROTOCOL_F_LOG_SHMFD (1)
+
+ socket filename /home/test/vhost1.sock type server errno "Success"
+
+ rx placement: 
+   thread 0 on vring 1, polling
+   thread 0 on vring 3, polling
+   thread 0 on vring 5, polling
+   thread 0 on vring 7, polling
+ tx placement: lock-free
+   thread 0 on vring 0
+
+ Memory regions (total 3)
+ region fd    guest_phys_addr    memory_size        userspace_addr     mmap_offset        mmap_addr
+ ====== ===== ================== ================== ================== ================== ==================
+  0     56    0x0000000000000000 0x00000000000a0000 0x00007f19b7000000 0x0000000000000000 0x00007fff81400000
+  1     57    0x00000000000c0000 0x00000000bff40000 0x00007f19b70c0000 0x00000000000c0000 0x00007fa4ff0c0000
+  2     58    0x0000000100000000 0x0000000040000000 0x00007f1a77000000 0x00000000c0000000 0x00007fa4bf000000
+
+ Virtqueue 0 (TX)
+  qsz 1024 last_avail_idx 18 last_used_idx 18
+  avail.flags 0 avail.idx 1024 used.flags 1 used.idx 18
+  kickfd 59 callfd 60 errfd -1
+
+ Virtqueue 1 (RX)
+  qsz 256 last_avail_idx 47 last_used_idx 47
+  avail.flags 0 avail.idx 47 used.flags 1 used.idx 47
+  kickfd 46 callfd 61 errfd -1
+
+ Virtqueue 2 (TX)
+  qsz 1024 last_avail_idx 0 last_used_idx 0
+  avail.flags 0 avail.idx 1024 used.flags 1 used.idx 0
+  kickfd 47 callfd 62 errfd -1
+
+ Virtqueue 3 (RX)
+  qsz 256 last_avail_idx 62 last_used_idx 62
+  avail.flags 0 avail.idx 62 used.flags 1 used.idx 62
+  kickfd 48 callfd 63 errfd -1
+
+ Virtqueue 4 (TX)
+  qsz 1024 last_avail_idx 0 last_used_idx 0
+  avail.flags 0 avail.idx 1024 used.flags 1 used.idx 0
+  kickfd 49 callfd 64 errfd -1
+
+ Virtqueue 5 (RX)
+  qsz 256 last_avail_idx 52 last_used_idx 52
+  avail.flags 0 avail.idx 52 used.flags 1 used.idx 52
+  kickfd 50 callfd 65 errfd -1
+
+ Virtqueue 6 (TX)
+  qsz 1024 last_avail_idx 0 last_used_idx 0
+  avail.flags 0 avail.idx 1024 used.flags 1 used.idx 0
+  kickfd 67 callfd 68 errfd -1
+
+ Virtqueue 7 (RX)
+  qsz 256 last_avail_idx 32 last_used_idx 32
+  avail.flags 0 avail.idx 32 used.flags 1 used.idx 32
+  kickfd 52 callfd 69 errfd -1
+
+ Virtqueue 8 (TX disabled)
+  qsz 1024 last_avail_idx 0 last_used_idx 0
+  avail.flags 0 avail.idx 1024 used.flags 1 used.idx 0
+  kickfd 53 callfd 70 errfd -1
+
+ Virtqueue 9 (RX disabled)
+  qsz 256 last_avail_idx 0 last_used_idx 0
+  avail.flags 0 avail.idx 0 used.flags 1 used.idx 0
+  kickfd 54 callfd 71 errfd -1
+
+log
+
+if 3 msg VHOST_USER_GET_FEATURES - reply 0x000000015c628000
+if 3 msg VHOST_USER_GET_PROTOCOL_FEATURES - reply 0x0000000000000003
+if 3 msg VHOST_USER_SET_PROTOCOL_FEATURES features 0x0000000000000003
+if 3 msg VHOST_USER_GET_QUEUE_NUM - reply 16
+if 3 msg VHOST_USER_SET_OWNER
+if 3 msg VHOST_USER_GET_FEATURES - reply 0x000000015c628000
+if 3 msg VHOST_USER_SET_VRING_CALL 0
+if 3 msg VHOST_USER_SET_VRING_CALL 1
+if 3 msg VHOST_USER_SET_FEATURES features 0x0000000150208000
+if 3 msg VHOST_USER_SET_MEM_TABLE nregions 3   设置mmap
+map memory region 0 addr 0 len 0x200000 fd 48 mapped 0x7fff81400000 page_sz 0x200000
+map memory region 1 addr 0 len 0xc0000000 fd 49 mapped 0x7fa4ff000000 page_sz 0x200000
+map memory region 2 addr 0 len 0x100000000 fd 50 mapped 0x7fa3ff000000 page_sz 0x200000
+if 3 msg VHOST_USER_SET_VRING_NUM idx 0 num 256   设置vring 大小
+if 3 msg VHOST_USER_SET_VRING_BASE idx 0 num 0xa  设置vring，数据位置
+if 3 msg VHOST_USER_SET_VRING_ADDR idx 0          设置vrings 地址
+if 3 msg VHOST_USER_SET_VRING_KICK 0 
+if 3 msg VHOST_USER_SET_VRING_CALL 0   添加vring的fd到 epoll
+if 0 KICK queue 0
+if 3 msg VHOST_USER_SET_VRING_NUM idx 1 num 256
+if 3 msg VHOST_USER_SET_VRING_BASE idx 1 num 0x5b
+if 3 msg VHOST_USER_SET_VRING_ADDR idx 1
+if 3 msg VHOST_USER_SET_VRING_KICK 1
+if 3 msg VHOST_USER_SET_VRING_CALL 1
+if 0 KICK queue 1
+interface 3 ready
+if 3 VHOST_USER_SET_VRING_ENABLE: enable queue 0
+if 3 VHOST_USER_SET_VRING_ENABLE: enable queue 1

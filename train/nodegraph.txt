@@ -1,0 +1,2899 @@
+           Name                      Next                    Previous         
+VirtualEthernet0/0/0-outpu      error-drop [0]               l2-output        
+                          VirtualEthernet0/0/0-tx [1     interface-output     
+
+VirtualEthernet0/0/0-tx         error-drop [0]      VirtualEthernet0/0/0-outpu
+
+VirtualEthernet0/0/1-outpu      error-drop [0]               l2-output        
+                          VirtualEthernet0/0/1-tx [1     interface-output     
+
+VirtualEthernet0/0/1-tx         error-drop [0]      VirtualEthernet0/0/1-outpu
+
+acl-plugin-fa-cleaner-proc
+
+acl-plugin-fa-worker-clean
+
+acl-plugin-in-ip4-fa            error-drop [0]      ip4-mpls-label-disposition
+                              ip4-not-enabled [1]   ip4-mpls-label-disposition
+                                                       ip4-input-no-checksum  
+                                                             ip4-input        
+
+acl-plugin-in-ip4-l2            error-drop [0]         l2-input-feat-arc-end  
+                           l2-input-feat-arc-end [1]     l2-input-feat-arc    
+
+acl-plugin-in-ip6-fa            error-drop [0]      ip6-mpls-label-disposition
+                              ip6-not-enabled [1]   ip6-mpls-label-disposition
+                                                             ip6-input        
+
+acl-plugin-in-ip6-l2            error-drop [0]         l2-input-feat-arc-end  
+                           l2-input-feat-arc-end [1]     l2-input-feat-arc    
+
+acl-plugin-in-nonip-l2          error-drop [0]      
+
+acl-plugin-out-ip4-fa           error-drop [0]      
+
+acl-plugin-out-ip4-l2           error-drop [0]      
+
+acl-plugin-out-ip6-fa           error-drop [0]      
+
+acl-plugin-out-ip6-l2           error-drop [0]      
+
+acl-plugin-out-nonip-l2         error-drop [0]      
+
+adj-l2-midchain                 error-drop [0]               gre-encap        
+
+adj-l2-rewrite                  error-drop [0]      
+
+adj-midchain-tx                 error-drop [0]      
+
+adj-midchain-tx-no-count        error-drop [0]      
+
+adj-nsh-midchain                error-drop [0]      
+
+adj-nsh-rewrite                 error-drop [0]      
+
+admin-up-down-process     
+
+af-packet-input            ip4-input-no-checksum [0]
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                mpls-input [3]      
+                              ethernet-input [4]    
+                                error-drop [5]      
+
+ah4-decrypt                     error-drop [0]            ipsec4-if-input     
+                                 ip4-input [1]         ipsec4-input-feature   
+                                 ip6-input [2]      
+
+ah4-encrypt                     error-drop [0]         ipsec4-output-feature  
+                                ip4-lookup [1]      
+                                ip6-lookup [2]      
+                             interface-output [3]   
+
+ah6-decrypt                     error-drop [0]            ipsec6-if-input     
+                                 ip4-input [1]         ipsec6-input-feature   
+                                 ip6-input [2]      
+
+ah6-encrypt                     error-drop [0]         ipsec6-output-feature  
+                                ip4-lookup [1]      
+                                ip6-lookup [2]      
+                             interface-output [3]   
+
+api-rx-from-node          
+
+api-rx-from-ring          
+
+arp-disabled                    error-drop [0]               arp-input        
+
+arp-input                       error-drop [0]                pipe-rx         
+                               arp-disabled [1]               l2-fwd          
+                                                             l2-flood         
+                                                       ethernet-input-not-l2  
+                                                        ethernet-input-type   
+                                                          ethernet-input      
+
+arp-proxy                       error-drop [0]      
+                             interface-output [1]   
+
+arp-reply                       error-drop [0]      
+                             interface-output [1]   
+
+arp-term-l2bd                    l2-output [0]           l2-ip-qos-record     
+                                error-drop [1]             span-l2-input      
+                            feature-bitmap-drop [2]        arp-term-l2bd      
+                                 l2-flood [3]                  l2-rw          
+                                 l2-uu-fwd [4]         l2-input-feat-arc-end  
+                               arp-term-l2bd [5]         l2-input-feat-arc    
+                                  l2-fwd [6]               l2-input-acl       
+                                   l2-rw [7]                 l2-learn         
+                                 l2-learn [8]              l2-input-vtr       
+                               l2-input-vtr [9]              l2-input         
+                             l2-ip-qos-record [10]            l2-fwd          
+                               l2-input-acl [11]             l2-flood         
+                           l2-policer-classify [12]      l2-input-classify    
+                            l2-input-feat-arc [13]      l2-policer-classify   
+                            l2-input-classify [14]  
+                              span-l2-input [15]    
+
+bfd-process               
+
+bfd-udp-echo4-input             error-drop [0]      
+                                  ip4-arp [1]       
+                                ip4-lookup [2]      
+
+bfd-udp-echo6-input             error-drop [0]      
+                           ip6-discover-neighbor [1]
+                                ip6-lookup [2]      
+
+bfd-udp4-input                  error-drop [0]      
+                                  ip4-arp [1]       
+                                ip4-lookup [2]      
+                               ip4-midchain [3]     
+
+bfd-udp6-input                  error-drop [0]      
+                           ip6-discover-neighbor [1]
+                                ip6-lookup [2]      
+                               ip6-midchain [3]     
+
+bier-bift-input           
+
+bier-disp-dispatch               bier-drop [0]           bier-disp-lookup     
+
+bier-disp-lookup                 bier-drop [0]      
+                            bier-disp-dispatch [1]  
+
+bier-drop                       error-drop [0]          bier-disp-dispatch    
+                                                         bier-disp-lookup     
+                                                           bier-imp-ip4       
+                                                            bier-output       
+                                                            bier-lookup       
+                                                            bier-input        
+
+bier-imp-ip4                     bier-drop [0]      
+
+bier-imp-ip6                    error-drop [0]      
+
+bier-input                      bier-lookup [0]     
+                                 bier-drop [1]      
+
+bier-load-balance                mpls-drop [0]      
+                              mpls-replicate [1]    
+
+bier-lookup                      bier-drop [0]              bier-input        
+                                bier-output [1]     
+
+bier-output                      bier-drop [0]              bier-lookup       
+
+bond-input                      error-drop [0]      
+
+bond-process              
+
+cop-input                    ip4-cop-whitelist [0]  
+                             ip6-cop-whitelist [1]  
+                           default-cop-whitelist [2]
+                                 ip4-input [3]      
+                                 ip6-input [4]      
+                              ethernet-input [5]    
+                                error-drop [6]      
+
+default-cop-whitelist                                    ip6-cop-whitelist    
+                                                         ip4-cop-whitelist    
+                                                             cop-input        
+
+device-input               ip4-input-no-checksum [0]
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                mpls-input [3]      
+                              ethernet-input [4]    
+                                error-drop [5]      
+
+dhcp-client-process       
+
+dhcp-proxy-to-client                                   dhcp-proxy-to-server   
+
+dhcp-proxy-to-server            error-drop [0]      
+                                ip4-lookup [1]      
+                           dhcp-proxy-to-client [2] 
+
+dhcp6-client-cp-process   
+
+dhcp6-pd-client-cp-process
+
+dhcp6-pd-reply-publisher-p
+
+dhcp6-reply-publisher-proc
+
+dhcpv6-client                   error-drop [0]      
+                                ip6-lookup [1]      
+
+dhcpv6-proxy-to-client                                dhcpv6-proxy-to-server  
+
+dhcpv6-proxy-to-server          error-drop [0]      
+                                ip6-lookup [1]      
+                          dhcpv6-proxy-to-client [2]
+
+dpdk-crypto-input               error-drop [0]      
+                                ip4-lookup [1]      
+                                ip6-lookup [2]      
+                             interface-output [3]   
+                          dpdk-esp4-decrypt-post [4]
+                          dpdk-esp6-decrypt-post [5]
+
+dpdk-esp4-decrypt               error-drop [0]      
+                           ip4-input-no-checksum [1]
+                                 ip6-input [2]      
+
+dpdk-esp4-decrypt-post          error-drop [0]           dpdk-crypto-input    
+                           ip4-input-no-checksum [1]
+                                 ip6-input [2]      
+
+dpdk-esp4-encrypt               error-drop [0]      
+
+dpdk-esp4-encrypt-tun           error-drop [0]      
+
+dpdk-esp6-decrypt               error-drop [0]      
+                           ip4-input-no-checksum [1]
+                                 ip6-input [2]      
+
+dpdk-esp6-decrypt-post          error-drop [0]           dpdk-crypto-input    
+                           ip4-input-no-checksum [1]
+                                 ip6-input [2]      
+
+dpdk-esp6-encrypt               error-drop [0]      
+
+dpdk-esp6-encrypt-tun           error-drop [0]      
+
+dpdk-input                 ip4-input-no-checksum [0]
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                mpls-input [3]      
+                              ethernet-input [4]    
+                                error-drop [5]      
+
+dpdk-ipsec-process        
+
+dpdk-process              
+
+drop                                                        error-drop        
+                                                           punt-dispatch      
+
+dslite-ce-decap                 ip4-lookup [0]      
+                              ip6-icmp-input [1]    
+                                error-drop [2]      
+
+dslite-ce-encap                 ip6-lookup [0]      
+                                error-drop [1]      
+
+dslite-in2out                   ip4-lookup [0]      
+                              ip6-icmp-input [1]    
+                                error-drop [2]      
+                          dslite-in2out-slowpath [3]
+
+dslite-in2out-slowpath          ip4-lookup [0]        dslite-in2out-slowpath  
+                                ip6-lookup [1]             dslite-in2out      
+                                error-drop [2]      
+                          dslite-in2out-slowpath [3]
+
+dslite-out2in                   ip4-lookup [0]      
+                                ip6-lookup [1]      
+                                error-drop [2]      
+
+error-drop                         drop [0]               nat-ha-handoff      
+                                                              nat-ha          
+                                                           nat66-out2in       
+                                                           nat66-in2out       
+                                                          dslite-ce-decap     
+                                                          dslite-ce-encap     
+                                                           dslite-out2in      
+                                                      dslite-in2out-slowpath  
+                                                           dslite-in2out      
+                                                       nat64-out2in-handoff   
+                                                        nat64-out2in-reass    
+                                                           nat64-out2in       
+                                                       nat64-in2out-handoff   
+                                                        nat64-in2out-reass    
+                                                       nat64-in2out-slowpath  
+                                                           nat64-in2out       
+                                                      nat44-handoff-classify  
+                                                        nat44-det-classify    
+                                                         nat44-ed-classify    
+                                                          nat44-classify      
+                                                       nat44-ed-hairpin-src   
+                                                         nat44-hairpin-src    
+                                                       nat44-ed-hairpin-dst   
+                                                         nat44-hairpin-dst    
+                                                       nat44-ed-hairpinning   
+                                                         nat44-hairpinning    
+                                                    nat44-out2in-worker-handof
+                                                    nat44-in2out-output-worker
+                                                    nat44-in2out-worker-handof
+                                                         nat44-det-out2in     
+                                                         nat44-det-in2out     
+                                                       nat44-ed-out2in-reass  
+                                                     nat44-ed-out2in-slowpath 
+                                                          nat44-ed-out2in     
+                                                         nat44-out2in-fast    
+                                                        nat44-out2in-reass    
+                                                           nat44-out2in       
+                                                    nat44-ed-in2out-reass-outp
+                                                       nat44-ed-in2out-reass  
+                                                    nat44-ed-in2out-output-slo
+                                                     nat44-ed-in2out-slowpath 
+                                                      nat44-ed-in2out-output  
+                                                          nat44-ed-in2out     
+                                                         nat44-in2out-fast    
+                                                        nat44-in2out-reass    
+                                                    nat44-in2out-output-slowpa
+                                                       nat44-in2out-slowpath  
+                                                        nat44-in2out-output   
+                                                           nat44-in2out       
+                                                            mactime-tx        
+                                                              mactime         
+                                                       dpdk-esp6-encrypt-tun  
+                                                       dpdk-esp4-encrypt-tun  
+                                                         dpdk-esp6-encrypt    
+                                                         dpdk-esp4-encrypt    
+                                                      dpdk-esp6-decrypt-post  
+                                                      dpdk-esp4-decrypt-post  
+                                                         dpdk-esp6-decrypt    
+                                                         dpdk-esp4-decrypt    
+                                                         dpdk-crypto-input    
+                                                            dpdk-input        
+                                                       acl-plugin-out-ip4-fa  
+                                                       acl-plugin-out-ip6-fa  
+                                                       acl-plugin-in-ip4-fa   
+                                                       acl-plugin-in-ip6-fa   
+                                                       acl-plugin-out-ip4-l2  
+                                                       acl-plugin-out-ip6-l2  
+                                                       acl-plugin-in-ip4-l2   
+                                                       acl-plugin-in-ip6-l2   
+                                                      acl-plugin-out-nonip-l2 
+                                                      acl-plugin-in-nonip-l2  
+                                                           bier-imp-ip6       
+                                                             bier-drop        
+                                                        vlan-mpls-qos-mark    
+                                                         vlan-ip6-qos-mark    
+                                                         vlan-ip4-qos-mark    
+                                                         l2-ip-qos-record     
+                                                    ethernet-mpls-label-imposi
+                                                    ethernet-mpls-label-imposi
+                                                    ip6-mpls-label-disposition
+                                                    ip4-mpls-label-disposition
+                                                    ip6-mpls-label-disposition
+                                                    ip4-mpls-label-disposition
+                                                        interface-rx-dpo-l2   
+                                                         nsh-load-balance     
+                                                          l2-load-balance     
+                                                         adj-nsh-midchain     
+                                                          adj-nsh-rewrite     
+                                                          adj-l2-midchain     
+                                                          adj-l2-rewrite      
+                                                     adj-midchain-tx-no-count 
+                                                          adj-midchain-tx     
+                                                             tuntap-rx        
+                                                           netmap-input       
+                                                          af-packet-input     
+                                                              pipe-rx         
+                                                         vhost-user-input     
+                                                           virtio-input       
+                                                             pg-input         
+                                                      sr-pl-rewrite-b-encaps  
+                                                      sr-pl-rewrite-b-insert  
+                                                       sr-pl-rewrite-insert   
+                                                      sr-pl-rewrite-encaps-l2 
+                                                      sr-pl-rewrite-encaps-v4 
+                                                       sr-pl-rewrite-encaps   
+                                                            sr-localsid       
+                                                           sr-localsid-d      
+                                                       dhcp-proxy-to-server   
+                                                      dhcpv6-proxy-to-server  
+                                                           dhcpv6-client      
+                                                     lisp-gpe-nsh-dummy-input 
+                                                        lisp-gpe-ip6-input    
+                                                        lisp-gpe-ip4-input    
+                                                           lisp-cp-input      
+                                                        lisp-cp-lookup-nsh    
+                                                         lisp-cp-lookup-l2    
+                                                        lisp-cp-lookup-ip6    
+                                                        lisp-cp-lookup-ip4    
+                                                          lisp-cp-output      
+                                                       ip6-vxlan-gpe-bypass   
+                                                       ip4-vxlan-gpe-bypass   
+                                                         vxlan6-gpe-input     
+                                                         vxlan4-gpe-input     
+                                                          vxlan-gpe-encap     
+                                                         vxlan6-gbp-encap     
+                                                         vxlan4-gbp-encap     
+                                                       ip6-vxlan-gbp-bypass   
+                                                       ip4-vxlan-gbp-bypass   
+                                                         vxlan6-gbp-input     
+                                                         vxlan4-gbp-input     
+                                                            mpls-input        
+                                                         mpls-not-enabled     
+                                                             mpls-drop        
+                                                        mpls-adj-incomplete   
+                                                           mpls-midchain      
+                                                            mpls-output       
+                                                         l2tp-decap-local     
+                                                            l2tp-decap        
+                                                            l2tp-encap        
+                                                            ipip6-input       
+                                                            ipip4-input       
+                                                            gre6-input        
+                                                            gre4-input        
+                                                            udp6-input        
+                                                            udp4-input        
+                                                            tcp6-reset        
+                                                            tcp4-reset        
+                                                            tcp6-output       
+                                                            tcp4-output       
+                                                           syn-filter-4       
+                                                             osi-input        
+                                                       ipsec6-output-feature  
+                                                       ipsec4-output-feature  
+                                                            ah6-encrypt       
+                                                            ah4-encrypt       
+                                                            ah6-decrypt       
+                                                            ah4-decrypt       
+                                                         esp6-decrypt-tun     
+                                                         esp4-decrypt-tun     
+                                                           esp6-decrypt       
+                                                           esp4-decrypt       
+                                                           esp6-encrypt       
+                                                           esp4-encrypt       
+                                                          ipsec6-if-input     
+                                                          ipsec4-if-input     
+                                                       ipsec6-input-feature   
+                                                       ipsec4-input-feature   
+                                                        bfd-udp-echo6-input   
+                                                        bfd-udp-echo4-input   
+                                                          bfd-udp6-input      
+                                                          bfd-udp4-input      
+                                                           arp-term-l2bd      
+                                                             arp-proxy        
+                                                             arp-reply        
+                                                           arp-disabled       
+                                                             arp-input        
+                                                    ip6-full-reass-feature-hof
+                                                    ip6-full-reassembly-handof
+                                                             ip6-input        
+                                                       ip6-local-hop-by-hop   
+                                                          ip6-not-enabled     
+                                                             ip6-drop         
+                                                    ip4-full-reass-feature-hof
+                                                    ip4-full-reassembly-handof
+                                                       ip4-input-no-checksum  
+                                                             ip4-input        
+                                                          ip4-not-enabled     
+                                                             ip4-drop         
+                                                             ip4-glean        
+                                                              ip4-arp         
+                                                          ip6-icmp-error      
+                                                         ip6-flow-classify    
+                                                         ip4-flow-classify    
+                                                            lldp-input        
+                                                            bond-input        
+                                                         ip6-geneve-bypass    
+                                                         ip4-geneve-bypass    
+                                                           geneve6-input      
+                                                           geneve4-input      
+                                                           geneve6-encap      
+                                                           geneve4-encap      
+                                                         vxlan-flow-input     
+                                                         ip6-vxlan-bypass     
+                                                         ip4-vxlan-bypass     
+                                                           vxlan6-input       
+                                                           vxlan4-input       
+                                                           vxlan6-encap       
+                                                           vxlan4-encap       
+                                                            snap-input        
+                                                             llc-input        
+                                                            hdlc-input        
+                                                             ppp-input        
+                                                              l2-xcrw         
+                                                             l2-uu-fwd        
+                                                               l2-rw          
+                                                             l2-patch         
+                                                           l2-output-acl      
+                                                           l2-input-acl       
+                                                        l2-output-bad-intf    
+                                                             l2-output        
+                                                             l2-learn         
+                                                           l2-input-vtr       
+                                                             l2-input         
+                                                              l2-fwd          
+                                                             l2-flood         
+                                                           l2-efp-filter      
+                                                        l2-output-classify    
+                                                         l2-input-classify    
+                                                        feature-bitmap-drop   
+                                                        p2p-ethernet-input    
+                                                       ethernet-input-not-l2  
+                                                        ethernet-input-type   
+                                                          ethernet-input      
+                                                         ip6-cop-whitelist    
+                                                         ip4-cop-whitelist    
+                                                             cop-input        
+                                                        l2-policer-classify   
+                                                       ip6-policer-classify   
+                                                       ip4-policer-classify   
+                                                      policer-by-sw-if-index  
+                                                           interface-tx       
+                                                          worker-handoff      
+                                                           device-input       
+                                                           handoff_trace      
+                                                             local0-tx        
+                                                           local0-output      
+                                                      VirtualEthernet0/0/0-tx 
+                                                    VirtualEthernet0/0/0-outpu
+                                                      VirtualEthernet0/0/1-tx 
+                                                    VirtualEthernet0/0/1-outpu
+                                                              tap0-tx         
+                                                            tap0-output       
+
+error-punt                         punt [0]         ip4-mpls-label-disposition
+                                                    ip4-mpls-label-disposition
+                                                              pipe-rx         
+                                                             mpls-punt        
+                                                            ipip6-input       
+                                                            ipip4-input       
+                                                            gre6-input        
+                                                            gre4-input        
+                                                             osi-input        
+                                                             ip6-punt         
+                                                       ip4-input-no-checksum  
+                                                             ip4-input        
+                                                             ip4-punt         
+                                                            snap-input        
+                                                             llc-input        
+                                                            hdlc-input        
+                                                             ppp-input        
+                                                       ethernet-input-not-l2  
+                                                        ethernet-input-type   
+                                                          ethernet-input      
+
+esp4-decrypt                    error-drop [0]            ipsec4-if-input     
+                           ip4-input-no-checksum [1]   ipsec4-input-feature   
+                                 ip6-input [2]      
+
+esp4-decrypt-tun                error-drop [0]           ipsec4-tun-input     
+                           ip4-input-no-checksum [1]
+                                 ip6-input [2]      
+
+esp4-encrypt                    error-drop [0]         ipsec4-output-feature  
+                                ip4-lookup [1]      
+                                ip6-lookup [2]      
+                             interface-output [3]   
+
+esp4-encrypt-tun                 ip4-drop [0]       
+
+esp4-no-crypto                   ip4-drop [0]       
+
+esp6-decrypt                    error-drop [0]            ipsec6-if-input     
+                           ip4-input-no-checksum [1]   ipsec6-input-feature   
+                                 ip6-input [2]      
+
+esp6-decrypt-tun                error-drop [0]           ipsec6-tun-input     
+                           ip4-input-no-checksum [1]
+                                 ip6-input [2]      
+
+esp6-encrypt                    error-drop [0]         ipsec6-output-feature  
+                                ip4-lookup [1]      
+                                ip6-lookup [2]      
+                             interface-output [3]   
+
+esp6-encrypt-tun                 ip6-drop [0]       
+
+esp6-no-crypto                   ip6-drop [0]       
+
+ethernet-input                  error-punt [0]              mactime-tx        
+                                error-drop [1]                mactime         
+                                 llc-input [2]              dpdk-input        
+                                 ip4-input [3]               tuntap-rx        
+                           ip4-input-no-checksum [4]       netmap-input       
+                                 l2-input [5]             af-packet-input     
+                                mpls-input [6]           vhost-user-input     
+                                 ip6-input [7]             virtio-input       
+                                 arp-input [8]               pg-input         
+                                lldp-input [9]              gre6-input        
+                                                            gre4-input        
+                                                         ip6-cop-whitelist    
+                                                         ip4-cop-whitelist    
+                                                             cop-input        
+                                                      policer-by-sw-if-index  
+                                                           device-input       
+
+ethernet-input-not-l2           error-punt [0]                li-hit          
+                                error-drop [1]           l2-input-classify    
+                                 llc-input [2]      
+                                 ip4-input [3]      
+                           ip4-input-no-checksum [4]
+                                 l2-input [5]       
+                                mpls-input [6]      
+                                 ip6-input [7]      
+                                 arp-input [8]      
+                                lldp-input [9]      
+
+ethernet-input-type             error-punt [0]              snap-input        
+                                error-drop [1]      
+                                 llc-input [2]      
+                                 ip4-input [3]      
+                           ip4-input-no-checksum [4]
+                                 l2-input [5]       
+                                mpls-input [6]      
+                                 ip6-input [7]      
+                                 arp-input [8]      
+                                lldp-input [9]      
+
+ethernet-mpls-label-imposi      error-drop [0]      
+
+ethernet-mpls-label-imposi      error-drop [0]      
+
+exception-punt-socket     
+
+feature-bitmap-drop             error-drop [0]           l2-ip-qos-record     
+                                                          span-l2-output      
+                                                           span-l2-input      
+                                                           arp-term-l2bd      
+                                                               l2-rw          
+                                                      l2-output-feat-arc-end  
+                                                       l2-input-feat-arc-end  
+                                                        l2-output-feat-arc    
+                                                         l2-input-feat-arc    
+                                                           l2-output-acl      
+                                                           l2-input-acl       
+                                                             l2-output        
+                                                             l2-learn         
+                                                           l2-input-vtr       
+                                                             l2-input         
+                                                              l2-fwd          
+                                                             l2-flood         
+                                                           l2-efp-filter      
+                                                        l2-output-classify    
+                                                         l2-input-classify    
+                                                        l2-policer-classify   
+
+fib-walk                  
+
+flow-report-process       
+
+geneve4-encap                   error-drop [0]      
+
+geneve4-input                   error-drop [0]           ip4-geneve-bypass    
+                                 l2-input [1]       
+
+geneve6-encap                   error-drop [0]      
+
+geneve6-input                   error-drop [0]           ip6-geneve-bypass    
+                                 l2-input [1]       
+
+gre-encap                     adj-l2-midchain [0]   
+
+gre4-input                      error-punt [0]      
+                                error-drop [1]      
+                              ethernet-input [2]    
+                                 ip4-input [3]      
+                                 ip6-input [4]      
+                                mpls-input [5]      
+
+gre6-input                      error-punt [0]      
+                                error-drop [1]      
+                              ethernet-input [2]    
+                                 ip4-input [3]      
+                                 ip6-input [4]      
+                                mpls-input [5]      
+
+handoff_trace                   error-drop [0]      
+
+hdlc-input                      error-punt [0]      
+                                error-drop [1]      
+                                 ip4-input [2]      
+                                 ip6-input [3]      
+                                 osi-input [4]      
+
+icmp6-neighbor-advertiseme       ip6-drop [0]             ip6-icmp-input      
+
+icmp6-neighbor-solicitatio       ip6-drop [0]             ip6-icmp-input      
+                             interface-output [1]   
+
+icmp6-router-advertisement       ip6-drop [0]             ip6-icmp-input      
+
+icmp6-router-solicitation        ip6-drop [0]             ip6-icmp-input      
+                             ip6-rewrite-mcast [1]  
+                             interface-output [2]   
+
+interface-output               local0-output [0]       nat44-ed-hairpin-src   
+                          VirtualEthernet0/0/0-outpu     nat44-hairpin-src    
+                          VirtualEthernet0/0/1-outpunat44-ed-in2out-reass-outp
+                                tap0-output [3]     nat44-ed-in2out-output-slo
+                                                      nat44-ed-in2out-output  
+                                                    nat44-in2out-output-slowpa
+                                                        nat44-in2out-output   
+                                                                jer           
+                                                         dpdk-crypto-input    
+                                                          span-l2-output      
+                                                            sr-localsid       
+                                                           sr-localsid-d      
+                                                        lisp-cp-lookup-nsh    
+                                                         lisp-cp-lookup-l2    
+                                                        lisp-cp-lookup-ip6    
+                                                        lisp-cp-lookup-ip4    
+                                                            ah6-encrypt       
+                                                            ah4-encrypt       
+                                                           esp6-encrypt       
+                                                           esp4-encrypt       
+                                                             arp-proxy        
+                                                             arp-reply        
+                                                          punt-socket-rx      
+                                                    icmp6-neighbor-solicitatio
+                                                     icmp6-router-solicitation
+                                                       ip6-icmp-echo-request  
+                                                      l2-output-feat-arc-end  
+                                                        l2-output-feat-arc    
+                                                           l2-output-acl      
+                                                             l2-output        
+                                                           l2-efp-filter      
+                                                        l2-output-classify    
+
+interface-rx-dpo-ip4             ip4-drop [0]       
+                                 ip4-input [1]      
+
+interface-rx-dpo-ip6             ip6-drop [0]       
+                                 ip6-input [1]      
+
+interface-rx-dpo-l2             error-drop [0]      
+                                 l2-input [1]       
+
+interface-tx                    error-drop [0]      
+
+ip-neighbor-scan-process  
+
+ip-route-resolver-process 
+
+ip4-arp                         error-drop [0]            lookup-ip4-src      
+                                                        lookup-ip4-dst-itf    
+                                                          lookup-ip4-dst      
+                                                        mpls-adj-incomplete   
+                                                            tcp4-output       
+                                                        bfd-udp-echo4-input   
+                                                          bfd-udp4-input      
+                                                         ip4-punt-redirect    
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                           ip4-classify       
+
+ip4-classify                     ip4-drop [0]       
+                                 ip4-punt [1]       
+                                 ip4-local [2]      
+                                  ip4-arp [3]       
+                                 ip4-glean [4]      
+                                ip4-rewrite [5]     
+                               ip4-midchain [6]     
+                              ip4-icmp-error [7]    
+                             ip4-rewrite-mcast [8]  
+                             ip4-rewrite-bcast [9]  
+                            ip4-mcast-midchain [10] 
+
+ip4-cop-whitelist            ip4-cop-whitelist [0]       ip6-cop-whitelist    
+                             ip6-cop-whitelist [1]       ip4-cop-whitelist    
+                           default-cop-whitelist [2]         cop-input        
+                                 ip4-input [3]      
+                                 ip6-input [4]      
+                              ethernet-input [5]    
+                                error-drop [6]      
+
+ip4-dhcp-client-detect        ip4-udp-lookup [0]    
+
+ip4-drop                        error-drop [0]             ip4-qos-mark       
+                                                           ip4-qos-store      
+                                                        vlan-ip4-qos-record   
+                                                          ip4-qos-record      
+                                                       ip4-mfib-forward-rpf   
+                                                            ip4-dvr-dpo       
+                                                    ip4-mpls-label-imposition-
+                                                    ip4-mpls-label-imposition-
+                                                    ip4-mpls-label-imposition-
+                                                    ip4-mpls-label-imposition-
+                                                       interface-rx-dpo-ip4   
+                                                           ip4-replicate      
+                                                       lookup-ip4-dst-mcast   
+                                                          lookup-ip4-src      
+                                                        lookup-ip4-dst-itf    
+                                                          lookup-ip4-dst      
+                                                             ip4-null         
+                                                          ip4-udp-lookup      
+                                                            tcp4-input        
+                                                        tcp4-input-nolookup   
+                                                            tcp6-listen       
+                                                            tcp4-listen       
+                                                         tcp6-rcv-process     
+                                                         tcp4-rcv-process     
+                                                           tcp6-syn-sent      
+                                                           tcp4-syn-sent      
+                                                         tcp6-established     
+                                                         tcp4-established     
+                                                          esp4-no-crypto      
+                                                         esp4-encrypt-tun     
+                                                         ipsec4-tun-input     
+                                                            ip4-outacl        
+                                                             ip4-inacl        
+                                                             ip4-frag         
+                                                    ip4-full-reassembly-featur
+                                                        ip4-full-reassembly   
+                                                      ip4-source-check-via-rx 
+                                                     ip4-source-check-via-any 
+                                                    ip4-source-and-port-range-
+                                                    ip4-source-and-port-range-
+                                                         ip4-punt-redirect    
+                                                         ip4-punt-policer     
+                                                           ip4-midchain       
+                                                        ip4-mcast-midchain    
+                                                         ip4-rewrite-mcast    
+                                                         ip4-rewrite-bcast    
+                                                            ip4-rewrite       
+                                                       ip4-local-end-of-arc   
+                                                             ip4-local        
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                          ip4-icmp-error      
+                                                           ip4-classify       
+
+ip4-dvr-dpo                      ip4-drop [0]       
+                              ip4-icmp-error [1]    
+                                 ip4-frag [2]       
+
+ip4-dvr-reinject                 l2-output [0]      
+
+ip4-flow-classify               error-drop [0]      
+
+ip4-frag                        ip4-rewrite [0]             ip4-dvr-dpo       
+                                ip4-lookup [1]             mpls-midchain      
+                                ip6-lookup [2]              mpls-output       
+                                mpls-output [3]            ip4-midchain       
+                              ip4-icmp-error [4]        ip4-mcast-midchain    
+                                 ip4-drop [5]            ip4-rewrite-mcast    
+                                                         ip4-rewrite-bcast    
+                                                            ip4-rewrite       
+
+ip4-full-reass-feature-hof      error-drop [0]      ip4-full-reassembly-featur
+
+ip4-full-reassembly              ip4-input [0]      ip4-mpls-label-disposition
+                                 ip4-drop [1]       ip4-mpls-label-disposition
+                          ip4-full-reassembly-handof   ip4-input-no-checksum  
+                                                             ip4-input        
+                                                       ip4-local-end-of-arc   
+                                                             ip4-local        
+
+ip4-full-reassembly-expire
+
+ip4-full-reassembly-featur       ip4-input [0]      
+                                 ip4-drop [1]       
+                          ip4-full-reass-feature-hof
+
+ip4-full-reassembly-handof      error-drop [0]          ip4-full-reassembly   
+
+ip4-geneve-bypass               error-drop [0]      
+                               geneve4-input [1]    
+
+ip4-glean                       error-drop [0]            lookup-ip4-src      
+                                                        lookup-ip4-dst-itf    
+                                                          lookup-ip4-dst      
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                           ip4-classify       
+
+ip4-icmp-echo-request        ip4-load-balance [0]         ip4-icmp-input      
+
+ip4-icmp-error                   ip4-drop [0]            nat44-det-out2in     
+                                ip4-lookup [1]           nat44-det-in2out     
+                                                       nat44-ed-out2in-reass  
+                                                     nat44-ed-out2in-slowpath 
+                                                          nat44-ed-out2in     
+                                                         nat44-out2in-fast    
+                                                        nat44-out2in-reass    
+                                                           nat44-out2in       
+                                                    nat44-ed-in2out-reass-outp
+                                                       nat44-ed-in2out-reass  
+                                                    nat44-ed-in2out-output-slo
+                                                     nat44-ed-in2out-slowpath 
+                                                      nat44-ed-in2out-output  
+                                                          nat44-ed-in2out     
+                                                         nat44-in2out-fast    
+                                                        nat44-in2out-reass    
+                                                    nat44-in2out-output-slowpa
+                                                       nat44-in2out-slowpath  
+                                                        nat44-in2out-output   
+                                                           nat44-in2out       
+                                                            ip4-dvr-dpo       
+                                                    ip4-mpls-label-disposition
+                                                    ip4-mpls-label-disposition
+                                                          lookup-ip4-src      
+                                                        lookup-ip4-dst-itf    
+                                                          lookup-ip4-dst      
+                                                             ip4-null         
+                                                          ip4-udp-lookup      
+                                                             ip4-frag         
+                                                       ip4-input-no-checksum  
+                                                             ip4-input        
+                                                           ip4-midchain       
+                                                        ip4-mcast-midchain    
+                                                         ip4-rewrite-mcast    
+                                                         ip4-rewrite-bcast    
+                                                            ip4-rewrite       
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                           ip4-classify       
+
+ip4-icmp-input                   ip4-punt [0]          ip4-local-end-of-arc   
+                           ip4-icmp-echo-request [1]         ip4-local        
+
+ip4-inacl                        ip4-drop [0]       
+
+ip4-input                       error-drop [0]              dpdk-input        
+                                error-punt [1]         interface-rx-dpo-ip4   
+                                ip4-options [2]              tuntap-rx        
+                                ip4-lookup [3]             netmap-input       
+                          ip4-mfib-forward-lookup [4      af-packet-input     
+                              ip4-icmp-error [5]              pipe-rx         
+                            ip4-full-reassembly [6]      vhost-user-input     
+                              ip4-not-enabled [7]          virtio-input       
+                           acl-plugin-in-ip4-fa [8]          pg-input         
+                                                        lisp-gpe-ip6-input    
+                                                        lisp-gpe-ip4-input    
+                                                         vxlan6-gpe-input     
+                                                         vxlan4-gpe-input     
+                                                         vxlan6-gbp-input     
+                                                         vxlan4-gbp-input     
+                                                            ipip6-input       
+                                                            ipip4-input       
+                                                            gre6-input        
+                                                            gre4-input        
+                                                            ah6-decrypt       
+                                                            ah4-decrypt       
+                                                    ip4-full-reassembly-featur
+                                                        ip4-full-reassembly   
+                                                            hdlc-input        
+                                                             ppp-input        
+                                                              l2-fwd          
+                                                             l2-flood         
+                                                         l2-input-classify    
+                                                       ethernet-input-not-l2  
+                                                        ethernet-input-type   
+                                                          ethernet-input      
+                                                         ip6-cop-whitelist    
+                                                         ip4-cop-whitelist    
+                                                             cop-input        
+                                                           device-input       
+
+ip4-input-no-checksum           error-drop [0]        dpdk-esp6-decrypt-post  
+                                error-punt [1]        dpdk-esp4-decrypt-post  
+                                ip4-options [2]          dpdk-esp6-decrypt    
+                                ip4-lookup [3]           dpdk-esp4-decrypt    
+                          ip4-mfib-forward-lookup [4        dpdk-input        
+                              ip4-icmp-error [5]             tuntap-rx        
+                            ip4-full-reassembly [6]        netmap-input       
+                              ip4-not-enabled [7]         af-packet-input     
+                           acl-plugin-in-ip4-fa [8]           pipe-rx         
+                                                         vhost-user-input     
+                                                           virtio-input       
+                                                             pg-input         
+                                                         esp6-decrypt-tun     
+                                                         esp4-decrypt-tun     
+                                                           esp6-decrypt       
+                                                           esp4-decrypt       
+                                                       ethernet-input-not-l2  
+                                                        ethernet-input-type   
+                                                          ethernet-input      
+                                                           device-input       
+
+ip4-load-balance                 ip4-drop [0]          ip4-icmp-echo-request  
+                                 ip4-punt [1]       
+                                 ip4-local [2]      
+                                  ip4-arp [3]       
+                                 ip4-glean [4]      
+                                ip4-rewrite [5]     
+                               ip4-midchain [6]     
+                              ip4-icmp-error [7]    
+                             ip4-rewrite-mcast [8]  
+                             ip4-rewrite-bcast [9]  
+                            ip4-mcast-midchain [10] 
+
+ip4-local                        ip4-drop [0]             lookup-ip4-src      
+                                 ip4-punt [1]           lookup-ip4-dst-itf    
+                              ip4-udp-lookup [2]          lookup-ip4-dst      
+                              ip4-icmp-input [3]            ip4-options       
+                            ip4-full-reassembly [4]      ip4-load-balance     
+                                                            ip4-lookup        
+                                                           ip4-classify       
+
+ip4-local-end-of-arc             ip4-drop [0]       
+                                 ip4-punt [1]       
+                              ip4-udp-lookup [2]    
+                              ip4-icmp-input [3]    
+                            ip4-full-reassembly [4] 
+
+ip4-lookup                       ip4-drop [0]                 nat-ha          
+                                 ip4-punt [1]             dslite-ce-decap     
+                                 ip4-local [2]             dslite-out2in      
+                                  ip4-arp [3]         dslite-in2out-slowpath  
+                                 ip4-glean [4]             dslite-in2out      
+                                ip4-rewrite [5]         nat64-out2in-reass    
+                               ip4-midchain [6]            nat64-out2in       
+                              ip4-icmp-error [7]        nat64-in2out-reass    
+                             ip4-rewrite-mcast [8]     nat64-in2out-slowpath  
+                             ip4-rewrite-bcast [9]         nat64-in2out       
+                            ip4-mcast-midchain [10]    nat44-ed-hairpin-dst   
+                                                         nat44-hairpin-dst    
+                                                       nat44-ed-hairpinning   
+                                                         nat44-hairpinning    
+                                                         nat44-det-out2in     
+                                                         nat44-det-in2out     
+                                                       nat44-ed-out2in-reass  
+                                                     nat44-ed-out2in-slowpath 
+                                                          nat44-ed-out2in     
+                                                         nat44-out2in-fast    
+                                                        nat44-out2in-reass    
+                                                           nat44-out2in       
+                                                       nat44-ed-in2out-reass  
+                                                     nat44-ed-in2out-slowpath 
+                                                          nat44-ed-in2out     
+                                                         nat44-in2out-fast    
+                                                        nat44-in2out-reass    
+                                                       nat44-in2out-slowpath  
+                                                           nat44-in2out       
+                                                         dpdk-crypto-input    
+                                                    ip4-mpls-label-disposition
+                                                    ip4-mpls-label-disposition
+                                                           session-queue      
+                                                            sr-localsid       
+                                                           sr-localsid-d      
+                                                       dhcp-proxy-to-server   
+                                                          vxlan-gpe-encap     
+                                                            tcp4-reset        
+                                                            tcp4-output       
+                                                            ah6-encrypt       
+                                                            ah4-encrypt       
+                                                           esp6-encrypt       
+                                                           esp4-encrypt       
+                                                        bfd-udp-echo4-input   
+                                                          bfd-udp4-input      
+                                                          punt-socket-rx      
+                                                             ip6-frag         
+                                                             ip4-frag         
+                                                       ip4-input-no-checksum  
+                                                             ip4-input        
+                                                          ip4-not-enabled     
+                                                          ip4-icmp-error      
+
+ip4-mcast-midchain               ip4-drop [0]             lookup-ip4-src      
+                              ip4-icmp-error [1]        lookup-ip4-dst-itf    
+                                 ip4-frag [2]             lookup-ip4-dst      
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                           ip4-classify       
+
+ip4-mfib-forward-lookup    ip4-mfib-forward-rpf [0] ip4-mpls-label-disposition
+                                                    ip4-mpls-label-disposition
+                                                       ip4-input-no-checksum  
+                                                             ip4-input        
+                                                          ip4-not-enabled     
+
+ip4-mfib-forward-rpf             ip4-drop [0]         ip4-mfib-forward-lookup 
+                                                       lookup-ip4-dst-mcast   
+
+ip4-midchain                     ip4-drop [0]             lookup-ip4-src      
+                              ip4-icmp-error [1]        lookup-ip4-dst-itf    
+                                 ip4-frag [2]             lookup-ip4-dst      
+                                                          bfd-udp4-input      
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                           ip4-classify       
+
+ip4-mpls-label-disposition      error-drop [0]      
+                                error-punt [1]      
+                                ip4-options [2]     
+                                ip4-lookup [3]      
+                          ip4-mfib-forward-lookup [4
+                              ip4-icmp-error [5]    
+                            ip4-full-reassembly [6] 
+                              ip4-not-enabled [7]   
+                           acl-plugin-in-ip4-fa [8] 
+
+ip4-mpls-label-disposition      error-drop [0]      
+                                error-punt [1]      
+                                ip4-options [2]     
+                                ip4-lookup [3]      
+                          ip4-mfib-forward-lookup [4
+                              ip4-icmp-error [5]    
+                            ip4-full-reassembly [6] 
+                              ip4-not-enabled [7]   
+                           acl-plugin-in-ip4-fa [8] 
+
+ip4-mpls-label-imposition-       ip4-drop [0]       
+
+ip4-mpls-label-imposition-       ip4-drop [0]       
+
+ip4-mpls-label-imposition-       ip4-drop [0]       
+
+ip4-mpls-label-imposition-       ip4-drop [0]       
+
+ip4-not-enabled                 error-drop [0]         acl-plugin-in-ip4-fa   
+                                ip4-lookup [1]      ip4-mpls-label-disposition
+                          ip4-mfib-forward-lookup [2ip4-mpls-label-disposition
+                                                       ip4-input-no-checksum  
+                                                             ip4-input        
+
+ip4-null                         ip4-drop [0]       
+                              ip4-icmp-error [1]    
+
+ip4-options                      ip4-punt [0]       ip4-mpls-label-disposition
+                                 ip4-local [1]      ip4-mpls-label-disposition
+                                                       ip4-input-no-checksum  
+                                                             ip4-input        
+
+ip4-outacl                       ip4-drop [0]       
+
+ip4-policer-classify            error-drop [0]      
+
+ip4-proto-punt-socket     
+
+ip4-punt-policer                 ip4-drop [0]       
+
+ip4-punt-redirect                ip4-drop [0]       
+                                ip4-rewrite [1]     
+                                  ip4-arp [2]       
+
+ip4-punt                        error-punt [0]            lookup-ip4-src      
+                                                        lookup-ip4-dst-itf    
+                                                          lookup-ip4-dst      
+                                                          ip4-udp-lookup      
+                                                            tcp4-input        
+                                                        tcp4-input-nolookup   
+                                                           ip6-udp-punt       
+                                                           ip4-udp-punt       
+                                                            ip4-options       
+                                                       ip4-local-end-of-arc   
+                                                             ip4-local        
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                          ip4-icmp-input      
+                                                           ip4-classify       
+
+ip4-qos-mark                     ip4-drop [0]       
+
+ip4-qos-record                   ip4-drop [0]       
+
+ip4-qos-store                    ip4-drop [0]       
+
+ip4-replicate                    ip4-drop [0]       
+
+ip4-rewrite                      ip4-drop [0]             lookup-ip4-src      
+                              ip4-icmp-error [1]        lookup-ip4-dst-itf    
+                                 ip4-frag [2]             lookup-ip4-dst      
+                                                            sr-localsid       
+                                                           sr-localsid-d      
+                                                            tcp4-output       
+                                                             ip4-frag         
+                                                         ip4-punt-redirect    
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                           ip4-classify       
+
+ip4-rewrite-bcast                ip4-drop [0]             lookup-ip4-src      
+                              ip4-icmp-error [1]        lookup-ip4-dst-itf    
+                                 ip4-frag [2]             lookup-ip4-dst      
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                           ip4-classify       
+
+ip4-rewrite-mcast                ip4-drop [0]             lookup-ip4-src      
+                              ip4-icmp-error [1]        lookup-ip4-dst-itf    
+                                 ip4-frag [2]             lookup-ip4-dst      
+                                                         ip4-load-balance     
+                                                            ip4-lookup        
+                                                           ip4-classify       
+
+ip4-source-and-port-range-       ip4-drop [0]       
+
+ip4-source-and-port-range-       ip4-drop [0]       
+
+ip4-source-check-via-any         ip4-drop [0]       
+
+ip4-source-check-via-rx          ip4-drop [0]       
+
+ip4-udp-lookup                   ip4-punt [0]         ip4-dhcp-client-detect  
+                                 ip4-drop [1]          ip4-local-end-of-arc   
+                              ip4-icmp-error [2]             ip4-local        
+                              ipsec4-if-input [3]   
+
+ip4-udp-punt                     ip4-punt [0]       
+                                 ip6-punt [1]       
+
+ip4-udp-punt-socket       
+
+ip4-vxlan-bypass                error-drop [0]      
+                               vxlan4-input [1]     
+
+ip4-vxlan-gbp-bypass            error-drop [0]      
+                             vxlan4-gbp-input [1]   
+
+ip4-vxlan-gpe-bypass            error-drop [0]      
+                             vxlan4-gpe-input [1]   
+
+ip6-add-hop-by-hop              ip6-rewrite [0]           lookup-ip6-src      
+                                ip6-lookup [1]          lookup-ip6-dst-itf    
+                                 ip6-drop [2]             lookup-ip6-dst      
+                                                        ip6-pop-hop-by-hop    
+                                                          ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-classify                     ip6-drop [0]       
+                                 ip6-punt [1]       
+                                 ip6-local [2]      
+                           ip6-discover-neighbor [3]
+                                 ip6-glean [4]      
+                                ip6-rewrite [5]     
+                               ip6-midchain [6]     
+                              ip6-icmp-error [7]    
+                             ip6-rewrite-mcast [8]  
+                             ip6-rewrite-bcast [9]  
+                            ip6-mcast-midchain [10] 
+                              ip6-hop-by-hop [11]   
+                            ip6-add-hop-by-hop [12] 
+                            ip6-pop-hop-by-hop [13] 
+                              ip6-link-local [14]   
+
+ip6-cop-whitelist            ip4-cop-whitelist [0]       ip6-cop-whitelist    
+                             ip6-cop-whitelist [1]       ip4-cop-whitelist    
+                           default-cop-whitelist [2]         cop-input        
+                                 ip4-input [3]      
+                                 ip6-input [4]      
+                              ethernet-input [5]    
+                                error-drop [6]      
+
+ip6-discover-neighbor            ip6-drop [0]             lookup-ip6-src      
+                             ip6-rewrite-mcast [1]      lookup-ip6-dst-itf    
+                                                          lookup-ip6-dst      
+                                                        mpls-adj-incomplete   
+                                                            tcp6-output       
+                                                        bfd-udp-echo6-input   
+                                                          bfd-udp6-input      
+                                                        ip6-pop-hop-by-hop    
+                                                         ip6-punt-redirect    
+                                                          ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-drop                        error-drop [0]             ip6-qos-mark       
+                                                           ip6-qos-store      
+                                                        vlan-ip6-qos-record   
+                                                          ip6-qos-record      
+                                                       ip6-mfib-forward-rpf   
+                                                            ip6-dvr-dpo       
+                                                    ip6-mpls-label-imposition-
+                                                    ip6-mpls-label-imposition-
+                                                    ip6-mpls-label-imposition-
+                                                    ip6-mpls-label-imposition-
+                                                       interface-rx-dpo-ip6   
+                                                           ip6-replicate      
+                                                       lookup-ip6-dst-mcast   
+                                                          lookup-ip6-src      
+                                                        lookup-ip6-dst-itf    
+                                                          lookup-ip6-dst      
+                                                          ip6-link-local      
+                                                             ip6-null         
+                                                          ip6-udp-lookup      
+                                                            tcp6-input        
+                                                        tcp6-input-nolookup   
+                                                            tcp6-listen       
+                                                            tcp4-listen       
+                                                         tcp6-rcv-process     
+                                                         tcp4-rcv-process     
+                                                           tcp6-syn-sent      
+                                                           tcp4-syn-sent      
+                                                         tcp6-established     
+                                                         tcp4-established     
+                                                          esp6-no-crypto      
+                                                         esp6-encrypt-tun     
+                                                         ipsec6-tun-input     
+                                                            ip6-outacl        
+                                                             ip6-inacl        
+                                                             ip6-frag         
+                                                    ip6-full-reassembly-featur
+                                                        ip6-full-reassembly   
+                                                       ip6-discover-neighbor  
+                                                             ip6-glean        
+                                                    icmp6-neighbor-advertiseme
+                                                    icmp6-neighbor-solicitatio
+                                                    icmp6-router-advertisement
+                                                     icmp6-router-solicitation
+                                                        ip6-pop-hop-by-hop    
+                                                        ip6-add-hop-by-hop    
+                                                         ip6-punt-redirect    
+                                                         ip6-punt-policer     
+                                                          ip6-hop-by-hop      
+                                                        ip6-mcast-midchain    
+                                                         ip6-rewrite-mcast    
+                                                         ip6-rewrite-bcast    
+                                                            ip6-rewrite       
+                                                           ip6-midchain       
+                                                       ip6-local-end-of-arc   
+                                                             ip6-local        
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-dvr-dpo                      ip6-drop [0]       
+                              ip6-icmp-error [1]    
+                                 ip6-frag [2]       
+
+ip6-dvr-reinject                 l2-output [0]      
+
+ip6-flow-classify               error-drop [0]      
+
+ip6-frag                        ip4-lookup [0]              ip6-dvr-dpo       
+                                ip6-lookup [1]             mpls-midchain      
+                                ip6-rewrite [2]             mpls-output       
+                                mpls-output [3]         ip6-mcast-midchain    
+                                 ip6-drop [4]            ip6-rewrite-mcast    
+                                                         ip6-rewrite-bcast    
+                                                            ip6-rewrite       
+                                                           ip6-midchain       
+
+ip6-full-reass-feature-hof      error-drop [0]      ip6-full-reassembly-featur
+
+ip6-full-reassembly              ip6-input [0]         ip6-local-end-of-arc   
+                                 ip6-drop [1]                ip6-local        
+                              ip6-icmp-error [2]    
+                          ip6-full-reassembly-handof
+
+ip6-full-reassembly-expire
+
+ip6-full-reassembly-featur       ip6-input [0]      
+                                 ip6-drop [1]       
+                              ip6-icmp-error [2]    
+                          ip6-full-reass-feature-hof
+
+ip6-full-reassembly-handof      error-drop [0]          ip6-full-reassembly   
+
+ip6-geneve-bypass               error-drop [0]      
+                               geneve6-input [1]    
+
+ip6-glean                        ip6-drop [0]             lookup-ip6-src      
+                             ip6-rewrite-mcast [1]      lookup-ip6-dst-itf    
+                                                          lookup-ip6-dst      
+                                                        ip6-pop-hop-by-hop    
+                                                          ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-hop-by-hop                   ip6-drop [0]             lookup-ip6-src      
+                                 ip6-punt [1]           lookup-ip6-dst-itf    
+                                 ip6-local [2]            lookup-ip6-dst      
+                           ip6-discover-neighbor [3]    ip6-pop-hop-by-hop    
+                                 ip6-glean [4]            ip6-hop-by-hop      
+                                ip6-rewrite [5]          ip6-load-balance     
+                               ip6-midchain [6]             ip6-lookup        
+                              ip6-icmp-error [7]           ip6-classify       
+                             ip6-rewrite-mcast [8]  
+                             ip6-rewrite-bcast [9]  
+                            ip6-mcast-midchain [10] 
+                              ip6-hop-by-hop [11]   
+                            ip6-add-hop-by-hop [12] 
+                            ip6-pop-hop-by-hop [13] 
+                              ip6-link-local [14]   
+
+ip6-icmp-echo-request           ip6-lookup [0]            ip6-icmp-input      
+                             interface-output [1]   
+
+ip6-icmp-error                  error-drop [0]              ip6-dvr-dpo       
+                                ip6-lookup [1]      ip6-mpls-label-disposition
+                                                    ip6-mpls-label-disposition
+                                                          lookup-ip6-src      
+                                                        lookup-ip6-dst-itf    
+                                                          lookup-ip6-dst      
+                                                             ip6-null         
+                                                          ip6-udp-lookup      
+                                                    ip6-full-reassembly-featur
+                                                        ip6-full-reassembly   
+                                                             ip6-input        
+                                                        ip6-pop-hop-by-hop    
+                                                          ip6-hop-by-hop      
+                                                        ip6-mcast-midchain    
+                                                         ip6-rewrite-mcast    
+                                                         ip6-rewrite-bcast    
+                                                            ip6-rewrite       
+                                                           ip6-midchain       
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-icmp-input                   ip6-punt [0]             dslite-ce-decap     
+                           ip6-icmp-echo-request [1]       dslite-in2out      
+                          icmp6-neighbor-solicitatio   ip6-local-end-of-arc   
+                          icmp6-neighbor-advertiseme         ip6-local        
+                          icmp6-router-solicitation 
+                          icmp6-router-advertisement
+
+ip6-icmp-neighbor-discover
+
+ip6-inacl                        ip6-drop [0]       
+
+ip6-input                       error-drop [0]        dpdk-esp6-decrypt-post  
+                                ip6-lookup [1]        dpdk-esp4-decrypt-post  
+                          ip6-mfib-forward-lookup [2     dpdk-esp6-decrypt    
+                              ip6-icmp-error [3]         dpdk-esp4-decrypt    
+                              ip6-not-enabled [4]           dpdk-input        
+                           acl-plugin-in-ip6-fa [5]    interface-rx-dpo-ip6   
+                                                             tuntap-rx        
+                                                           netmap-input       
+                                                          af-packet-input     
+                                                              pipe-rx         
+                                                         vhost-user-input     
+                                                           virtio-input       
+                                                             pg-input         
+                                                        lisp-gpe-ip6-input    
+                                                        lisp-gpe-ip4-input    
+                                                         vxlan6-gpe-input     
+                                                         vxlan4-gpe-input     
+                                                         vxlan6-gbp-input     
+                                                         vxlan4-gbp-input     
+                                                            ipip6-input       
+                                                            ipip4-input       
+                                                            gre6-input        
+                                                            gre4-input        
+                                                            ah6-decrypt       
+                                                            ah4-decrypt       
+                                                         esp6-decrypt-tun     
+                                                         esp4-decrypt-tun     
+                                                           esp6-decrypt       
+                                                           esp4-decrypt       
+                                                    ip6-full-reassembly-featur
+                                                        ip6-full-reassembly   
+                                                            hdlc-input        
+                                                             ppp-input        
+                                                              l2-fwd          
+                                                             l2-flood         
+                                                         l2-input-classify    
+                                                       ethernet-input-not-l2  
+                                                        ethernet-input-type   
+                                                          ethernet-input      
+                                                         ip6-cop-whitelist    
+                                                         ip4-cop-whitelist    
+                                                             cop-input        
+                                                           device-input       
+
+ip6-link-local                   ip6-drop [0]             lookup-ip6-src      
+                                ip6-lookup [1]          lookup-ip6-dst-itf    
+                                                          lookup-ip6-dst      
+                                                        ip6-pop-hop-by-hop    
+                                                          ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-load-balance                 ip6-drop [0]       
+                                 ip6-punt [1]       
+                                 ip6-local [2]      
+                           ip6-discover-neighbor [3]
+                                 ip6-glean [4]      
+                                ip6-rewrite [5]     
+                               ip6-midchain [6]     
+                              ip6-icmp-error [7]    
+                             ip6-rewrite-mcast [8]  
+                             ip6-rewrite-bcast [9]  
+                            ip6-mcast-midchain [10] 
+                              ip6-hop-by-hop [11]   
+                            ip6-add-hop-by-hop [12] 
+                            ip6-pop-hop-by-hop [13] 
+                              ip6-link-local [14]   
+
+ip6-local                        ip6-drop [0]              ip6-replicate      
+                                 ip6-punt [1]             lookup-ip6-src      
+                              ip6-udp-lookup [2]        lookup-ip6-dst-itf    
+                              ip6-icmp-input [3]          lookup-ip6-dst      
+                            ip6-full-reassembly [4]     ip6-pop-hop-by-hop    
+                           ip6-local-hop-by-hop [5]       ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-local-end-of-arc             ip6-drop [0]       
+                                 ip6-punt [1]       
+                              ip6-udp-lookup [2]    
+                              ip6-icmp-input [3]    
+                            ip6-full-reassembly [4] 
+                           ip6-local-hop-by-hop [5] 
+
+ip6-local-hop-by-hop            error-drop [0]         ip6-local-end-of-arc   
+                                                             ip6-local        
+
+ip6-lookup                       ip6-drop [0]              nat66-out2in       
+                                 ip6-punt [1]              nat66-in2out       
+                                 ip6-local [2]            dslite-ce-encap     
+                           ip6-discover-neighbor [3]       dslite-out2in      
+                                 ip6-glean [4]        dslite-in2out-slowpath  
+                                ip6-rewrite [5]         nat64-out2in-reass    
+                               ip6-midchain [6]            nat64-out2in       
+                              ip6-icmp-error [7]        nat64-in2out-reass    
+                             ip6-rewrite-mcast [8]     nat64-in2out-slowpath  
+                             ip6-rewrite-bcast [9]         nat64-in2out       
+                            ip6-mcast-midchain [10]      dpdk-crypto-input    
+                              ip6-hop-by-hop [11]   ip6-mpls-label-disposition
+                            ip6-add-hop-by-hop [12] ip6-mpls-label-disposition
+                            ip6-pop-hop-by-hop [13]       ip6-link-local      
+                              ip6-link-local [14]          session-queue      
+                                                      sr-pl-rewrite-b-encaps  
+                                                      sr-pl-rewrite-b-insert  
+                                                       sr-pl-rewrite-insert   
+                                                      sr-pl-rewrite-encaps-l2 
+                                                      sr-pl-rewrite-encaps-v4 
+                                                       sr-pl-rewrite-encaps   
+                                                            sr-localsid       
+                                                           sr-localsid-d      
+                                                      dhcpv6-proxy-to-server  
+                                                           dhcpv6-client      
+                                                          vxlan-gpe-encap     
+                                                            l2tp-encap        
+                                                            tcp6-reset        
+                                                            tcp6-output       
+                                                            ah6-encrypt       
+                                                            ah4-encrypt       
+                                                           esp6-encrypt       
+                                                           esp4-encrypt       
+                                                        bfd-udp-echo6-input   
+                                                          bfd-udp6-input      
+                                                          punt-socket-rx      
+                                                             ip6-frag         
+                                                             ip4-frag         
+                                                             ip6-input        
+                                                        ip6-add-hop-by-hop    
+                                                          ip6-not-enabled     
+                                                          ip6-icmp-error      
+                                                       ip6-icmp-echo-request  
+
+ip6-mcast-midchain               ip6-drop [0]             lookup-ip6-src      
+                              ip6-icmp-error [1]        lookup-ip6-dst-itf    
+                                 ip6-frag [2]             lookup-ip6-dst      
+                                                        ip6-pop-hop-by-hop    
+                                                          ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-mfib-forward-lookup    ip6-mfib-forward-rpf [0] ip6-mpls-label-disposition
+                                                    ip6-mpls-label-disposition
+                                                             ip6-input        
+                                                          ip6-not-enabled     
+
+ip6-mfib-forward-rpf             ip6-drop [0]         ip6-mfib-forward-lookup 
+                               ip6-replicate [1]       lookup-ip6-dst-mcast   
+
+ip6-midchain                     ip6-drop [0]             lookup-ip6-src      
+                              ip6-icmp-error [1]        lookup-ip6-dst-itf    
+                                 ip6-frag [2]             lookup-ip6-dst      
+                                                          bfd-udp6-input      
+                                                        ip6-pop-hop-by-hop    
+                                                          ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-mpls-label-disposition      error-drop [0]      
+                                ip6-lookup [1]      
+                          ip6-mfib-forward-lookup [2
+                              ip6-icmp-error [3]    
+                              ip6-not-enabled [4]   
+                           acl-plugin-in-ip6-fa [5] 
+
+ip6-mpls-label-disposition      error-drop [0]      
+                                ip6-lookup [1]      
+                          ip6-mfib-forward-lookup [2
+                              ip6-icmp-error [3]    
+                              ip6-not-enabled [4]   
+                           acl-plugin-in-ip6-fa [5] 
+
+ip6-mpls-label-imposition-       ip6-drop [0]       
+
+ip6-mpls-label-imposition-       ip6-drop [0]       
+
+ip6-mpls-label-imposition-       ip6-drop [0]       
+
+ip6-mpls-label-imposition-       ip6-drop [0]       
+
+ip6-not-enabled                 error-drop [0]         acl-plugin-in-ip6-fa   
+                                ip6-lookup [1]      ip6-mpls-label-disposition
+                          ip6-mfib-forward-lookup [2ip6-mpls-label-disposition
+                                                             ip6-input        
+
+ip6-null                         ip6-drop [0]       
+                              ip6-icmp-error [1]    
+
+ip6-outacl                       ip6-drop [0]       
+
+ip6-policer-classify            error-drop [0]      
+
+ip6-pop-hop-by-hop               ip6-drop [0]             lookup-ip6-src      
+                                 ip6-punt [1]           lookup-ip6-dst-itf    
+                                 ip6-local [2]            lookup-ip6-dst      
+                           ip6-discover-neighbor [3]    ip6-pop-hop-by-hop    
+                                 ip6-glean [4]            ip6-hop-by-hop      
+                                ip6-rewrite [5]          ip6-load-balance     
+                               ip6-midchain [6]             ip6-lookup        
+                              ip6-icmp-error [7]           ip6-classify       
+                             ip6-rewrite-mcast [8]  
+                             ip6-rewrite-bcast [9]  
+                            ip6-mcast-midchain [10] 
+                              ip6-hop-by-hop [11]   
+                            ip6-add-hop-by-hop [12] 
+                            ip6-pop-hop-by-hop [13] 
+                              ip6-link-local [14]   
+
+ip6-proto-punt-socket     
+
+ip6-punt-policer                 ip6-drop [0]       
+
+ip6-punt                        error-punt [0]            lookup-ip6-src      
+                                                        lookup-ip6-dst-itf    
+                                                          lookup-ip6-dst      
+                                                          ip6-udp-lookup      
+                                                            tcp6-input        
+                                                        tcp6-input-nolookup   
+                                                           ip6-udp-punt       
+                                                           ip4-udp-punt       
+                                                        ip6-pop-hop-by-hop    
+                                                          ip6-hop-by-hop      
+                                                       ip6-local-end-of-arc   
+                                                             ip6-local        
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                          ip6-icmp-input      
+                                                           ip6-classify       
+
+ip6-punt-redirect                ip6-drop [0]       
+                                ip6-rewrite [1]     
+                           ip6-discover-neighbor [2]
+
+ip6-qos-mark                     ip6-drop [0]       
+
+ip6-qos-record                   ip6-drop [0]       
+
+ip6-qos-store                    ip6-drop [0]       
+
+ip6-replicate                    ip6-drop [0]          ip6-mfib-forward-rpf   
+                                 ip6-local [1]      
+
+ip6-rewrite                      ip6-drop [0]             lookup-ip6-src      
+                              ip6-icmp-error [1]        lookup-ip6-dst-itf    
+                                 ip6-frag [2]             lookup-ip6-dst      
+                                                            sr-localsid       
+                                                           sr-localsid-d      
+                                                            tcp6-output       
+                                                             ip6-frag         
+                                                        ip6-pop-hop-by-hop    
+                                                        ip6-add-hop-by-hop    
+                                                         ip6-punt-redirect    
+                                                          ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-rewrite-bcast                ip6-drop [0]             lookup-ip6-src      
+                              ip6-icmp-error [1]        lookup-ip6-dst-itf    
+                                 ip6-frag [2]             lookup-ip6-dst      
+                                                        ip6-pop-hop-by-hop    
+                                                          ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-rewrite-mcast                ip6-drop [0]             lookup-ip6-src      
+                              ip6-icmp-error [1]        lookup-ip6-dst-itf    
+                                 ip6-frag [2]             lookup-ip6-dst      
+                                                       ip6-discover-neighbor  
+                                                             ip6-glean        
+                                                     icmp6-router-solicitation
+                                                        ip6-pop-hop-by-hop    
+                                                          ip6-hop-by-hop      
+                                                         ip6-load-balance     
+                                                            ip6-lookup        
+                                                           ip6-classify       
+
+ip6-udp-lookup                   ip6-punt [0]          ip6-local-end-of-arc   
+                                 ip6-drop [1]                ip6-local        
+                              ip6-icmp-error [2]    
+
+ip6-udp-punt                     ip4-punt [0]       
+                                 ip6-punt [1]       
+
+ip6-udp-punt-socket       
+
+ip6-vxlan-bypass                error-drop [0]      
+                               vxlan6-input [1]     
+
+ip6-vxlan-gbp-bypass            error-drop [0]      
+                             vxlan6-gbp-input [1]   
+
+ip6-vxlan-gpe-bypass            error-drop [0]      
+                             vxlan6-gpe-input [1]   
+
+ipip4-input                     error-punt [0]      
+                                error-drop [1]      
+                                 ip4-input [2]      
+                                 ip6-input [3]      
+
+ipip6-input                     error-punt [0]      
+                                error-drop [1]      
+                                 ip4-input [2]      
+                                 ip6-input [3]      
+
+ipsec4-if-input                punt-dispatch [0]          ip4-udp-lookup      
+                                error-drop [1]      
+                                ah4-decrypt [2]     
+                               esp4-decrypt [3]     
+
+ipsec4-input-feature           punt-dispatch [0]    
+                                error-drop [1]      
+                                ah4-decrypt [2]     
+                               esp4-decrypt [3]     
+
+ipsec4-output-feature           error-drop [0]      
+                                ah4-encrypt [1]     
+                               esp4-encrypt [2]     
+
+ipsec4-tun-input               punt-dispatch [0]    
+                                 ip4-drop [1]       
+                             esp4-decrypt-tun [2]   
+
+ipsec6-if-input                punt-dispatch [0]    
+                                error-drop [1]      
+                                ah6-decrypt [2]     
+                               esp6-decrypt [3]     
+
+ipsec6-input-feature           punt-dispatch [0]    
+                                error-drop [1]      
+                                ah6-decrypt [2]     
+                               esp6-decrypt [3]     
+
+ipsec6-output-feature           error-drop [0]      
+                                ah6-encrypt [1]     
+                               esp6-encrypt [2]     
+
+ipsec6-tun-input               punt-dispatch [0]    
+                                 ip6-drop [1]       
+                             esp6-decrypt-tun [2]   
+
+jer                          interface-output [0]   
+
+l2-efp-filter                   error-drop [0]            span-l2-output      
+                             interface-output [1]     l2-output-feat-arc-end  
+                              span-l2-output [2]        l2-output-feat-arc    
+                            feature-bitmap-drop [3]        l2-output-acl      
+                               l2-output-acl [4]             l2-output        
+                               l2-efp-filter [5]           l2-efp-filter      
+                            l2-output-classify [6]      l2-output-classify    
+                            l2-output-feat-arc [7]  
+                                  l2-xcrw [8]       
+
+l2-flood                         l2-output [0]           l2-ip-qos-record     
+                                error-drop [1]             span-l2-input      
+                            feature-bitmap-drop [2]        arp-term-l2bd      
+                                 l2-flood [3]                  l2-rw          
+                                 l2-uu-fwd [4]         l2-input-feat-arc-end  
+                               arp-term-l2bd [5]         l2-input-feat-arc    
+                                  l2-fwd [6]               l2-input-acl       
+                                   l2-rw [7]                 l2-learn         
+                                 l2-learn [8]              l2-input-vtr       
+                               l2-input-vtr [9]              l2-input         
+                             l2-ip-qos-record [10]            l2-fwd          
+                               l2-input-acl [11]             l2-flood         
+                           l2-policer-classify [12]      l2-input-classify    
+                            l2-input-feat-arc [13]      l2-policer-classify   
+                            l2-input-classify [14]  
+                              span-l2-input [15]    
+                                mpls-input [16]     
+                                ip4-input [17]      
+                                ip6-input [18]      
+                                arp-input [19]      
+                                lldp-input [20]     
+
+l2-fwd                           l2-output [0]           l2-ip-qos-record     
+                                error-drop [1]             span-l2-input      
+                            feature-bitmap-drop [2]        arp-term-l2bd      
+                                 l2-flood [3]                  l2-rw          
+                                 l2-uu-fwd [4]         l2-input-feat-arc-end  
+                               arp-term-l2bd [5]         l2-input-feat-arc    
+                                  l2-fwd [6]               l2-input-acl       
+                                   l2-rw [7]                 l2-learn         
+                                 l2-learn [8]              l2-input-vtr       
+                               l2-input-vtr [9]              l2-input         
+                             l2-ip-qos-record [10]            l2-fwd          
+                               l2-input-acl [11]             l2-flood         
+                           l2-policer-classify [12]      l2-input-classify    
+                            l2-input-feat-arc [13]      l2-policer-classify   
+                            l2-input-classify [14]  
+                              span-l2-input [15]    
+                                mpls-input [16]     
+                                ip4-input [17]      
+                                ip6-input [18]      
+                                arp-input [19]      
+                                lldp-input [20]     
+
+l2-input-classify               error-drop [0]           l2-ip-qos-record     
+                           ethernet-input-not-l2 [1]       span-l2-input      
+                                 ip4-input [2]             arp-term-l2bd      
+                                 ip6-input [3]                 l2-rw          
+                                  li-hit [4]           l2-input-feat-arc-end  
+                            feature-bitmap-drop [5]      l2-input-feat-arc    
+                                 l2-output [6]             l2-input-acl       
+                                 l2-flood [7]                l2-learn         
+                                 l2-uu-fwd [8]             l2-input-vtr       
+                               arp-term-l2bd [9]             l2-input         
+                                  l2-fwd [10]                 l2-fwd          
+                                  l2-rw [11]                 l2-flood         
+                                 l2-learn [12]           l2-input-classify    
+                               l2-input-vtr [13]        l2-policer-classify   
+                             l2-ip-qos-record [14]  
+                               l2-input-acl [15]    
+                           l2-policer-classify [16] 
+                            l2-input-feat-arc [17]  
+                            l2-input-classify [18]  
+                              span-l2-input [19]    
+
+l2-input                         l2-learn [0]           interface-rx-dpo-l2   
+                                  l2-fwd [1]                  pipe-rx         
+                                error-drop [2]          lisp-gpe-ip6-input    
+                            feature-bitmap-drop [3]     lisp-gpe-ip4-input    
+                                 l2-output [4]           vxlan6-gpe-input     
+                                 l2-flood [5]            vxlan4-gpe-input     
+                                 l2-uu-fwd [6]           vxlan6-gbp-input     
+                               arp-term-l2bd [7]         vxlan4-gbp-input     
+                                   l2-rw [8]             l2tp-decap-local     
+                               l2-input-vtr [9]             l2tp-decap        
+                             l2-ip-qos-record [10]         geneve6-input      
+                               l2-input-acl [11]           geneve4-input      
+                           l2-policer-classify [12]      vxlan-flow-input     
+                            l2-input-feat-arc [13]         vxlan6-input       
+                            l2-input-classify [14]         vxlan4-input       
+                              span-l2-input [15]       ethernet-input-not-l2  
+                                                        ethernet-input-type   
+                                                          ethernet-input      
+
+l2-input-acl                    error-drop [0]           l2-ip-qos-record     
+                            feature-bitmap-drop [1]        span-l2-input      
+                                 l2-output [2]             arp-term-l2bd      
+                                 l2-flood [3]                  l2-rw          
+                                 l2-uu-fwd [4]         l2-input-feat-arc-end  
+                               arp-term-l2bd [5]         l2-input-feat-arc    
+                                  l2-fwd [6]               l2-input-acl       
+                                   l2-rw [7]                 l2-learn         
+                                 l2-learn [8]              l2-input-vtr       
+                               l2-input-vtr [9]              l2-input         
+                             l2-ip-qos-record [10]            l2-fwd          
+                               l2-input-acl [11]             l2-flood         
+                           l2-policer-classify [12]      l2-input-classify    
+                            l2-input-feat-arc [13]      l2-policer-classify   
+                            l2-input-classify [14]  
+                              span-l2-input [15]    
+
+l2-input-feat-arc           feature-bitmap-drop [0]      l2-ip-qos-record     
+                                 l2-output [1]             span-l2-input      
+                                 l2-flood [2]              arp-term-l2bd      
+                                 l2-uu-fwd [3]                 l2-rw          
+                               arp-term-l2bd [4]       l2-input-feat-arc-end  
+                                  l2-fwd [5]             l2-input-feat-arc    
+                                   l2-rw [6]               l2-input-acl       
+                                 l2-learn [7]                l2-learn         
+                               l2-input-vtr [8]            l2-input-vtr       
+                             l2-ip-qos-record [9]            l2-input         
+                               l2-input-acl [10]              l2-fwd          
+                           l2-policer-classify [11]          l2-flood         
+                            l2-input-feat-arc [12]       l2-input-classify    
+                            l2-input-classify [13]      l2-policer-classify   
+                              span-l2-input [14]    
+                           acl-plugin-in-ip4-l2 [15]
+                           acl-plugin-in-ip6-l2 [16]
+                          l2-input-feat-arc-end [17]
+
+l2-input-feat-arc-end       feature-bitmap-drop [0]    acl-plugin-in-ip4-l2   
+                                 l2-output [1]         acl-plugin-in-ip6-l2   
+                                 l2-flood [2]          l2-input-feat-arc-end  
+                                 l2-uu-fwd [3]           l2-input-feat-arc    
+                               arp-term-l2bd [4]    
+                                  l2-fwd [5]        
+                                   l2-rw [6]        
+                                 l2-learn [7]       
+                               l2-input-vtr [8]     
+                             l2-ip-qos-record [9]   
+                               l2-input-acl [10]    
+                           l2-policer-classify [11] 
+                            l2-input-feat-arc [12]  
+                            l2-input-classify [13]  
+                              span-l2-input [14]    
+                           acl-plugin-in-ip4-l2 [15]
+                           acl-plugin-in-ip6-l2 [16]
+                          l2-input-feat-arc-end [17]
+
+l2-input-vtr                    error-drop [0]           l2-ip-qos-record     
+                            feature-bitmap-drop [1]        span-l2-input      
+                                 l2-output [2]             arp-term-l2bd      
+                                 l2-flood [3]                  l2-rw          
+                                 l2-uu-fwd [4]         l2-input-feat-arc-end  
+                               arp-term-l2bd [5]         l2-input-feat-arc    
+                                  l2-fwd [6]               l2-input-acl       
+                                   l2-rw [7]                 l2-learn         
+                                 l2-learn [8]              l2-input-vtr       
+                               l2-input-vtr [9]              l2-input         
+                             l2-ip-qos-record [10]            l2-fwd          
+                               l2-input-acl [11]             l2-flood         
+                           l2-policer-classify [12]      l2-input-classify    
+                            l2-input-feat-arc [13]      l2-policer-classify   
+                            l2-input-classify [14]  
+                              span-l2-input [15]    
+
+l2-ip-qos-record                error-drop [0]           l2-ip-qos-record     
+                            feature-bitmap-drop [1]        span-l2-input      
+                                 l2-output [2]             arp-term-l2bd      
+                                 l2-flood [3]                  l2-rw          
+                                 l2-uu-fwd [4]         l2-input-feat-arc-end  
+                               arp-term-l2bd [5]         l2-input-feat-arc    
+                                  l2-fwd [6]               l2-input-acl       
+                                   l2-rw [7]                 l2-learn         
+                                 l2-learn [8]              l2-input-vtr       
+                               l2-input-vtr [9]              l2-input         
+                             l2-ip-qos-record [10]            l2-fwd          
+                               l2-input-acl [11]             l2-flood         
+                           l2-policer-classify [12]      l2-input-classify    
+                            l2-input-feat-arc [13]      l2-policer-classify   
+                            l2-input-classify [14]  
+                              span-l2-input [15]    
+
+l2-learn                          l2-fwd [0]             l2-ip-qos-record     
+                                error-drop [1]             span-l2-input      
+                            feature-bitmap-drop [2]        arp-term-l2bd      
+                                 l2-output [3]                 l2-rw          
+                                 l2-flood [4]          l2-input-feat-arc-end  
+                                 l2-uu-fwd [5]           l2-input-feat-arc    
+                               arp-term-l2bd [6]           l2-input-acl       
+                                   l2-rw [7]                 l2-learn         
+                                 l2-learn [8]              l2-input-vtr       
+                               l2-input-vtr [9]              l2-input         
+                             l2-ip-qos-record [10]            l2-fwd          
+                               l2-input-acl [11]             l2-flood         
+                           l2-policer-classify [12]      l2-input-classify    
+                            l2-input-feat-arc [13]      l2-policer-classify   
+                            l2-input-classify [14]  
+                              span-l2-input [15]    
+
+l2-load-balance                 error-drop [0]      
+                             lisp-cp-lookup-l2 [1]  
+
+l2-output-classify              error-drop [0]            span-l2-output      
+                             interface-output [1]     l2-output-feat-arc-end  
+                              span-l2-output [2]        l2-output-feat-arc    
+                            feature-bitmap-drop [3]        l2-output-acl      
+                               l2-output-acl [4]             l2-output        
+                               l2-efp-filter [5]           l2-efp-filter      
+                            l2-output-classify [6]      l2-output-classify    
+                            l2-output-feat-arc [7]  
+                                  l2-xcrw [8]       
+
+l2-output                       error-drop [0]           l2-ip-qos-record     
+                            l2-output-bad-intf [1]       ip6-dvr-reinject     
+                             interface-output [2]        ip4-dvr-reinject     
+                              span-l2-output [3]           span-l2-input      
+                            feature-bitmap-drop [4]        arp-term-l2bd      
+                               l2-output-acl [5]             l2-uu-fwd        
+                               l2-efp-filter [6]               l2-rw          
+                            l2-output-classify [7]     l2-input-feat-arc-end  
+                            l2-output-feat-arc [8]       l2-input-feat-arc    
+                                  l2-xcrw [9]              l2-input-acl       
+                          VirtualEthernet0/0/0-outpu         l2-learn         
+                          VirtualEthernet0/0/1-outpu       l2-input-vtr       
+                               tap0-output [12]              l2-input         
+                                                              l2-fwd          
+                                                             l2-flood         
+                                                         l2-input-classify    
+                                                        l2-policer-classify   
+
+l2-output-acl                   error-drop [0]            span-l2-output      
+                             interface-output [1]     l2-output-feat-arc-end  
+                              span-l2-output [2]        l2-output-feat-arc    
+                            feature-bitmap-drop [3]        l2-output-acl      
+                               l2-output-acl [4]             l2-output        
+                               l2-efp-filter [5]           l2-efp-filter      
+                            l2-output-classify [6]      l2-output-classify    
+                            l2-output-feat-arc [7]  
+                                  l2-xcrw [8]       
+
+l2-output-bad-intf              error-drop [0]               l2-output        
+
+l2-output-feat-arc           interface-output [0]         span-l2-output      
+                              span-l2-output [1]      l2-output-feat-arc-end  
+                            feature-bitmap-drop [2]     l2-output-feat-arc    
+                               l2-output-acl [3]           l2-output-acl      
+                               l2-efp-filter [4]             l2-output        
+                            l2-output-classify [5]         l2-efp-filter      
+                            l2-output-feat-arc [6]      l2-output-classify    
+                                  l2-xcrw [7]       
+
+l2-output-feat-arc-end       interface-output [0]   
+                              span-l2-output [1]    
+                            feature-bitmap-drop [2] 
+                               l2-output-acl [3]    
+                               l2-efp-filter [4]    
+                            l2-output-classify [5]  
+                            l2-output-feat-arc [6]  
+                                  l2-xcrw [7]       
+
+l2-patch                        error-drop [0]      
+
+l2-policer-classify             error-drop [0]           l2-ip-qos-record     
+                            feature-bitmap-drop [1]        span-l2-input      
+                                 l2-output [2]             arp-term-l2bd      
+                                 l2-flood [3]                  l2-rw          
+                                 l2-uu-fwd [4]         l2-input-feat-arc-end  
+                               arp-term-l2bd [5]         l2-input-feat-arc    
+                                  l2-fwd [6]               l2-input-acl       
+                                   l2-rw [7]                 l2-learn         
+                                 l2-learn [8]              l2-input-vtr       
+                               l2-input-vtr [9]              l2-input         
+                             l2-ip-qos-record [10]            l2-fwd          
+                               l2-input-acl [11]             l2-flood         
+                           l2-policer-classify [12]      l2-input-classify    
+                            l2-input-feat-arc [13]      l2-policer-classify   
+                            l2-input-classify [14]  
+                              span-l2-input [15]    
+
+l2-rw                           error-drop [0]           l2-ip-qos-record     
+                            feature-bitmap-drop [1]        span-l2-input      
+                                 l2-output [2]             arp-term-l2bd      
+                                 l2-flood [3]                  l2-rw          
+                                 l2-uu-fwd [4]         l2-input-feat-arc-end  
+                               arp-term-l2bd [5]         l2-input-feat-arc    
+                                  l2-fwd [6]               l2-input-acl       
+                                   l2-rw [7]                 l2-learn         
+                                 l2-learn [8]              l2-input-vtr       
+                               l2-input-vtr [9]              l2-input         
+                             l2-ip-qos-record [10]            l2-fwd          
+                               l2-input-acl [11]             l2-flood         
+                           l2-policer-classify [12]      l2-input-classify    
+                            l2-input-feat-arc [13]      l2-policer-classify   
+                            l2-input-classify [14]  
+                              span-l2-input [15]    
+
+l2-uu-fwd                       error-drop [0]           l2-ip-qos-record     
+                                 l2-output [1]             span-l2-input      
+                                                           arp-term-l2bd      
+                                                               l2-rw          
+                                                       l2-input-feat-arc-end  
+                                                         l2-input-feat-arc    
+                                                           l2-input-acl       
+                                                             l2-learn         
+                                                           l2-input-vtr       
+                                                             l2-input         
+                                                              l2-fwd          
+                                                             l2-flood         
+                                                         l2-input-classify    
+                                                        l2-policer-classify   
+
+l2-xcrw                         error-drop [0]            span-l2-output      
+                                                      l2-output-feat-arc-end  
+                                                        l2-output-feat-arc    
+                                                           l2-output-acl      
+                                                             l2-output        
+                                                           l2-efp-filter      
+                                                        l2-output-classify    
+
+l2fib-mac-age-scanner-proc
+
+l2tp-decap                      error-drop [0]      
+                                 l2-input [1]       
+
+l2tp-decap-local                error-drop [0]      
+                                 l2-input [1]       
+
+l2tp-encap                      error-drop [0]      
+                                ip6-lookup [1]      
+
+li-hit                     ethernet-input-not-l2 [0]     l2-input-classify    
+
+lisp-cp-input                   error-drop [0]      
+
+lisp-cp-lookup-ip4              error-drop [0]      
+                             interface-output [1]   
+
+lisp-cp-lookup-ip6              error-drop [0]      
+                             interface-output [1]   
+
+lisp-cp-lookup-l2               error-drop [0]            l2-load-balance     
+                             interface-output [1]   
+
+lisp-cp-lookup-nsh              error-drop [0]      
+                             interface-output [1]   
+
+lisp-cp-output                  error-drop [0]      
+
+lisp-gpe-ip4-input              error-drop [0]      
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                 l2-input [3]       
+
+lisp-gpe-ip6-input              error-drop [0]      
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                 l2-input [3]       
+
+lisp-gpe-nsh-dummy-input        error-drop [0]      
+
+llc-input                       error-punt [0]                pipe-rx         
+                                error-drop [1]         ethernet-input-not-l2  
+                                 osi-input [2]          ethernet-input-type   
+                                snap-input [3]            ethernet-input      
+
+lldp-input                      error-drop [0]                pipe-rx         
+                                                              l2-fwd          
+                                                             l2-flood         
+                                                       ethernet-input-not-l2  
+                                                        ethernet-input-type   
+                                                          ethernet-input      
+
+lldp-process              
+
+local0-output                   error-drop [0]           interface-output     
+                                 local0-tx [1]      
+
+local0-tx                       error-drop [0]             local0-output      
+
+lookup-ip4-dst                   ip4-drop [0]       
+                                 ip4-punt [1]       
+                                 ip4-local [2]      
+                                  ip4-arp [3]       
+                                 ip4-glean [4]      
+                                ip4-rewrite [5]     
+                               ip4-midchain [6]     
+                              ip4-icmp-error [7]    
+                             ip4-rewrite-mcast [8]  
+                             ip4-rewrite-bcast [9]  
+                            ip4-mcast-midchain [10] 
+
+lookup-ip4-dst-itf               ip4-drop [0]       
+                                 ip4-punt [1]       
+                                 ip4-local [2]      
+                                  ip4-arp [3]       
+                                 ip4-glean [4]      
+                                ip4-rewrite [5]     
+                               ip4-midchain [6]     
+                              ip4-icmp-error [7]    
+                             ip4-rewrite-mcast [8]  
+                             ip4-rewrite-bcast [9]  
+                            ip4-mcast-midchain [10] 
+
+lookup-ip4-dst-mcast             ip4-drop [0]       
+                           ip4-mfib-forward-rpf [1] 
+
+lookup-ip4-src                   ip4-drop [0]       
+                                 ip4-punt [1]       
+                                 ip4-local [2]      
+                                  ip4-arp [3]       
+                                 ip4-glean [4]      
+                                ip4-rewrite [5]     
+                               ip4-midchain [6]     
+                              ip4-icmp-error [7]    
+                             ip4-rewrite-mcast [8]  
+                             ip4-rewrite-bcast [9]  
+                            ip4-mcast-midchain [10] 
+
+lookup-ip6-dst                   ip6-drop [0]       
+                                 ip6-punt [1]       
+                                 ip6-local [2]      
+                           ip6-discover-neighbor [3]
+                                 ip6-glean [4]      
+                                ip6-rewrite [5]     
+                               ip6-midchain [6]     
+                              ip6-icmp-error [7]    
+                             ip6-rewrite-mcast [8]  
+                             ip6-rewrite-bcast [9]  
+                            ip6-mcast-midchain [10] 
+                              ip6-hop-by-hop [11]   
+                            ip6-add-hop-by-hop [12] 
+                            ip6-pop-hop-by-hop [13] 
+                              ip6-link-local [14]   
+
+lookup-ip6-dst-itf               ip6-drop [0]       
+                                 ip6-punt [1]       
+                                 ip6-local [2]      
+                           ip6-discover-neighbor [3]
+                                 ip6-glean [4]      
+                                ip6-rewrite [5]     
+                               ip6-midchain [6]     
+                              ip6-icmp-error [7]    
+                             ip6-rewrite-mcast [8]  
+                             ip6-rewrite-bcast [9]  
+                            ip6-mcast-midchain [10] 
+                              ip6-hop-by-hop [11]   
+                            ip6-add-hop-by-hop [12] 
+                            ip6-pop-hop-by-hop [13] 
+                              ip6-link-local [14]   
+
+lookup-ip6-dst-mcast             ip6-drop [0]       
+                           ip6-mfib-forward-rpf [1] 
+
+lookup-ip6-src                   ip6-drop [0]       
+                                 ip6-punt [1]       
+                                 ip6-local [2]      
+                           ip6-discover-neighbor [3]
+                                 ip6-glean [4]      
+                                ip6-rewrite [5]     
+                               ip6-midchain [6]     
+                              ip6-icmp-error [7]    
+                             ip6-rewrite-mcast [8]  
+                             ip6-rewrite-bcast [9]  
+                            ip6-mcast-midchain [10] 
+                              ip6-hop-by-hop [11]   
+                            ip6-add-hop-by-hop [12] 
+                            ip6-pop-hop-by-hop [13] 
+                              ip6-link-local [14]   
+
+lookup-mpls-dst                  mpls-drop [0]      
+                              mpls-replicate [1]    
+
+lookup-mpls-dst-itf              mpls-drop [0]      
+                              mpls-replicate [1]    
+
+mactime                         error-drop [0]      
+                              ethernet-input [1]    
+
+mactime-tx                      error-drop [0]      
+                              ethernet-input [1]    
+
+mpls-adj-incomplete             error-drop [0]      
+                                  ip4-arp [1]       
+                           ip6-discover-neighbor [2]
+
+mpls-drop                       error-drop [0]             mpls-qos-mark      
+                                                       vlan-mpls-qos-record   
+                                                          mpls-qos-record     
+                                                    mpls-label-imposition-unif
+                                                    mpls-label-imposition-pipe
+                                                          mpls-replicate      
+                                                        lookup-mpls-dst-itf   
+                                                          lookup-mpls-dst     
+                                                         bier-load-balance    
+                                                         mpls-load-balance    
+                                                            mpls-lookup       
+
+mpls-input                      error-drop [0]              dpdk-input        
+                                mpls-lookup [1]              tuntap-rx        
+                             mpls-not-enabled [2]          netmap-input       
+                                                          af-packet-input     
+                                                              pipe-rx         
+                                                         vhost-user-input     
+                                                           virtio-input       
+                                                             pg-input         
+                                                            gre6-input        
+                                                            gre4-input        
+                                                              l2-fwd          
+                                                             l2-flood         
+                                                       ethernet-input-not-l2  
+                                                        ethernet-input-type   
+                                                          ethernet-input      
+                                                           device-input       
+
+mpls-label-imposition-pipe       mpls-drop [0]      
+
+mpls-label-imposition-unif       mpls-drop [0]      
+
+mpls-load-balance                mpls-drop [0]      
+                              mpls-replicate [1]    
+
+mpls-lookup                      mpls-drop [0]              mpls-input        
+                              mpls-replicate [1]         mpls-not-enabled     
+
+mpls-midchain                   error-drop [0]      
+                                 ip4-frag [1]       
+                                 ip6-frag [2]       
+
+mpls-not-enabled                error-drop [0]              mpls-input        
+                                mpls-lookup [1]     
+
+mpls-output                     error-drop [0]               ip6-frag         
+                                 ip4-frag [1]                ip4-frag         
+                                 ip6-frag [2]       
+
+mpls-punt                       error-punt [0]      
+
+mpls-qos-mark                    mpls-drop [0]      
+
+mpls-qos-record                  mpls-drop [0]      
+
+mpls-replicate                   mpls-drop [0]          lookup-mpls-dst-itf   
+                                                          lookup-mpls-dst     
+                                                         bier-load-balance    
+                                                         mpls-load-balance    
+                                                            mpls-lookup       
+
+nat-det-expire-walk       
+
+nat-ha-process            
+
+nat-ha-worker             
+
+nat-ha                          ip4-lookup [0]      
+                                error-drop [1]      
+
+nat-ha-handoff                  error-drop [0]      
+
+nat44-classify                 nat44-in2out [0]     
+                               nat44-out2in [1]     
+                                error-drop [2]      
+
+nat44-det-classify           nat44-det-in2out [0]   
+                             nat44-det-out2in [1]   
+                                error-drop [2]      
+
+nat44-det-in2out                ip4-lookup [0]          nat44-det-classify    
+                                error-drop [1]      
+                              ip4-icmp-error [2]    
+
+nat44-det-out2in                error-drop [0]          nat44-det-classify    
+                                ip4-lookup [1]      
+                              ip4-icmp-error [2]    
+
+nat44-ed-classify             nat44-ed-in2out [0]   
+                              nat44-ed-out2in [1]   
+                                error-drop [2]      
+
+nat44-ed-hairpin-dst            ip4-lookup [0]      
+                                error-drop [1]      
+
+nat44-ed-hairpin-src            error-drop [0]      
+                          nat44-ed-in2out-output [1]
+                          nat44-in2out-output-worker
+                             interface-output [3]   
+
+nat44-ed-hairpinning            ip4-lookup [0]      
+                                error-drop [1]      
+
+nat44-ed-in2out                 ip4-lookup [0]           nat44-ed-classify    
+                                error-drop [1]         nat44-ed-out2in-reass  
+                              ip4-icmp-error [2]     nat44-ed-out2in-slowpath 
+                          nat44-ed-in2out-slowpath [      nat44-ed-out2in     
+                           nat44-ed-in2out-reass [4]
+
+nat44-ed-in2out-output       interface-output [0]      nat44-ed-hairpin-src   
+                                error-drop [1]      
+                              ip4-icmp-error [2]    
+                          nat44-ed-in2out-output-slo
+                          nat44-ed-in2out-reass-outp
+
+nat44-ed-in2out-output-slo   interface-output [0]   nat44-ed-in2out-output-slo
+                                error-drop [1]        nat44-ed-in2out-output  
+                              ip4-icmp-error [2]    
+                          nat44-ed-in2out-output-slo
+                           nat44-ed-in2out-reass [4]
+
+nat44-ed-in2out-reass           ip4-lookup [0]      nat44-ed-in2out-reass-outp
+                                error-drop [1]         nat44-ed-in2out-reass  
+                              ip4-icmp-error [2]    nat44-ed-in2out-output-slo
+                           nat44-in2out-slowpath [3] nat44-ed-in2out-slowpath 
+                           nat44-ed-in2out-reass [4]      nat44-ed-in2out     
+
+nat44-ed-in2out-reass-outp   interface-output [0]     nat44-ed-in2out-output  
+                                error-drop [1]      
+                              ip4-icmp-error [2]    
+                           nat44-in2out-slowpath [3]
+                           nat44-ed-in2out-reass [4]
+
+nat44-ed-in2out-slowpath        ip4-lookup [0]       nat44-ed-in2out-slowpath 
+                                error-drop [1]            nat44-ed-in2out     
+                              ip4-icmp-error [2]    
+                          nat44-ed-in2out-slowpath [
+                           nat44-ed-in2out-reass [4]
+
+nat44-ed-out2in                 error-drop [0]           nat44-ed-classify    
+                                ip4-lookup [1]      
+                              ip4-icmp-error [2]    
+                              nat44-ed-in2out [3]   
+                          nat44-ed-out2in-slowpath [
+                           nat44-ed-out2in-reass [5]
+
+nat44-ed-out2in-reass           error-drop [0]         nat44-ed-out2in-reass  
+                                ip4-lookup [1]       nat44-ed-out2in-slowpath 
+                              ip4-icmp-error [2]          nat44-ed-out2in     
+                              nat44-ed-in2out [3]   
+                          nat44-ed-out2in-slowpath [
+                           nat44-ed-out2in-reass [5]
+
+nat44-ed-out2in-slowpath        error-drop [0]         nat44-ed-out2in-reass  
+                                ip4-lookup [1]       nat44-ed-out2in-slowpath 
+                              ip4-icmp-error [2]          nat44-ed-out2in     
+                              nat44-ed-in2out [3]   
+                          nat44-ed-out2in-slowpath [
+                           nat44-ed-out2in-reass [5]
+
+nat44-hairpin-dst               ip4-lookup [0]      
+                                error-drop [1]      
+
+nat44-hairpin-src               error-drop [0]      
+                            nat44-in2out-output [1] 
+                          nat44-in2out-output-worker
+                             interface-output [3]   
+
+nat44-hairpinning               ip4-lookup [0]      
+                                error-drop [1]      
+
+nat44-handoff-classify    nat44-in2out-worker-handof
+                          nat44-out2in-worker-handof
+                                error-drop [2]      
+
+nat44-in2out                    ip4-lookup [0]            nat44-classify      
+                                error-drop [1]      
+                              ip4-icmp-error [2]    
+                           nat44-in2out-slowpath [3]
+                            nat44-in2out-reass [4]  
+
+nat44-in2out-fast               ip4-lookup [0]      
+                                error-drop [1]      
+                              ip4-icmp-error [2]    
+                           nat44-in2out-slowpath [3]
+                            nat44-in2out-reass [4]  
+
+nat44-in2out-output          interface-output [0]        nat44-hairpin-src    
+                                error-drop [1]      
+                              ip4-icmp-error [2]    
+                          nat44-in2out-output-slowpa
+                            nat44-in2out-reass [4]  
+
+nat44-in2out-output-slowpa   interface-output [0]   nat44-in2out-output-slowpa
+                                error-drop [1]          nat44-in2out-output   
+                              ip4-icmp-error [2]    
+                          nat44-in2out-output-slowpa
+                            nat44-in2out-reass [4]  
+
+nat44-in2out-output-worker      error-drop [0]         nat44-ed-hairpin-src   
+                                                         nat44-hairpin-src    
+
+nat44-in2out-reass              ip4-lookup [0]           nat44-in2out-fast    
+                                error-drop [1]          nat44-in2out-reass    
+                              ip4-icmp-error [2]    nat44-in2out-output-slowpa
+                           nat44-in2out-slowpath [3]   nat44-in2out-slowpath  
+                            nat44-in2out-reass [4]      nat44-in2out-output   
+                                                           nat44-in2out       
+
+nat44-in2out-slowpath           ip4-lookup [0]      nat44-ed-in2out-reass-outp
+                                error-drop [1]         nat44-ed-in2out-reass  
+                              ip4-icmp-error [2]         nat44-in2out-fast    
+                           nat44-in2out-slowpath [3]    nat44-in2out-reass    
+                            nat44-in2out-reass [4]     nat44-in2out-slowpath  
+                                                           nat44-in2out       
+
+nat44-in2out-worker-handof      error-drop [0]        nat44-handoff-classify  
+
+nat44-out2in                    error-drop [0]            nat44-classify      
+                                ip4-lookup [1]      
+                              ip4-icmp-error [2]    
+                            nat44-out2in-reass [3]  
+
+nat44-out2in-fast               error-drop [0]      
+                                ip4-lookup [1]      
+                              ip4-icmp-error [2]    
+                            nat44-out2in-reass [3]  
+
+nat44-out2in-reass              error-drop [0]           nat44-out2in-fast    
+                                ip4-lookup [1]          nat44-out2in-reass    
+                              ip4-icmp-error [2]           nat44-out2in       
+                            nat44-out2in-reass [3]  
+
+nat44-out2in-worker-handof      error-drop [0]        nat44-handoff-classify  
+
+nat64-expire-walk         
+
+nat64-expire-worker-walk  
+
+nat64-in2out                    ip4-lookup [0]      
+                                ip6-lookup [1]      
+                                error-drop [2]      
+                           nat64-in2out-slowpath [3]
+                            nat64-in2out-reass [4]  
+
+nat64-in2out-handoff            error-drop [0]      
+
+nat64-in2out-reass              ip4-lookup [0]          nat64-in2out-reass    
+                                ip6-lookup [1]         nat64-in2out-slowpath  
+                                error-drop [2]             nat64-in2out       
+                           nat64-in2out-slowpath [3]
+                            nat64-in2out-reass [4]  
+
+nat64-in2out-slowpath           ip4-lookup [0]          nat64-in2out-reass    
+                                ip6-lookup [1]         nat64-in2out-slowpath  
+                                error-drop [2]             nat64-in2out       
+                           nat64-in2out-slowpath [3]
+                            nat64-in2out-reass [4]  
+
+nat64-out2in                    ip6-lookup [0]      
+                                ip4-lookup [1]      
+                                error-drop [2]      
+                            nat64-out2in-reass [3]  
+
+nat64-out2in-handoff            error-drop [0]      
+
+nat64-out2in-reass              ip6-lookup [0]          nat64-out2in-reass    
+                                ip4-lookup [1]             nat64-out2in       
+                                error-drop [2]      
+                            nat64-out2in-reass [3]  
+
+nat64-static-bib-worker   
+
+nat66-in2out                    ip6-lookup [0]      
+                                error-drop [1]      
+
+nat66-out2in                    ip6-lookup [0]      
+                                error-drop [1]      
+
+netmap-input               ip4-input-no-checksum [0]
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                mpls-input [3]      
+                              ethernet-input [4]    
+                                error-drop [5]      
+
+nsh-load-balance                error-drop [0]      
+
+null-node                 
+
+osi-input                       error-punt [0]               llc-input        
+                                error-drop [1]              hdlc-input        
+                                                             ppp-input        
+
+p2p-ethernet-input              error-drop [0]      
+
+pg-input                   ip4-input-no-checksum [0]
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                mpls-input [3]      
+                              ethernet-input [4]    
+                                error-drop [5]      
+
+pipe-rx                         error-punt [0]      
+                                error-drop [1]      
+                                 llc-input [2]      
+                                 ip4-input [3]      
+                           ip4-input-no-checksum [4]
+                                 l2-input [5]       
+                                mpls-input [6]      
+                                 ip6-input [7]      
+                                 arp-input [8]      
+                                lldp-input [9]      
+
+policer-by-sw-if-index        ethernet-input [0]    
+                                error-drop [1]      
+
+ppp-input                       error-punt [0]      
+                                error-drop [1]      
+                                 ip4-input [2]      
+                                 ip6-input [3]      
+                                 osi-input [4]      
+
+punt                                                        error-punt        
+
+punt-dispatch                      drop [0]              vxlan6-gbp-input     
+                                                         vxlan4-gbp-input     
+                                                         ipsec6-tun-input     
+                                                         ipsec4-tun-input     
+                                                          ipsec6-if-input     
+                                                          ipsec4-if-input     
+                                                       ipsec6-input-feature   
+                                                       ipsec4-input-feature   
+
+punt-socket-rx               interface-output [0]   
+                                ip4-lookup [1]      
+                                ip6-lookup [2]      
+
+pw-cw-pop                 
+
+rd-cp-process             
+
+send-dhcp6-client-message-
+
+send-dhcp6-pd-client-messa
+
+send-rs-process           
+
+session-queue                   ip4-lookup [0]      
+                                ip6-lookup [1]      
+                                tcp4-output [2]     
+                                tcp6-output [3]     
+
+session-queue-main        
+
+session-queue-process     
+
+snap-input                      error-drop [0]               llc-input        
+                                error-punt [1]      
+                            ethernet-input-type [2] 
+
+snat-ipfix-flush          
+
+span-input                
+
+span-l2-input               feature-bitmap-drop [0]      l2-ip-qos-record     
+                                 l2-output [1]             span-l2-input      
+                                 l2-flood [2]              arp-term-l2bd      
+                                 l2-uu-fwd [3]                 l2-rw          
+                               arp-term-l2bd [4]       l2-input-feat-arc-end  
+                                  l2-fwd [5]             l2-input-feat-arc    
+                                   l2-rw [6]               l2-input-acl       
+                                 l2-learn [7]                l2-learn         
+                               l2-input-vtr [8]            l2-input-vtr       
+                             l2-ip-qos-record [9]            l2-input         
+                               l2-input-acl [10]              l2-fwd          
+                           l2-policer-classify [11]          l2-flood         
+                            l2-input-feat-arc [12]       l2-input-classify    
+                            l2-input-classify [13]      l2-policer-classify   
+                              span-l2-input [14]    
+
+span-l2-output               interface-output [0]         span-l2-output      
+                              span-l2-output [1]      l2-output-feat-arc-end  
+                            feature-bitmap-drop [2]     l2-output-feat-arc    
+                               l2-output-acl [3]           l2-output-acl      
+                               l2-efp-filter [4]             l2-output        
+                            l2-output-classify [5]         l2-efp-filter      
+                            l2-output-feat-arc [6]      l2-output-classify    
+                                  l2-xcrw [7]       
+
+span-output               
+
+sr-localsid-d                   error-drop [0]      
+                                ip6-lookup [1]      
+                                ip4-lookup [2]      
+                                ip6-rewrite [3]     
+                                ip4-rewrite [4]     
+                             interface-output [5]   
+
+sr-localsid                     error-drop [0]      
+                                ip6-lookup [1]      
+                                ip4-lookup [2]      
+                                ip6-rewrite [3]     
+                                ip4-rewrite [4]     
+                             interface-output [5]   
+
+sr-pl-rewrite-b-encaps          ip6-lookup [0]      
+                                error-drop [1]      
+
+sr-pl-rewrite-b-insert          ip6-lookup [0]      
+                                error-drop [1]      
+
+sr-pl-rewrite-encaps            ip6-lookup [0]      
+                                error-drop [1]      
+
+sr-pl-rewrite-encaps-l2         ip6-lookup [0]      
+                                error-drop [1]      
+
+sr-pl-rewrite-encaps-v4         ip6-lookup [0]      
+                                error-drop [1]      
+
+sr-pl-rewrite-insert            ip6-lookup [0]      
+                                error-drop [1]      
+
+startup-config-process    
+
+stats-collect-rx          
+
+stats-collect-tx          
+
+statseg-collector-process 
+
+syn-filter-4                    error-drop [0]      
+
+tap0-output                     error-drop [0]               l2-output        
+                                  tap0-tx [1]            interface-output     
+
+tap0-tx                         error-drop [0]              tap0-output       
+
+tcp4-established                 ip4-drop [0]               tcp4-input        
+                                 ip6-drop [1]           tcp4-input-nolookup   
+                                tcp4-output [2]     
+                                tcp6-output [3]     
+
+tcp4-input-nolookup              ip4-drop [0]       
+                                tcp4-listen [1]     
+                             tcp4-rcv-process [2]   
+                               tcp4-syn-sent [3]    
+                             tcp4-established [4]   
+                                tcp4-reset [5]      
+                                 ip4-punt [6]       
+
+tcp4-input                       ip4-drop [0]       
+                                tcp4-listen [1]     
+                             tcp4-rcv-process [2]   
+                               tcp4-syn-sent [3]    
+                             tcp4-established [4]   
+                                tcp4-reset [5]      
+                                 ip4-punt [6]       
+
+tcp4-listen                      ip4-drop [0]               tcp4-input        
+                                 ip6-drop [1]           tcp4-input-nolookup   
+                                tcp4-output [2]     
+                                tcp6-output [3]     
+
+tcp4-output                     error-drop [0]             session-queue      
+                                ip4-lookup [1]              tcp6-listen       
+                                ip4-rewrite [2]             tcp4-listen       
+                                  ip4-arp [3]            tcp6-rcv-process     
+                                                         tcp4-rcv-process     
+                                                           tcp6-syn-sent      
+                                                           tcp4-syn-sent      
+                                                         tcp6-established     
+                                                         tcp4-established     
+
+tcp4-rcv-process                 ip4-drop [0]               tcp4-input        
+                                 ip6-drop [1]           tcp4-input-nolookup   
+                                tcp4-output [2]     
+                                tcp6-output [3]     
+
+tcp4-reset                      error-drop [0]              tcp4-input        
+                                ip4-lookup [1]          tcp4-input-nolookup   
+
+tcp4-syn-sent                    ip4-drop [0]               tcp4-input        
+                                 ip6-drop [1]           tcp4-input-nolookup   
+                                tcp4-output [2]     
+                                tcp6-output [3]     
+
+tcp6-established                 ip4-drop [0]               tcp6-input        
+                                 ip6-drop [1]           tcp6-input-nolookup   
+                                tcp4-output [2]     
+                                tcp6-output [3]     
+
+tcp6-input-nolookup              ip6-drop [0]       
+                                tcp6-listen [1]     
+                             tcp6-rcv-process [2]   
+                               tcp6-syn-sent [3]    
+                             tcp6-established [4]   
+                                tcp6-reset [5]      
+                                 ip6-punt [6]       
+
+tcp6-input                       ip6-drop [0]       
+                                tcp6-listen [1]     
+                             tcp6-rcv-process [2]   
+                               tcp6-syn-sent [3]    
+                             tcp6-established [4]   
+                                tcp6-reset [5]      
+                                 ip6-punt [6]       
+
+tcp6-listen                      ip4-drop [0]               tcp6-input        
+                                 ip6-drop [1]           tcp6-input-nolookup   
+                                tcp4-output [2]     
+                                tcp6-output [3]     
+
+tcp6-output                     error-drop [0]             session-queue      
+                                ip6-lookup [1]              tcp6-listen       
+                                ip6-rewrite [2]             tcp4-listen       
+                           ip6-discover-neighbor [3]     tcp6-rcv-process     
+                                                         tcp4-rcv-process     
+                                                           tcp6-syn-sent      
+                                                           tcp4-syn-sent      
+                                                         tcp6-established     
+                                                         tcp4-established     
+
+tcp6-rcv-process                 ip4-drop [0]               tcp6-input        
+                                 ip6-drop [1]           tcp6-input-nolookup   
+                                tcp4-output [2]     
+                                tcp6-output [3]     
+
+tcp6-reset                      error-drop [0]              tcp6-input        
+                                ip6-lookup [1]          tcp6-input-nolookup   
+
+tcp6-syn-sent                    ip4-drop [0]               tcp6-input        
+                                 ip6-drop [1]           tcp6-input-nolookup   
+                                tcp4-output [2]     
+                                tcp6-output [3]     
+
+tuntap-rx                  ip4-input-no-checksum [0]
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                mpls-input [3]      
+                              ethernet-input [4]    
+                                error-drop [5]      
+
+tuntap-tx                 
+
+udp4-encap                
+
+udp4-input                      error-drop [0]      
+
+udp6-encap                
+
+udp6-input                      error-drop [0]      
+
+unix-cli-local:0          
+
+unix-cli-local:23         
+
+unix-cli-new-session      
+
+unix-epoll-input          
+
+vhost-user-input           ip4-input-no-checksum [0]
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                mpls-input [3]      
+                              ethernet-input [4]    
+                                error-drop [5]      
+
+vhost-user-process        
+
+vhost-user-send-interrupt-
+
+virtio-input               ip4-input-no-checksum [0]
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                mpls-input [3]      
+                              ethernet-input [4]    
+                                error-drop [5]      
+
+vlan-ip4-qos-mark               error-drop [0]      
+
+vlan-ip4-qos-record              ip4-drop [0]       
+
+vlan-ip6-qos-mark               error-drop [0]      
+
+vlan-ip6-qos-record              ip6-drop [0]       
+
+vlan-mpls-qos-mark              error-drop [0]      
+
+vlan-mpls-qos-record             mpls-drop [0]      
+
+vpe-link-state-process    
+
+vxlan-flow-input                error-drop [0]      
+                                 l2-input [1]       
+
+vxlan-gpe-encap                 ip4-lookup [0]      
+                                ip6-lookup [1]      
+                                error-drop [2]      
+
+vxlan4-encap                    error-drop [0]      
+
+vxlan4-gbp-encap                error-drop [0]      
+
+vxlan4-gbp-input                error-drop [0]         ip4-vxlan-gbp-bypass   
+                               punt-dispatch [1]    
+                                 l2-input [2]       
+                                 ip4-input [3]      
+                                 ip6-input [4]      
+
+vxlan4-gpe-input                error-drop [0]         ip4-vxlan-gpe-bypass   
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                 l2-input [3]       
+
+vxlan4-input                    error-drop [0]           ip4-vxlan-bypass     
+                                 l2-input [1]       
+
+vxlan6-encap                    error-drop [0]      
+
+vxlan6-gbp-encap                error-drop [0]      
+
+vxlan6-gbp-input                error-drop [0]         ip6-vxlan-gbp-bypass   
+                               punt-dispatch [1]    
+                                 l2-input [2]       
+                                 ip4-input [3]      
+                                 ip6-input [4]      
+
+vxlan6-gpe-input                error-drop [0]         ip6-vxlan-gpe-bypass   
+                                 ip4-input [1]      
+                                 ip6-input [2]      
+                                 l2-input [3]       
+
+vxlan6-input                    error-drop [0]           ip6-vxlan-bypass     
+                                 l2-input [1]       
+
+wildcard-ip4-arp-publisher
+
+worker-handoff                  error-drop [0]      
+

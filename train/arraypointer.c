@@ -12,7 +12,7 @@ char **str = {"nihao",  "wohenhao"};  //用法错误
 int main(int argc, char * * argv)
 {
     int (*p)[4];  //定义数组指针
-    int **q;      //只是定义了指向指针的指针，二级指针； 可以理解为指针数组的性质
+    int **q;      //只是定义了指向指针的指针，二级指针； 可以理解为指针数组的性质(一维的)
     p = a;
     q = a;
     printf("OX%p\n", a);

@@ -24,7 +24,7 @@ GNU C的一大特色就是__attribute__机制。__attribute__可以设置函数�
 
 `__attribute__ ((aligned(x)))`
 
-让所作用的结构成员对齐在n字节自然边界上。如果结构中有成员的长度大于n，则按照最大成员的长度来对齐
+按照x字节对齐；
 
 aligned特性：aligned属性只能增加对齐字节数，不能减少到比默认对齐字节数还小。
 
@@ -39,11 +39,9 @@ aligned支持的最大对齐字节数由linker决定。
     	return 0;
     }
 
+`__attribute__ ((optimize ("O3")))`
 
-
-
-
-
+在全局已经使能O1， O2， O3， Os的情况下，某个单独的函数我们不想做任何的优化，可以用`__attribute__((optimize("O0")))`来修饰这个函数，比如我们把上述用O2可以编译过的代码进行如下修改：
 
 
 
@@ -117,15 +115,15 @@ C语言中有一个goto语句，其可以结合标号实现函数内部的任意
 ###### 函数指针typedef
 
 ```
-typedef int (*p) (int x);
-typedef int (p) (int x);
+typedef int (*p) (int x);  #1
+typedef int (p) (int x);   #2
 
 int (*p) (int x);  /*定义一个函数指针*/
-#函数指针
+#函数指针  #1
 p q;
 q = fun;
 
-#函数
+#函数     #2
 p *q;
 q = fun;
 
@@ -168,39 +166,183 @@ p=a;       //p++;    该语句执行过后，也就是p=p+1;p跨过行a[0][]指�
 
 []: http://blog.chinaunix.net/uid-27018250-id-3867588.html
 
-`objdump -s -d a.out` 
+`objdump -s -d a.out`
+
+`objdump -h a.out`
 
 堆、栈、静态存储区，
 
 
 
-bss段：
+1 **.rodata段：**存放只读数据，比如printf语句中的格式字符串和开关语句的跳转表。也就是你所说的常量区。
 
-BSS段（bsssegment）通常是指用来存放程序中未初始化的全局变量的一块内存区域。BSS是英文BlockStarted by Symbol的简称。BSS段属于静态内存分配。  特点是:可读写的，在程序执行之前BSS段会自动清0。所以，未初始的全局变量在程序执行之前已经成0了。
+> 例如，全局作用域中的 const int ival = 10，ival存放在.rodata段
+> 再如，函数局部作用域中的printf("Hello world %d\n", c);语句中的格式字符串"Hello world %d\n"，也存放在.rodata段
 
-data段：
 
-数据段（datasegment）通常是指用来存放程序中已初始化的全局变量的一块内存区域。数据段属于静态内存分配。
 
-text段：
+2 **.text段：**存放已编译程序的机器代码。
 
-代码段（codesegment/textsegment）通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读,某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。
+**注意：程序加载运行时，.rodata段和.text段通常合并到一个Segment（Text Segment）中，操作系统将这个Segment的页面只读保护起来，防止意外的改写。**
 
-rodata段：
+3 **.data段：**存放已初始化的全局变量。而局部变量在运行时保存在栈中，既不出现在.data段，也不出现在.bss段中。就是你所说的全局区。
 
-存放C中的字符串和#define定义的常量，在实际编译中个，<!--实验发现字符常量都放在了rodata里-->
+> 例如：全局作用域中的int ival = 10，static int a = 30，以及局部作用域中的static int b = 30，这3个变量均存放在.data段中。注意，局部作用域中的static变量的生命周期和其余栈变量的生命周期是不同的。
 
-heap堆：
 
-堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）
+4 **.bss段：**存放未初始化的全局变量。<u>在目标文件中这个段不占据实际的空间</u>，它仅仅是一个占位符，在加载时这个段用0填充。目标文件区分初始化和未初始化变量是为了空间效率：在目标文件中，未初始化变量不需要占据任何实际的磁盘空间。全局变量如果不初始化则初值为0，同理可以推断，static变量（不管是函数里的还是函数外的）如果不初始化则初值也是0，也分配在.bss段。
 
-stack栈：
+> 例如，全局作用域中的int ival; ival显然存放在.bss段
 
-是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进先出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区
+**
 
-常量段：
 
-常量段一般包含编译器产生的数据（与只读段包含用户定义的只读数据不同）。比如说由一个语句a=2+3编译器把2+3编译期就算出5，存成常量5在常量段中
+
+5. **栈：**函数的参数和局部变量是分配在栈上（但不包括static声明的变量）。在函数被调用时，栈用来传递参数和返回值。由于栈的后进先出特点，所以栈特别方便用来保存/恢复调用现场。
+
+6. **堆：**用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc/free等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）/释放的内存从堆中被剔除（堆被缩减）
+
+
+
+
+
+```
+objdump -t exam1_elf | grep "\.bss"
+```
+
+
+可以看到，全局变量未初始化的，**和全局变量初始化为0的都在里面在bss段**，初始化其他值的在.data
+
+
+
+```
+root@ubuntu:~/train# objdump -h a.out 
+
+a.out:     file format elf64-x86-64
+
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .interp       0000001c  0000000000000238  0000000000000238  00000238  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .note.ABI-tag 00000020  0000000000000254  0000000000000254  00000254  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .note.gnu.build-id 00000024  0000000000000274  0000000000000274  00000274  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .gnu.hash     0000001c  0000000000000298  0000000000000298  00000298  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .dynsym       000000d8  00000000000002b8  00000000000002b8  000002b8  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .dynstr       00000090  0000000000000390  0000000000000390  00000390  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  6 .gnu.version  00000012  0000000000000420  0000000000000420  00000420  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  7 .gnu.version_r 00000020  0000000000000438  0000000000000438  00000438  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  8 .rela.dyn     000000c0  0000000000000458  0000000000000458  00000458  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  9 .rela.plt     00000048  0000000000000518  0000000000000518  00000518  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 10 .init         00000017  0000000000000560  0000000000000560  00000560  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 11 .plt          00000040  0000000000000580  0000000000000580  00000580  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 12 .plt.got      00000008  00000000000005c0  00000000000005c0  000005c0  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 13 .text         000003a2  00000000000005d0  00000000000005d0  000005d0  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 14 .fini         00000009  0000000000000974  0000000000000974  00000974  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 15 .rodata       000000b9  0000000000000980  0000000000000980  00000980  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 16 .eh_frame_hdr 00000044  0000000000000a3c  0000000000000a3c  00000a3c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 17 .eh_frame     00000128  0000000000000a80  0000000000000a80  00000a80  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 18 .init_array   00000008  0000000000200da8  0000000000200da8  00000da8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 19 .fini_array   00000008  0000000000200db0  0000000000200db0  00000db0  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 20 .dynamic      000001f0  0000000000200db8  0000000000200db8  00000db8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 21 .got          00000058  0000000000200fa8  0000000000200fa8  00000fa8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 22 .data         00000014  0000000000201000  0000000000201000  00001000  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 23 .bss          00000058  0000000000201020  0000000000201020  00001014  2**5
+                  ALLOC
+ 24 .comment      00000029  0000000000000000  0000000000000000  00001014  2**0
+                  CONTENTS, READONLY
+```
+
+
+
+首先看a.out
+
+file format elf64-x86-64:文件所在平台属性，这里是64位x86处理器平台
+
+Sections:
+
+Size: 段的大小，字节为单位
+
+VMA: 段在虚拟地址中的位置
+
+LMA：段在加载地址中的位置
+
+File off： File offset，段的起始位置
+
+Algn：字节对齐方式，2**2表示2的平方即为4，2**3表示2的3次方即为8
+
+这里面重要的有
+
+.text（代码段）
+
+.data（数据段）
+
+.bss
+
+```
+root@ubuntu:~/train# readelf -h a.out 
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              DYN (Shared object file)
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x5d0
+  Start of program headers:          64 (bytes into file)
+  Start of section headers:          6696 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           56 (bytes)
+  Number of program headers:         9
+  Size of section headers:           64 (bytes)
+  Number of section headers:         29
+  Section header string table index: 28
+```
+
+ Entry point address:               0x5d0就是text段了
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+![在这里插入图片描述](https://www.freesion.com/images/926/76de31769ed28fe2e7e3e72ce595ea16.png)
 
 
 
@@ -304,8 +446,13 @@ return是需要释放局部变量的栈内存地址的，return的值是怎么�
 
 
 
-
 ###### char *str与char str[]的区别
+
+
+
+介绍一下char str[]="hello"与char *str="hello"的区别
+
+今天做题的时候遇到一个问题，如何实现一个函数返回一个指针，返回一个整型值很简单，因为“C语言是按值传递的”，而想要返回一个指针，比如char型的指针，然后想在主调函数中使用被调函数的返回指针，分析了一下关于char str[]和char *str的区别。
 
 `char str[]`表达式表示的是在动态变量区中开辟一个能连续放6个字符的数组，数组名称是str.而赋值运算符右边是一个字符串常量，这个字符串常量是存放在常量区的，这个表达式的意思就是将“hello”这个字符串常量拷贝到刚才开辟的数组中。C语言规定，表达式如果是一个数组名，则代表的意思是该数组的起始地址，如果这个数组在一个函数中定义，如果以数组名返回时，因为数组在函数中定义，是个局部变量，函数返回之后，这个数组所占用的空间就被释放掉了，数组也被破坏掉了，因此返回的数组名也就没有意义，不能被其主调函数使用了。
 
@@ -430,3 +577,8 @@ struct A[N]；
 
  (&A[1]  - &A[0])结果为1；
 
+
+
+###### 原子操作
+
+__atomic_exchange_n     原子替换`obj`指向的值`desired`并返回`obj`之前保存的值。操作是读取 - 修改 - 写入操作。C atomic_exchange                      （volatile A * obj，需要C语言）;
