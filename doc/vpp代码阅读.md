@@ -1306,6 +1306,10 @@ vrings数组
 
 vnet_hw_interface_set_rx_mode
 
+跟线程有关系
+
+vhost_user_rx_thread_placement
+
 
 
 DBGvpp# show vhost-user 
@@ -1400,7 +1404,7 @@ if 3 msg VHOST_USER_GET_FEATURES - reply 0x000000015c628000
 if 3 msg VHOST_USER_GET_PROTOCOL_FEATURES - reply 0x0000000000000003
 if 3 msg VHOST_USER_SET_PROTOCOL_FEATURES features 0x0000000000000003
 if 3 msg VHOST_USER_GET_QUEUE_NUM - reply 16
-if 3 msg VHOST_USER_SET_OWNER
+if 3 msg VHOST_USER_SET_OWNER   vhost协议中，内核模式此消息会触发创建vhost 内核线程
 if 3 msg VHOST_USER_GET_FEATURES - reply 0x000000015c628000
 if 3 msg VHOST_USER_SET_VRING_CALL 0
 if 3 msg VHOST_USER_SET_VRING_CALL 1
@@ -1424,3 +1428,101 @@ if 0 KICK queue 1
 interface 3 ready
 if 3 VHOST_USER_SET_VRING_ENABLE: enable queue 0
 if 3 VHOST_USER_SET_VRING_ENABLE: enable queue 1
+
+
+
+
+
+
+
+发送的gdb
+
+
+
+(gdb) bt
+#0  vhost_user_log_dirty_pages_2 (vui=0x7f1ecfd903c0, addr=5274576320, len=12, is_host_address=1 '\001') at /home/test/vpp/src/vnet/devices/virtio/vhost_user_inline.h:178
+#1  0x00007f1f10a10759 in vhost_user_tx_copy (vui=0x7f1ecfd903c0, cpy=0x7f1ecfd58e40, copy_len=2, map_hint=0x7f1ecebf46fc)
+    at /home/test/vpp/src/vnet/devices/virtio/vhost_user_output.c:228
+#2  0x00007f1f10a0de26 in vhost_user_device_class_tx_fn_hsw (vm=0x7f1f10604980 <vlib_global_main>, node=0x7f1ecfe4bf40, frame=0x7f1ecfda25c0)
+    at /home/test/vpp/src/vnet/devices/virtio/vhost_user_output.c:1006
+#3  0x00007f1f1034c1f5 in dispatch_node (vm=0x7f1f10604980 <vlib_global_main>, node=0x7f1ecfe4bf40, type=VLIB_NODE_TYPE_INTERNAL, dispatch_state=VLIB_NODE_STATE_POLLING, 
+    frame=0x7f1ecfda25c0, last_time_stamp=12078039460343984) at /home/test/vpp/src/vlib/main.c:1235
+#4  0x00007f1f1034cac7 in dispatch_pending_node (vm=0x7f1f10604980 <vlib_global_main>, pending_frame_index=7, last_time_stamp=12078039460343984)
+    at /home/test/vpp/src/vlib/main.c:1403
+#5  0x00007f1f10346f21 in vlib_main_or_worker_loop (vm=0x7f1f10604980 <vlib_global_main>, is_main=1) at /home/test/vpp/src/vlib/main.c:1862
+#6  0x00007f1f10348c6a in vlib_main_loop (vm=0x7f1f10604980 <vlib_global_main>) at /home/test/vpp/src/vlib/main.c:1990
+#7  0x00007f1f10348a3f in vlib_main (vm=0x7f1f10604980 <vlib_global_main>, input=0x7f1ecebf4fa8) at /home/test/vpp/src/vlib/main.c:2236
+#8  0x00007f1f103cf8f5 in thread0 (arg=139771395459456) at /home/test/vpp/src/vlib/unix/main.c:658
+#9  0x00007f1f0f79a964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#10 0x00007ffe999daef0 in ?? ()
+#11 0x00007f1f103cf487 in vlib_unix_main (argc=89, argv=0x22a1500) at /home/test/vpp/src/vlib/unix/main.c:730
+#12 0x0000000000406888 in main (argc=89, argv=0x22a1500) at /home/test/vpp/src/vpp/vnet/main.c:291
+(gdb) c
+
+
+
+接收
+
+#0  vhost_user_input_copy (vui=0x7f1ecfd903c0, cpy=0x7f1ecfd58e40, copy_len=1, map_hint=0x7f1ecebf4708) at /home/test/vpp/src/vnet/devices/virtio/vhost_user_input.c:145
+#1  0x00007f1f10a058e2 in vhost_user_if_input (vm=0x7f1f10604980 <vlib_global_main>, vum=0x7f1f11db2680 <vhost_user_main>, vui=0x7f1ecfd903c0, qid=0, node=0x7f1ecf594880, 
+    mode=VNET_HW_INTERFACE_RX_MODE_POLLING, enable_csum=0 '\000') at /home/test/vpp/src/vnet/devices/virtio/vhost_user_input.c:732
+#2  0x00007f1f10a0357f in vhost_user_input_node_fn_hsw (vm=0x7f1f10604980 <vlib_global_main>, node=0x7f1ecf594880, frame=0x0)
+    at /home/test/vpp/src/vnet/devices/virtio/vhost_user_input.c:1449
+#3  0x00007f1f1034c1f5 in dispatch_node (vm=0x7f1f10604980 <vlib_global_main>, node=0x7f1ecf594880, type=VLIB_NODE_TYPE_INPUT, dispatch_state=VLIB_NODE_STATE_POLLING, 
+    frame=0x0, last_time_stamp=12080428594479180) at /home/test/vpp/src/vlib/main.c:1235
+#4  0x00007f1f10346c95 in vlib_main_or_worker_loop (vm=0x7f1f10604980 <vlib_global_main>, is_main=1) at /home/test/vpp/src/vlib/main.c:1815
+#5  0x00007f1f10348c6a in vlib_main_loop (vm=0x7f1f10604980 <vlib_global_main>) at /home/test/vpp/src/vlib/main.c:1990
+#6  0x00007f1f10348a3f in vlib_main (vm=0x7f1f10604980 <vlib_global_main>, input=0x7f1ecebf4fa8) at /home/test/vpp/src/vlib/main.c:2236
+#7  0x00007f1f103cf8f5 in thread0 (arg=139771395459456) at /home/test/vpp/src/vlib/unix/main.c:658
+#8  0x00007f1f0f79a964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#9  0x00007ffe999daef0 in ?? ()
+#10 0x00007f1f103cf487 in vlib_unix_main (argc=89, argv=0x22a1500) at /home/test/vpp/src/vlib/unix/main.c:730
+#11 0x0000000000406888 in main (argc=89, argv=0x22a1500) at /home/test/vpp/src/vpp/vnet/main.c:291
+
+
+
+
+
+region_mmap_addr
+
+
+
+
+
+
+
+设置发送
+
+#0  vhost_user_tx_thread_placement (vui=0x7f771e6c5440) at /home/test/vpp/src/vnet/devices/virtio/vhost_user.c:124
+#1  0x00007f775ed98b21 in vhost_user_thread_placement (vui=0x7f771e6c5440, qid=0) at /home/test/vpp/src/vnet/devices/virtio/vhost_user.c:249
+#2  0x00007f775ed98a74 in vhost_user_kickfd_read_ready (uf=0x7f771e1a1418) at /home/test/vpp/src/vnet/devices/virtio/vhost_user.c:270
+#3  0x00007f775db94050 in linux_epoll_input_inline (vm=0x7f775ddcb980 <vlib_global_main>, node=0x7f771cdc4140, frame=0x0, thread_index=0)
+    at /home/test/vpp/src/vlib/unix/input.c:314
+#4  0x00007f775db936e9 in linux_epoll_input (vm=0x7f775ddcb980 <vlib_global_main>, node=0x7f771cdc4140, frame=0x0) at /home/test/vpp/src/vlib/unix/input.c:364
+#5  0x00007f775db131f5 in dispatch_node (vm=0x7f775ddcb980 <vlib_global_main>, node=0x7f771cdc4140, type=VLIB_NODE_TYPE_PRE_INPUT, dispatch_state=VLIB_NODE_STATE_POLLING, 
+    frame=0x0, last_time_stamp=12482898174075168) at /home/test/vpp/src/vlib/main.c:1235
+#6  0x00007f775db0dbd2 in vlib_main_or_worker_loop (vm=0x7f775ddcb980 <vlib_global_main>, is_main=1) at /home/test/vpp/src/vlib/main.c:1807
+#7  0x00007f775db0fc6a in vlib_main_loop (vm=0x7f775ddcb980 <vlib_global_main>) at /home/test/vpp/src/vlib/main.c:1990
+#8  0x00007f775db0fa3f in vlib_main (vm=0x7f775ddcb980 <vlib_global_main>, input=0x7f771c3bbfa8) at /home/test/vpp/src/vlib/main.c:2236
+#9  0x00007f775db968f5 in thread0 (arg=140150652582272) at /home/test/vpp/src/vlib/unix/main.c:658
+#10 0x00007f775cf61964 in clib_calljmp () at /home/test/vpp/src/vppinfra/longjmp.S:123
+#11 0x00007ffc50f62fb0 in ?? ()
+#12 0x00007f775db96487 in vlib_unix_main (argc=91, argv=0x2253500) at /home/test/vpp/src/vlib/unix/main.c:730
+#13 0x0000000000406888 in main (argc=91, argv=0x2253500) at /home/test/vpp/src/vpp/vnet/main.c:291
+
+
+
+###### 发送函数触发中断有三处
+
+vhost_user_send_call (vm, rxvq); 
+
+input收报的时候每次都比一下是否需要send通知guest
+
+output的时候，拼装完数据send通知guest
+
+interrupt_process，协程用来一直判断通信
+
+
+
+
+

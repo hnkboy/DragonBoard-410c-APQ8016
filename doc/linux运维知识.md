@@ -171,7 +171,31 @@ nohup ./a.out &
 
 https://blog.csdn.net/hl449006540/article/details/80216061
 
+###### 配置命令行历史
 
+在linux系统中，history命令可以输出历史命令，历史命令默认保存在文件~/.bash_history中。
+
+HISTFILESIZE 与 HISTSIZE都是history命令需要用到的两个shell变量，这两个变量到底有什么区别呢？
+
+HISTFILESIZE 定义了在 .bash_history 中保存命令的记录总数，可以理解为.bash_history文件中最多只有HISTFILESIZE行
+
+HISTSIZE 定义了 history 命令输出的记录数，即输出.bash_history文件中的最后HISTSIZE行
+
+
+
+vim ~/.bashrc
+
+HISTSIZE=10000000
+HISTFILESIZE=200000000
+HISTTIMEFORMAT='%F %T '
+
+
+
+如果想让当前终端的历史命令写入.bash_history文件中，则执行：history -w
+
+如果想获取终端的最新历史命令，则执行：history -r
+
+查看 命令用history
 
 ##### 配置特定场景
 
@@ -784,6 +808,171 @@ qemu-img create -f raw /data/CentOS7.raw 10G
 
 
 
+###### 安装内核头文件
+
+
+
+1：获取最新的内核的：apt-cache search linux|grep linux-image*
+
+2：直接安装：apt-get install linux-image-4.8.0-58-generic linux-headers-4.8.0-58-generic
+
+3：apt upgrade Reboot重启  
+
+4：check安装是否成功：sudo uname -r
+
+
+
+假设你没有手动编译内核，你可以使用apt-get命令来安装匹配的内核头文件。
+
+首先，使用dpkg-query命令检查是否有可用的内核头文件。
+
+```
+$ dpkg-query -s linux-headers-$(uname -r) 
+```
+
+------
+
+```
+dpkg-query: package 'linux-headers-3.11.0-26-generic' is not installed and no information is available
+```
+
+接着使用下面的命令安装匹配的内核头文件。
+
+```
+$ sudo apt-get install linux-headers-$(uname -r)
+```
+
+###### 编译内核，需要安装的包
+
+
+
+sudo apt-get install -y bison flex
+
+sudo apt-get install libncurses5-dev
+
+###### 磁盘满了解决办法
+
+1.手动删除占空间的文件
+
+列出当前目录文件夹大小
+
+du -h --max-depth=1
+
+2.扩容
+
+vmware调整硬盘，
+
+ubuntu安装gparted，https://blog.csdn.net/m0_43403238/article/details/85480314
+
+###### 查看线程在哪个cpu上
+
+```
+top -H -p PID
+按f键，并使用上下切换，利用空格键选中nTH,P：
+按esc键，P所在的列就是线程运行的CPU号：
+```
+
+##### qemu命令
+
+
+
+qemu-system-x86_64 -vga none -nographic  -s -S  -kernel ./arch/x86_64/boot/bzImage     -initrd ./rootfs  -m 4096   -append "root=/dev/ram rdinit=/helloworld"
+
+普通的img镜像
+
+https://download.cirros-cloud.net/0.5.1/cirros-0.5.1-x86_64-disk.img
+
+###### vhost方式的网卡
+
+
+
+```
+qemu-system-x86_64 \
+    -enable-kvm -m 512 \
+    -smp 4 -cpu host \
+    -vga none -nographic \
+    -drive file=/home/jerry/cirros-0.3.4-x86_64-disk.img,if=virtio,aio=threads \
+    -netdev tap,id=mynet1,vhost=on,ifname=tap0,script=/home/jerry/qemu-ifup \
+    -device virtio-net-pci,mac=0a:0b:0c:0d:0e:0f,netdev=mynet1 \
+    -object memory-backend-file,id=mem,size=512M,mem-path=/dev/hugepages,share=on \
+    -numa node,memdev=mem -mem-prealloc \
+    -debugcon file:debug.log -global isa-debugcon.iobase=0x402
+```
+
+-netdev tap,中指定vhost=on，初始化设备的同时会创建内核线程
+
+
+
+vhost-user的网卡
+
+
+
+```
+qemu-system-x86_64 \
+    -enable-kvm -m 512 \
+    -smp 4 -cpu host \
+    -vga none -nographic \
+    -drive file=/home/jerry/cirros-0.3.4-x86_64-disk.img,if=virtio,aio=threads \
+    -chardev socket,id=char1,path=/home/jerry/vhost1.sock \
+    -netdev type=vhost-user,id=mynet1,chardev=char1,vhostforce \
+    -device virtio-net-pci,mac=00:00:00:00:00:01,netdev=mynet1 \
+    -object memory-backend-file,id=mem,size=512M,mem-path=/dev/hugepages,share=on \
+    -numa node,memdev=mem -mem-prealloc \
+    -debugcon file:debug.log -global isa-debugcon.iobase=0x402
+```
+
+```
+qemu-system-x86_64 \
+    -enable-kvm -m 512 \
+    -smp 4 -cpu host \
+    -vga none -nographic \
+    -drive file=/home/jerry/cirros-0.3.4-x86_64-disk.img,if=virtio,aio=threads \
+    -chardev socket,id=char1,path=/home/jerry/vhost1.sock,reconnect=10 \
+    -netdev type=vhost-user,queues=5,id=mynet1,chardev=char1,vhostforce \
+    -device virtio-net-pci,mac=00:00:00:00:00:01,netdev=mynet1 \
+    -object memory-backend-file,id=mem,size=512M,mem-path=/dev/hugepages,share=on \
+    -numa node,memdev=mem -mem-prealloc \
+    -debugcon file:debug.log -global isa-debugcon.iobase=0x402
+```
+
+
+
+修改 vim  /home/jerry/qemu-ifup
+
+#!/bin/bash
+#
+bridge=virbr0
+
+if [ -n “$1” ];then
+ip link set $1 up
+sleep 1
+brctl addif $bridge $1
+[ $? -eq 0 ] && exit 0 || exit 1
+else
+echo “Error: no interface specified.”
+exit 2
+fi
+
+
+
+###### 编译命令
+
+mkdir build 
+
+cd build./configure --enable-debug  --prefix=/data  --enable-trace-backend=simple 
+
+../configure 
+
+可执行文件位置
+
+sudo /home/jerry/qemu-5.1.0/x86_64-softmmu/qemu-system-x86_64
+
+
+
+
+
+
+
 ##### 特定现象解决办法
 
 ###### 用户不能sudo
@@ -1080,11 +1269,41 @@ tcpdump -e 显示mac地址
 git clone -b 1.18.0 https://github.com/passedbylove/poiji.git
 ```
 
+git checkout 切换分支
+
+git push
+
+
+
+提交注释
+
+git commit -m "misc: add Matt Smith to the committer list.
+
+In hopes of restoring his +2 button...
+
+Type: fix"
+
+
+
+- Add ( 新加入的需求 )
+- Mod 修改 
+- Del 删除 (删除文件等)
+- Fixed  ( 修复 bug )
+- Changed ( 完成的任务 )
+- Updated ( 完成的任务,升级，或者由于第三方模块变化而做的变化 )
+- rem:移除（Remove,移除功能）
+
+
+
 ###### netstat 
 
 netstat -nlp  查看端口情况
 
 netstat -anp |grep 2379  查看端口占用关系
+
+netstat -anpt 查看tcp连接中的地址
+
+
 
 ###### docker 
 
@@ -1134,6 +1353,40 @@ sudo nmap -uT -p- 10.10.8.8  扫描udp
 
 $ which python
 /usr/bin/python
+
+###### lspci
+
+
+
+常用参数：
+
+-v 显示设备的详细信息。
+
+-vv 显示设备更详细的信息。
+
+-vvv 显示设备所有可解析的信息。
+
+-x 以16进制显示配置空间的前64字节，或者CardBus桥的前128字节。
+
+-xxx 以16进制显示整个PCI配置空间（256字节）。
+
+-xxxx 以16进制显示整个PCI-E配置空间（4096字节）。
+
+     -s [[[[<domain>]:]<bus>]:][<slot>][.[<func>]]：
+
+显示指定设备。
+
+
+
+lspci -vv -s 21:00.0 |grep MSI
+Capabilities: [70] MSI-X: Enable+ Count=64 Masked-
+count=64 代表支持64个队列
+
+###### gdb
+
+set args
+
+set scheduler-locking off
 
 
 ##### 工具介绍
@@ -1362,7 +1615,11 @@ neocomplete requires ...th Lua support的警告
 
 ,安装vim-gnome:
 
+快捷键设置
 
+set pastetoggle=<F12>           " pastetoggle (sane indentation on pastes)
+
+set nu 显示行数
 
 配色方案
 
@@ -1413,6 +1670,12 @@ sudo vim /etc/default/isc-dhcp-server 配置使用的网卡
 sudo vim /etc/dhcp/dhcpd.conf
 
 ```
+option domain-name "example.org";
+
+default-lease-time 600;
+max-lease-time 7200;
+DHCPDARGS=virbr0;
+ddns-update-style none;
 
 subnet 192.168.1.0 netmask 255.255.255.0 {
   range 192.168.1.2 192.168.1.244;
@@ -1434,7 +1697,17 @@ subnet 192.168.0.0 netmask 255.255.255.0 {
 }
 ```
 
+systemctl restart isc-dhcp-server
+
+
+
 出现问题用journalctl解决
+
+
+
+###### htop
+
+查看线程的状态，图形化显示
 
 ##### 部署场景
 
